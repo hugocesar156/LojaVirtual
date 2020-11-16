@@ -1,0 +1,131 @@
+﻿@model LojaVirtual.Models.Produto.Produto
+
+@{
+    ViewData["Title"] = "Edição de produto";
+}
+
+<div class="text-center">
+    <h4>Edição de produto</h4>
+
+    <form action="" method="post" id="form-cadastro">
+        <div class="row justify-content-center text-center text-md-left mt-4">
+            <div class="col-10 col-md-6 col-xl-5">
+                <label>Nome</label>
+                <input id="nome" type="text" class="form-control" maxlength="30" value="@Model.Nome" onchange="ValidaCampo(this)" />
+                <div id="nome" class="invalid-feedback"></div>
+            </div>
+            <div class="col-8 col-md-4 col-xl-3 text-center text-md-left mt-4 mt-md-0">
+                <label>Categoria</label>
+                <select id="categoria" class="custom-select form-control" onchange="ValidaCampo(this)">
+                    <option value="">Selecione uma opção...</option>
+                    @foreach (var item in ViewBag.Categorias)
+                    {
+                        if (item.Key == Model.IdCategoria)
+                        {
+                            <option value="@item.Key" selected>@item.Value</option>
+                        }
+                        else
+                        {
+                            <option value="@item.Key">@item.Value</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-10 col-md-6 col-xl-5 text-center text-md-left">
+                <label>Descrição</label>
+                <textarea id="descricao" class="form-control" maxlength="150" asp-for="Descricao" onchange="ValidaCampo(this)"></textarea>
+                <div id="descricao" class="invalid-feedback"></div>
+            </div>
+            <div class="col-4 col-md-3 col-xl-2 text-left mt-4 mt-md-0">
+                <label>Valor</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">R$</div>
+                    </div>
+                    <input id="valor" type="text" class="form-control real" style="text-align: center"
+                           placeholder="0,00" value="@Model.Valor.ToString("N2")" onchange="ValidaValor(this)" />
+                    <div id="valor" class="invalid-feedback msg-valor"></div>
+                </div>
+            </div>
+            <div class="col-4 col-md-3 col-xl-2 text-left mt-4 mt-md-0">
+                <label>Qtd.estoque</label>
+                <input id="estoque" type="text" class="form-control quantidade"
+                       placeholder="000" style="text-align: center" value="@Model.Estoque" onchange="ValidaValor(this)" />
+                <div id="estoque" class="invalid-feedback msg-valor"></div>
+            </div>
+        </div>
+        <div class="row mt-4 justify-content-center">
+            <div class="col-8 col-md-4 col-xl-3 text-center text-md-left">
+                <label>Fabricante</label>
+                <input id="fabricante" type="text" class="form-control" maxlength="25" value="@Model.Fabricante" onchange="ValidaCampo(this)" />
+                <div id="fabricante" class="invalid-feedback"></div>
+            </div>
+            <div class="col-8 col-md-4 col-xl-3 text-center text-md-left mt-3 mt-md-0">
+                <label>Modelo</label>
+                <input id="modelo" type="text" class="form-control" maxlength="25" value="@Model.Modelo" onchange="ValidaCampo(this)" />
+                <div id="modelo" class="invalid-feedback"></div>
+            </div>
+            <div class="col-8 col-md-4 col-xl-3 text-center text-md-left mt-3 mt-md-0">
+                <label>Cor</label>
+                <input id="cor" type="text" class="form-control" maxlength="20" value="@Model.Cor" onchange="ValidaCampo(this)" />
+                <div id="cor" class="invalid-feedback"></div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-4 col-md-3 col-xl-2 text-left">
+                <label>Largura</label>
+                <div class="input-group">
+                    <input id="largura" type="text" class="form-control cm" style="text-align: center"
+                           placeholder="0" value="@Model.Largura" onchange="ValidaLargura()" />
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">cm</div>
+                    </div>
+                    <div id="largura" class="invalid-feedback msg-largura"></div>
+                </div>
+            </div>
+            <div class="col-4 col-md-3 col-xl-2 text-left">
+                <label>Altura</label>
+                <div class="input-group">
+                    <input id="altura" type="text" class="form-control cm" style="text-align: center"
+                           placeholder="0" value="@Model.Altura" onchange="ValidaAltura()" />
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">cm</div>
+                    </div>
+                    <div id="altura" class="invalid-feedback msg-altura"></div>
+                </div>
+            </div>
+            <div class="col-4 col-md-3 col-xl-2 text-left">
+                <label>Comprimento</label>
+                <div class="input-group">
+                    <input id="comprimento" type="text" class="form-control cm" style="text-align: center"
+                           placeholder="0" value="@Model.Comprimento" onchange="ValidaComprimento()" />
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">cm</div>
+                    </div>
+                    <div id="comprimento" class="invalid-feedback msg-comprimento"></div>
+                </div>
+            </div>
+            <div class="col-4 col-md-3 col-xl-2 ml-xl-4 text-lg-left mt-3 mt-md-0 mt-xl-0">
+                <label>Peso</label>
+                <div class="input-group">
+                    <input id="peso" type="text" class="form-control kg" style="text-align: center"
+                           placeholder="0,00" value="@Model.Peso.ToString("N2")" onchange="ValidaPeso()" />
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Kg</div>
+                    </div>
+                    <div id="cor" class="invalid-feedback msg-peso"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-5 mb-3">
+            <a href="@Url.Action("Imagem", "Produto", new { id = Model.IdProduto })" class="btn btn-outline-success col-6 col-sm-5 col-md-3" 
+                    style="border-radius: 5px 0px 0px 5px;">Imagem</a>
+            <button class="btn btn-outline-success col-6 col-sm-5 col-md-3" type="button" 
+                    style="border-radius: 0px 5px 5px 0px;" onclick="ValidaEdicao()">Salvar</button>
+        </div>
+    </form>
+</div>
+
+<script src="~/js/Produto/validacao.js"></script>

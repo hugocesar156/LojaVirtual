@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" lang="pt-br" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/Global/fontawesome/all.min.css" rel="stylesheet" />
+    <link href="~/css/Global/pagedlist.css" rel="stylesheet" />
+
+    <title>@ViewData["Title"] - Loja Virtual</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <a class="navbar-brand" href="#">Loja Virtual</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-center" id="navbar">
+            <ul class="navbar-nav">
+                <li class="nav-item text-center">
+                    <div class="dropdown">
+                        <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false" id="dropdown-produto">Produtos</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown-produto">
+                            <a class="dropdown-item" href="@Url.Action("Cadastro", "Produto")">Novo</a>
+                            <a class="dropdown-item" href="@Url.Action("Lista", "Produto")">Listar</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item text-center">
+                    <div class="dropdown">
+                        <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false" id="dropdown-produto">Cliente</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown-produto">
+                            <a class="dropdown-item" href="#">Novo</a>
+                            <a class="dropdown-item" href="#">Listar</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item text-center">
+                    <div class="dropdown">
+                        <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false" id="dropdown-produto">Vendedores</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown-produto">
+                            <a class="dropdown-item" href="@Url.Action("Cadastro", "Usuario")">Novo</a>
+                            <a class="dropdown-item" href="#">Listar</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item text-center">
+                    <div class="dropdown">
+                        <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false" id="dropdown-produto">Carrinho</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown-produto">
+                            <a class="dropdown-item" href="@Url.Action("Menu", "Carrinho")">Meu carrinho</a>
+                            <a class="dropdown-item" href="#">Gerenciar</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item text-center">
+                    <div class="dropdown">
+                        <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false" id="dropdown-produto">Venda</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown-produto">
+                            <a class="dropdown-item" href="#">Minhas venas</a>
+                            <a class="dropdown-item" href="#">Gerenciar</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item text-center d-block d-sm-none d-md-none d-sm-none d-xl-none mt-2">
+                    <a class="nav-link" href="#">Conta</a>
+                </li>
+            </ul>
+        </div>
+        <div class="nav-item text-right d-none d-sm-block">
+            <a class="nav-link" href="#">Conta</a>
+        </div>
+    </nav>
+
+    <div class="container mt-3 body-content">
+        @RenderBody()
+        <footer class="text-center mt-5">
+            <p>@DateTime.Now.Year - Loja Virtual</p>
+        </footer>
+    </div>
+</body>
+</html>
+
+<script src="~/jquery/jquery-3.5.1.min.js"></script>
+<script src="~/jquery/plugins/mask/jquery.mask.min.js"></script>
+<script src="~/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/js/Global/mascara.js"></script>

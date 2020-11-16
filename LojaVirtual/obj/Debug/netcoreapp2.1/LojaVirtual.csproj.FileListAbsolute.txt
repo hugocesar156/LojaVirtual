@@ -1,0 +1,113 @@
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.csprojAssemblyReference.cache
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.AssemblyInfoInputs.cache
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.AssemblyInfo.cs
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.RazorAssemblyInfo.cache
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.RazorAssemblyInfo.cs
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.TagHelpers.input.cache
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.TagHelpers.output.cache
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.RazorCoreGenerate.cache
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Home\Inicio.cshtml.g.cs
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Login\Entrar.cshtml.g.cs
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_Layout.cshtml.g.cs
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\_ViewImports.cshtml.g.cs
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\_ViewStart.cshtml.g.cs
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.RazorTargetAssemblyInfo.cache
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.RazorTargetAssemblyInfo.cs
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.dll
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.pdb
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\appsettings.Development.json
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\appsettings.json
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\Properties\launchSettings.json
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.deps.json
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.runtimeconfig.json
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.runtimeconfig.dev.json
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.dll
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.pdb
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.Views.dll
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.Views.pdb
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.Views.pdb
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.genruntimeconfig.cache
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.csproj.CopyComplete
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Usuario\Cadastro.cshtml.g.cs
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.csproj.CoreCompileInputs.cache
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Produto\Cadastro.cshtml.g.cs
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\appsettings.Development.json
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\appsettings.json
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\Properties\launchSettings.json
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.deps.json
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.runtimeconfig.json
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.runtimeconfig.dev.json
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.dll
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.pdb
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.Views.dll
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.Views.pdb
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.csprojAssemblyReference.cache
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.AssemblyInfoInputs.cache
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.AssemblyInfo.cs
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.RazorAssemblyInfo.cache
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.RazorAssemblyInfo.cs
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.TagHelpers.input.cache
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.TagHelpers.output.cache
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.RazorCoreGenerate.cache
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Home\Inicio.cshtml.g.cs
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Login\Entrar.cshtml.g.cs
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Produto\Cadastro.cshtml.g.cs
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_Layout.cshtml.g.cs
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Usuario\Cadastro.cshtml.g.cs
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\_ViewImports.cshtml.g.cs
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\_ViewStart.cshtml.g.cs
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.RazorTargetAssemblyInfo.cache
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.RazorTargetAssemblyInfo.cs
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.Views.pdb
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.dll
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.pdb
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.genruntimeconfig.cache
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.csproj.CopyComplete
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Produto\Lista.cshtml.g.cs
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.csproj.CoreCompileInputs.cache
+C:\Users\Hugo Souza\Downloads\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Produto\_Tabela.cshtml.g.cs
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Produto\Lista.cshtml.g.cs
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Produto\_Tabela.cshtml.g.cs
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Produto\Edicao.cshtml.g.cs
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Produto\Imagem.cshtml.g.cs
+C:\Users\hugoc\OneDrive\Área de Trabalho\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Produto\_Imagens.cshtml.g.cs
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\appsettings.Development.json
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\appsettings.json
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\Properties\launchSettings.json
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.deps.json
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.runtimeconfig.json
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.runtimeconfig.dev.json
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.dll
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.pdb
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.Views.dll
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.Views.pdb
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.csprojAssemblyReference.cache
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.AssemblyInfoInputs.cache
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.AssemblyInfo.cs
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.csproj.CoreCompileInputs.cache
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.RazorAssemblyInfo.cache
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.RazorAssemblyInfo.cs
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.TagHelpers.input.cache
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.TagHelpers.output.cache
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.RazorCoreGenerate.cache
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Home\Inicio.cshtml.g.cs
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Login\Entrar.cshtml.g.cs
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Produto\Cadastro.cshtml.g.cs
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Produto\Edicao.cshtml.g.cs
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Produto\Imagem.cshtml.g.cs
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Produto\Lista.cshtml.g.cs
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Produto\_Imagens.cshtml.g.cs
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Produto\_Tabela.cshtml.g.cs
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_Layout.cshtml.g.cs
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Usuario\Cadastro.cshtml.g.cs
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\_ViewImports.cshtml.g.cs
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\_ViewStart.cshtml.g.cs
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.RazorTargetAssemblyInfo.cache
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.RazorTargetAssemblyInfo.cs
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.Views.pdb
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.dll
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.pdb
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.genruntimeconfig.cache
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.csproj.CopyComplete
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Carrinho\Menu.cshtml.g.cs
+C:\Projetos\Nova pasta\LojaVirtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Carrinho\_Carrinho.cshtml.g.cs

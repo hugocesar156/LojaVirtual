@@ -1,0 +1,25 @@
+﻿@model List<LojaVirtual.Models.Produto.Imagem>
+
+@if (Model != null && Model.Count > 0)
+{
+    <div class="row justify-content-center mt-4">
+        @foreach (var imagem in Model)
+        {
+            <div class="col-2">
+                <img src="@imagem.Caminho.Replace("wwwroot", "")" class="img-thumbnail" 
+                     width="120" height="120" style="border-radius: 5px 5px 0px 0px;" />
+
+                <button class="btn btn-outline-danger col-9" data-toggle="modal" data-target="#remove-imagem"
+                        type="button" style="border-radius: 0px 0px 5px 5px;" onclick="$('#caminho-remover').val('@imagem.Caminho')">
+                <i class="fa fa-trash"></i>
+                </button>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="mt-4">
+        <small>Este produto ainda não possui imagens salvas.</small>
+    </div>
+}

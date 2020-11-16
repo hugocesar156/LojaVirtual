@@ -1,0 +1,46 @@
+﻿@model List<LojaVirtual.Models.Produto.Produto>
+
+@foreach (var produto in Model)
+{
+    <tr>
+        <td>
+            <figure class="itemside">
+                @{var imagem = produto.Imagem != null && produto.Imagem.Count > 0 ? produto.Imagem.FirstOrDefault().Caminho.Replace("wwwroot", "") : "";}
+                <div class="aside"><img src="@imagem" width="70" height="70" class="img-sm"></div>
+            </figure>
+        </td>
+        <td>
+            <figure class="itemside">
+                <figcaption class="info">
+                    <p class="text-muted small">
+                        <strong>@produto.Nome</strong>
+                    </p>
+                </figcaption>
+            </figure>
+        </td>
+        <td>
+            <div class="row">
+                <div class="col">
+                    <div class="input-group mb-3 input-spinner">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-dark" id="remover" type="button" onclick="RetirarQuantidade(@produto.IdProduto)"> − </button>
+                        </div>
+                        <input type="text" class="form-control quantidade" value="@ViewBag.Quantidade[produto.IdProduto]" readonly style="text-align: center;">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-dark adicionar" type="button" onclick="AdicionarQuantidade(@produto.IdProduto)"> + </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td>
+            <div class="price-wrap">
+                <var class="price">@produto.Valor.ToString("C")</var>
+                <small class="text-muted"> /unidade </small>
+            </div>
+        </td>
+        <td class="text-right">
+            <button type="button" class="btn btn-sm btn-outline-dark" onclick="Remover(@produto.IdProduto)"> <i class="fa fa-trash"></i></button>
+        </td>
+    </tr>
+}

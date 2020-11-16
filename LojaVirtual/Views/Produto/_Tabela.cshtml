@@ -1,0 +1,102 @@
+﻿@model IPagedList<LojaVirtual.Models.Produto.Produto>
+
+@if (Model.Count > 0)
+{
+    <div class="table-responsive mt-4" style="overflow-y: scroll; height: 400px; background-color: #fafafa;">
+        <table id="cabecalho" class="table table-hover teste">
+            <thead class="cabecalho" style="background-color: #f2f8fb;">
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col" onmousemove="$(this).css('cursor', 'pointer')" onclick="Ordenacao(1)">Nome</th>
+                    <th scope="col" onmousemove="$(this).css('cursor', 'pointer')" onclick="Ordenacao(2)">Fabricante</th>
+                    <th scope="col" onmousemove="$(this).css('cursor', 'pointer')" onclick="Ordenacao(3)">Modelo</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    var imagem = item.Imagem != null && item.Imagem.Count > 0 ? item.Imagem.FirstOrDefault().Caminho.Replace("wwwroot", "") : "";
+                    <tr>
+                        <td width="25"> <img src="@imagem" width="50" height="50" /> </td>
+                        <td width="350" class="text-capitalize">@item.Nome</td>
+                        <td width="250" class="text-capitalize">@item.Fabricante</td>
+                        <td width="250" class="text-capitalize">@item.Modelo</td>
+                        <td width="130">
+                            <a href="#" class="btn btn-sm btn-outline-dark"><i class="fa fa-info-circle"></i></a>
+                            <a href="@Url.Action("Edicao", "Produto", new { id = item.IdProduto })" class="btn btn-sm btn-outline-dark"><i class="fa fa-edit"></i></a>
+                            <button class="btn btn-sm btn-outline-danger" type="button"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p>Nenhum registro encontrado</p>
+}
+
+<div class="text-left mt-3">
+    @if (Model.PageCount > 0)
+    {
+        <div class="row">
+            <div class="col">
+                <small>
+                    <strong>
+                        Página <label id="pagina">@Model.PageNumber</label> de
+                        <label id="num-paginas">@Model.PageCount</label>
+                    </strong>
+                </small>
+            </div>
+            <div class="col text-right">
+                <a href="#cabecalho">Topo da lista</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <small class="justify-content-end">
+                    <strong>Total de @Model.TotalItemCount registros</strong>
+                </small>
+            </div>
+        </div>
+    }
+
+    <div class="mt-3">
+        @if (Model.PageNumber > 2)
+        {
+            <button class="btn btn-sm btn-primary mr-2" type="button"
+                    onclick="AlterarPagina(1)">
+                1
+            </button>
+        }
+        @if (Model.PageNumber > 1)
+        {
+            <button class="btn btn-sm btn-primary" type="button"
+                    onclick="AlterarPagina(2)">
+                @{ var anterior = Model.PageNumber - 1;} @anterior
+            </button>
+        }
+        @if (Model.PageCount > 0)
+        {
+            <button class="btn btn-outline-primary" type="button" disabled>
+                @Model.PageNumber
+            </button>
+        }
+        @if (Model.PageNumber < Model.PageCount)
+        {
+            <button class="btn btn-sm btn-primary" type="button"
+                    onclick="AlterarPagina(3)">
+                @{ var proximo = Model.PageNumber + 1;} @proximo
+            </button>
+        }
+        @if (Model.PageNumber < Model.PageCount - 1)
+        {
+            <button class="btn btn-sm btn-primary ml-2" type="button"
+                    onclick="AlterarPagina(4)">
+                @Model.PageCount
+            </button>
+        }
+    </div>
+</div>

@@ -1,0 +1,60 @@
+﻿@model LojaVirtual.Models.Acesso.Usuario
+
+@{
+    ViewData["Title"] = "Cadastro e usuário";
+}
+
+<div class="text-center">
+    <h4>Cadastro</h4>
+
+    <form action="" method="post" id="form-cadastro">
+        <div class="row justify-content-center mt-4">
+            <div class="col-10 col-sm-9 col-md-6 text-center text-md-left">
+                <label>Nome de usuário</label>
+                <input class="form-control" id="nome" name="nome" type="text" maxlength="50"
+                       onchange="ValidaCampo(this)" value="@Model.Cliente.Nome"/>
+                <div class="invalid-feedback text-left" id="nome">Preencha este campo</div>
+            </div>
+            <div class="col-6 col-sm-4 col-md-3 text-center mt-2 mt-md-0">
+                <label>CPF</label>
+                <input class="form-control cpf" id="cpf" type="text" placeholder="000.000.000-00" name="cpf"
+                       style="text-align: center" onchange="ValidaCampo(this)" value="@Model.Cliente.Cpf" />
+                <div class="invalid-feedback text-left" id="cpf">Insira um CPF válido</div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-9 col-sm-8 col-md-8 text-center">
+                <label>Endereço de Email</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">@@</span>
+                    </div>
+                    <input class="form-control" id="email" type="text" maxlength="35" name="email"
+                           placeholder="exemplo@@email.com" style="text-align: center"
+                           onchange="ValidaCampo(this)" value="@Model.Email" />
+                    <div class="invalid-feedback text-left" id="email">Preencha este campo</div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-9 col-sm-7 col-md-4 text-center text-md-left">
+                <label>Senha</label>
+                <input class="form-control senha" id="senha" type="password" maxlength="30"
+                       placeholder="*******" style="text-align: center" name="senha"
+                       onchange="ValidaCampo(this)" value="@Model.Senha" />
+                <div class="invalid-feedback text-left msg-senha" id="senha"></div>
+            </div>
+            <div class="col-9 col-sm-7 col-md-4 text-center text-md-left mt-2 mt-md-0">
+                <label>Confirme sua senha</label>
+                <input class="form-control conf" id="confirma" type="password" maxlength="30"
+                       style="text-align: center" onchange="ValidaCampo(this)" />
+                <div class="invalid-feedback text-left msg-conf" id="confirma"></div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-5 mb-3">
+            <button class="btn btn-success col-6 col-sm-5 col-md-3" type="button" onclick="ValidaRegistro()">Registrar</button>
+        </div>
+    </form>
+</div>
+
+<script src="~/js/Usuario/validacao.js"></script>

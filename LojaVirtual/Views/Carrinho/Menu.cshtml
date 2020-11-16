@@ -1,0 +1,79 @@
+﻿@model List<LojaVirtual.Models.Produto.Produto>
+
+@{
+    ViewData["Title"] = "Carrinho de Compras";
+}
+
+<div class="text-center">
+    <h4>Carrinho de Compras</h4>
+
+    @if (Model != null && Model.Count > 0)
+    {
+        <div class="row mt-5">
+            <div class="col-8">
+                <div class="table-responsive mt-4" style="overflow-y: scroll; height: 250px; background-color: #fafafa;">
+                    <table class="table table-hover">
+                        <thead class="text-muted" style="background-color: #f2f8fb;">
+                            <tr class="small text-uppercase">
+                                <th scope="col"></th>
+                                <th scope="col" width="300">Produto</th>
+                                <th scope="col" class="text-center" width="170">Quantidade</th>
+                                <th scope="col">Preço</th>
+                                <th scope="col" class="text-right"> </th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista">
+                            @await Html.PartialAsync("_Carrinho")
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col text-left">
+                <h6>Calcular o frete</h6>
+
+                <label>CEP:</label>
+                <div class="row">
+                    <div class="col-6">
+                        <input type="text" id="cep" class="form-control" placeholder="00000-000" style="text-align: center;" />
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-outline-primary" onclick="CalcularFrete()">Calcular</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        var subtotal = 0.0;
+
+        foreach (var item in Model)
+        {
+            subtotal += (item.Valor * ViewBag.Quantidade[item.IdProduto]);
+        }
+
+        <div class="row text-left mt-4">
+            <div class="col-2">
+                <strong>Subtotal:</strong>
+                <label id="subtotal">@subtotal.ToString("C")</label>
+            </div>
+            <div class="col-2">
+                <strong>Frete:</strong>
+                <label id="frete"> - </label>
+            </div>
+            <div class="col-2">
+                <strong>Total:</strong>
+                <strong><label id="total">@subtotal.ToString("C")</label></strong>
+            </div>
+            <div class="col-2 text-right">
+                <a href="#" class="btn btn-primary">Realizar compra</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="mt-5">
+            <p>Você ainda não possui nenhum item no carrinho.</p>
+        </div>
+    }
+</div>
+
+<script src="~/js/Carrinho/acoes.js"></script>
