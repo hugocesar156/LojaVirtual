@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Projetos\\LovaVirtual\\LojaVirtual\\LojaVirtual.csproj": {}
+    "C:\\Projetos\\Loja Virtual\\LojaVirtual\\LojaVirtual.csproj": {}
   },
   "projects": {
-    "C:\\Projetos\\LovaVirtual\\LojaVirtual\\LojaVirtual.csproj": {
+    "C:\\Projetos\\Loja Virtual\\LojaVirtual\\LojaVirtual.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Projetos\\LovaVirtual\\LojaVirtual\\LojaVirtual.csproj",
+        "projectUniqueName": "C:\\Projetos\\Loja Virtual\\LojaVirtual\\LojaVirtual.csproj",
         "projectName": "LojaVirtual",
-        "projectPath": "C:\\Projetos\\LovaVirtual\\LojaVirtual\\LojaVirtual.csproj",
-        "packagesPath": "C:\\Users\\hugoc\\.nuget\\packages\\",
-        "outputPath": "C:\\Projetos\\LovaVirtual\\LojaVirtual\\obj\\",
+        "projectPath": "C:\\Projetos\\Loja Virtual\\LojaVirtual\\LojaVirtual.csproj",
+        "packagesPath": "C:\\Users\\Hugo Souza\\.nuget\\packages\\",
+        "outputPath": "C:\\Projetos\\Loja Virtual\\LojaVirtual\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\hugoc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Hugo Souza\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -67,6 +70,22 @@
               "target": "Package",
               "version": "[2.1.4, )"
             },
+            "System.ServiceModel.Duplex": {
+              "target": "Package",
+              "version": "[4.4.*, )"
+            },
+            "System.ServiceModel.Http": {
+              "target": "Package",
+              "version": "[4.4.*, )"
+            },
+            "System.ServiceModel.NetTcp": {
+              "target": "Package",
+              "version": "[4.4.*, )"
+            },
+            "System.ServiceModel.Security": {
+              "target": "Package",
+              "version": "[4.4.*, )"
+            },
             "X.PagedList.Mvc.Core": {
               "target": "Package",
               "version": "[7.5.0, )"
@@ -82,7 +101,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

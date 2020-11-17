@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LojaVirtual.Data;
+﻿using LojaVirtual.Data;
 using LojaVirtual.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WSCorreios;
 
 namespace LojaVirtual
 {
@@ -44,6 +40,11 @@ namespace LojaVirtual
             services.AddScoped<ProdutoR>();
             services.AddScoped<ImagemR>();
             services.AddScoped<CarrinhoR>();
+            services.AddScoped<FreteR>();
+
+            services.AddScoped<CalcPrecoPrazoWSSoap>(options => {
+                return new CalcPrecoPrazoWSSoapClient(CalcPrecoPrazoWSSoapClient.EndpointConfiguration.CalcPrecoPrazoWSSoap);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

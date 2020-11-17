@@ -25,7 +25,7 @@
                         <div class="input-group-prepend">
                             <button class="btn btn-outline-dark" id="remover" type="button" onclick="RetirarQuantidade(@produto.IdProduto)"> − </button>
                         </div>
-                        <input type="text" class="form-control quantidade" value="@ViewBag.Quantidade[produto.IdProduto]" readonly style="text-align: center;">
+                        <input type="text" class="form-control" value="@ViewBag.Quantidade[produto.IdProduto]" readonly style="text-align: center;">
                         <div class="input-group-append">
                             <button class="btn btn-outline-dark adicionar" type="button" onclick="AdicionarQuantidade(@produto.IdProduto)"> + </button>
                         </div>
@@ -35,12 +35,13 @@
         </td>
         <td>
             <div class="price-wrap">
-                <var class="price">@produto.Valor.ToString("C")</var>
+                R$ <var class="price">@produto.Valor.ToString("C").Replace("R$ ", "")</var>
                 <small class="text-muted"> /unidade </small>
+                <input type="hidden" id="quantidade" value="@ViewBag.Quantidade[produto.IdProduto]" />
             </div>
         </td>
         <td class="text-right">
-            <button type="button" class="btn btn-sm btn-outline-dark" onclick="Remover(@produto.IdProduto)"> <i class="fa fa-trash"></i></button>
+            <button type="button" class="btn btn-sm btn-outline-dark" onclick="RemoverItem(@produto.IdProduto)"> <i class="fa fa-trash"></i></button>
         </td>
     </tr>
 }

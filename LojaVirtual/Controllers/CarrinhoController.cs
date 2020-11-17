@@ -4,6 +4,7 @@ using LojaVirtual.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace LojaVirtual.Controllers
 {
@@ -11,12 +12,15 @@ namespace LojaVirtual.Controllers
     {
         private readonly ProdutoR _reposProduto;
         private readonly CarrinhoR _reposCarrinho;
+        private readonly FreteR _reposFrete;
+
         private static List<Carrinho> _itens;
 
-        public CarrinhoController(ProdutoR reposProduto, CarrinhoR reposCarrinho)
+        public CarrinhoController(ProdutoR reposProduto, CarrinhoR reposCarrinho, FreteR reposFrete)
         {
             _reposProduto = reposProduto;
             _reposCarrinho = reposCarrinho;
+            _reposFrete = reposFrete;
         }
 
         //Páginas
@@ -37,11 +41,12 @@ namespace LojaVirtual.Controllers
 
 
         //Operações
-        public IActionResult AdicionarItem(uint id)
+        [HttpGet]
+        public IActionResult AdicionarQuantidade(uint id)
         {
             var item = _itens.FirstOrDefault(c => c.IdProduto == id);
 
-            if (item.Quantidade > 1)
+            if (_reposProduto.Buscar(id).Estoque > item.Quantidade)
             {
                 if (_reposCarrinho.Atualizar(item, 1) > 0)
                     return PartialView("_Carrinho", BuscaProdutosCarrinho(_itens));
@@ -50,7 +55,25 @@ namespace LojaVirtual.Controllers
             return BadRequest();
         }
 
-        public IActionResult RetirarItem(uint id)
+        [HttpGet]
+        public async Task<JsonResult> CalcularFrete(string cep)
+        {
+            var lista = new List<Produto>();
+            var carrinho = _reposCarrinho.Buscar();
+
+            var quantidade = new Dictionary<uint, uint>();
+
+            foreach (var item in carrinho)
+            {
+                lista.Add(_reposProduto.Buscar(item.IdProduto));
+                quantidade.Add(item.IdProduto, item.Quantidade);
+            }
+
+            return Json(await _reposFrete.CalcularFrete(cep, FreteR.PrepararPacotes(lista, quantidade)));
+        }
+
+        [HttpGet]
+        public IActionResult RetirarQuantidade(uint id)
         {
             var item = _itens.FirstOrDefault(c => c.IdProduto == id);
 
@@ -66,6 +89,20 @@ namespace LojaVirtual.Controllers
                     _itens.Remove(item);
                     return PartialView("_Carrinho", BuscaProdutosCarrinho(_itens));
                 }
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet]
+        public IActionResult RemoverItem(uint id)
+        {
+            var item = _itens.FirstOrDefault(c => c.IdProduto == id);
+
+            if (_reposCarrinho.RemoverItem(item) > 0)
+            {
+                _itens.Remove(item);
+                return PartialView("_Carrinho", BuscaProdutosCarrinho(_itens));
             }
 
             return BadRequest();

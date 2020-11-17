@@ -10,7 +10,7 @@
     @if (Model != null && Model.Count > 0)
     {
         <div class="row mt-5">
-            <div class="col-8">
+            <div class="col-9">
                 <div class="table-responsive mt-4" style="overflow-y: scroll; height: 250px; background-color: #fafafa;">
                     <table class="table table-hover">
                         <thead class="text-muted" style="background-color: #f2f8fb;">
@@ -34,10 +34,29 @@
                 <label>CEP:</label>
                 <div class="row">
                     <div class="col-6">
-                        <input type="text" id="cep" class="form-control" placeholder="00000-000" style="text-align: center;" />
+                        <input type="text" class="form-control cep" placeholder="00000-000" style="text-align: center;" />
                     </div>
                     <div class="col">
-                        <button type="button" class="btn btn-outline-primary" onclick="CalcularFrete()">Calcular</button>
+                        <button type="button" class="btn btn-outline-primary" id="btn-frete" onclick="CalcularFrete()">Calcular</button>
+                    </div>
+                </div>
+                <div class="d-none" id="load">
+                    <img src="" id="load-gif" height="150" width="150"/>
+                </div>
+                <div class="d-none" id="div-frete">
+                    <div class="row mt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="frete" id="sedex-input" onchange="SelecionaFrete($('#sedex'))">
+                            <label class="form-check-label" for="sedex-input">SEDEX</label>
+                            R$ <label class="ml-2" id="sedex">0,00</label>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="frete" id="pac-input" onchange="SelecionaFrete($('#pac'))">
+                            <label class="form-check-label" for="pac-input">PAC</label>
+                            R$ <label class="ml-2" id="pac">0,00</label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -52,18 +71,18 @@
 
         <div class="row text-left mt-4">
             <div class="col-2">
-                <strong>Subtotal:</strong>
-                <label id="subtotal">@subtotal.ToString("C")</label>
+                <small><strong>Subtotal:</strong></small>
+                R$ <label id="subtotal">@subtotal.ToString("C").Replace("R$ ", "")</label>
             </div>
             <div class="col-2">
-                <strong>Frete:</strong>
-                <label id="frete"> - </label>
+                <small><strong>Frete:</strong></small>
+                R$ <label id="frete">0,00</label>
             </div>
             <div class="col-2">
-                <strong>Total:</strong>
-                <strong><label id="total">@subtotal.ToString("C")</label></strong>
+                <small><strong>Total:</strong></small>
+                <strong>R$ <label id="total">@subtotal.ToString("C").Replace("R$ ", "")</label></strong>
             </div>
-            <div class="col-2 text-right">
+            <div class="col-3 text-right">
                 <a href="#" class="btn btn-primary">Realizar compra</a>
             </div>
         </div>
