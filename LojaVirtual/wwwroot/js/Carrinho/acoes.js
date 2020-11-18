@@ -5,7 +5,9 @@
         success: function (lista) {
             $("#lista").html(lista);
 
-            CalculaValores();
+            if ($('.cep').val().length > 0) {
+                CalcularFrete();
+            }
         },
         error: function () {
             alert("Erro ao tentar atualizar carrinho.");
@@ -27,14 +29,24 @@ function CalcularFrete() {
         url: "/Carrinho/CalcularFrete",
         data: { cep: cep },
         success: function (frete) {
-            $('#sedex').html(frete.valorSedex.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }));
-            $('#pac').html(frete.valorPac.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }));
+            $('#sedex').html(frete.valorSedex.toFixed(2).replace(".", ","));
+            $('#pac').html(frete.valorPac.toFixed(2).replace(".", ","));
 
             $('#btn-frete').attr('disabled', false);
             $('#div-frete').removeClass('d-none');
 
             $('#load').addClass('d-none');
             $('#load-gif').attr('src', '');
+
+            CalculaValores();
+
+            if ($('#sedex-input').prop('checked')) {
+                SelecionaFrete($('#sedex'))
+            }
+
+            if ($('#pac-input').prop('checked')) {
+                SelecionaFrete($('#pac'))
+            }
         },
         error: function () {
             alert("Erro ao tentar calcular o frete.");
@@ -45,46 +57,6 @@ function CalcularFrete() {
             $('#load-gif').attr('src', '');
         }
     });
-}
-
-function RetirarQuantidade(idProduto) {
-    $.ajax({
-        type: "GET",
-        url: "/Carrinho/RetirarQuantidade/" + idProduto,
-        success: function (lista) {
-            $("#lista").html(lista);
-
-            CalculaValores();
-        },
-        error: function () {
-            alert("Erro ao tentar atualizar carrinho.");
-        }
-    });
-}
-
-function RemoverItem(idProduto) {
-    $.ajax({
-        type: "GET",
-        url: "/Carrinho/RemoverItem/" + idProduto,
-        success: function (lista) {
-            $("#lista").html(lista);
-
-            CalculaValores();
-        },
-        error: function () {
-            alert("Erro ao tentar atualizar carrinho.");
-        }
-    });
-}
-
-function SelecionaFrete(tipo) {
-    let frete = tipo.html().replace("R$ ", "").replace(",", ".");
-
-    let total = parseFloat($('#total').html().replace("R$&nbsp;", "").replace("R$", "").replace(".", "").replace(",", "."));
-    total += parseFloat(frete.replace("R$&nbsp;", ""));
-
-    $('#frete').html(frete.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }).replace(".", ","));
-    $('#total').html(total.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }));
 }
 
 function CalculaValores() {
@@ -98,6 +70,59 @@ function CalculaValores() {
 
     let frete = parseFloat($('#frete').html().replace(".", "").replace(",", "."));
 
-    $('#subtotal').html(subtotal.toFixed(2));
-    $('#total').html(subtotal + frete).toFixed(2);
+    $('#subtotal').html(subtotal.toFixed(2).replace(".", ","));
+    $('#total').html((subtotal + frete).toFixed(2).replace(".", ","));
+}
+
+function RemoverItem(idProduto) {
+    $.ajax({
+        type: "GET",
+        url: "/Carrinho/RemoverItem/" + idProduto,
+        success: function (lista) {
+            $("#lista").html(lista);
+
+            if ($('.cep').val().length > 0) {
+                CalcularFrete();
+            }
+        },
+        error: function () {
+            alert("Erro ao tentar atualizar carrinho.");
+        }
+    });
+}
+
+function RetirarQuantidade(idProduto) {
+    $.ajax({
+        type: "GET",
+        url: "/Carrinho/RetirarQuantidade/" + idProduto,
+        success: function (lista) {
+            $("#lista").html(lista);
+
+            if ($('.cep').val().length > 0) {
+                CalcularFrete();
+            }
+        },
+        error: function () {
+            alert("Erro ao tentar atualizar carrinho.");
+        }
+    });
+}
+
+function SelecionaFrete(tipo) {
+    let frete = tipo.html().replace(",", ".");
+
+    let total = parseFloat($('#subtotal').html().replace(".", "").replace(",", "."));
+    total += parseFloat(frete);
+
+    $('#frete').html(frete.replace(".", ","));
+    $('#total').html(total.toFixed(2).replace(".", ","));
+
+    $('#valorFrete').val(frete);
+
+    if (tipo.html() == $('#sedex').html()) {
+        $('#tipoFrete').val("1");
+    }
+    else {
+        $('#tipoFrete').val("2");
+    }
 }

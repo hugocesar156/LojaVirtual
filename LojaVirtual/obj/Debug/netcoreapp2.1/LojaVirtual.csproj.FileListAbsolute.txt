@@ -152,3 +152,4 @@ C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.genrunt
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.csproj.CopyComplete
 C:\Projetos\Loja Virtual\LojaVirtual\bin\Debug\netcoreapp2.1\Connected Services\WSCorreios\ConnectedService.json
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.csproj.CoreCompileInputs.cache
+C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Pagamento\Pagamento.cshtml.g.cs

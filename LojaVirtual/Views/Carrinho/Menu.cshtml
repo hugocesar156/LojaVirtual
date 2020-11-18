@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="col text-left">
-                <h6>Calcular o frete</h6>
+                <h5>Frete</h5>
 
                 <label>CEP:</label>
                 <div class="row">
@@ -41,21 +41,21 @@
                     </div>
                 </div>
                 <div class="d-none" id="load">
-                    <img src="" id="load-gif" height="150" width="150"/>
+                    <img src="" id="load-gif" height="150" width="150" />
                 </div>
                 <div class="d-none" id="div-frete">
                     <div class="row mt-4">
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="frete" id="sedex-input" onchange="SelecionaFrete($('#sedex'))">
                             <label class="form-check-label" for="sedex-input">SEDEX</label>
-                            R$ <label class="ml-2" id="sedex">0,00</label>
+                            R$<label class="ml-2" id="sedex">0,00</label>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="frete" id="pac-input" onchange="SelecionaFrete($('#pac'))">
                             <label class="form-check-label" for="pac-input">PAC</label>
-                            R$ <label class="ml-2" id="pac">0,00</label>
+                            R$<label class="ml-2" id="pac">0,00</label>
                         </div>
                     </div>
                 </div>
@@ -69,23 +69,27 @@
             subtotal += (item.Valor * ViewBag.Quantidade[item.IdProduto]);
         }
 
-        <div class="row text-left mt-4">
-            <div class="col-2">
-                <small><strong>Subtotal:</strong></small>
-                R$ <label id="subtotal">@subtotal.ToString("C").Replace("R$ ", "")</label>
+        <form asp-controller="Pagamento" asp-action="Pagamento" method="post">
+            <div class="row text-left mt-4">
+                <div class="col-2">
+                    <small><strong>Subtotal:</strong></small>
+                    R$ <label id="subtotal">@subtotal.ToString("C").Replace("R$ ", "")</label>
+                </div>
+                <div class="col-2">
+                    <small><strong>Frete:</strong></small>
+                    R$ <label id="frete">0,00</label>
+                </div>
+                <div class="col-2">
+                    <small><strong>Total:</strong></small>
+                    <strong>R$ <label id="total">@subtotal.ToString("C").Replace("R$ ", "")</label></strong>
+                </div>
+                <input type="hidden" id="tipoFrete" name="tipoFrete" value="" />
+                <input type="hidden" id="valorFrete" name="valorFrete" value="" />
+                <div class="col-3 text-right">
+                    <button type="submit" class="btn btn-primary">Realizar compra</button>
+                </div>
             </div>
-            <div class="col-2">
-                <small><strong>Frete:</strong></small>
-                R$ <label id="frete">0,00</label>
-            </div>
-            <div class="col-2">
-                <small><strong>Total:</strong></small>
-                <strong>R$ <label id="total">@subtotal.ToString("C").Replace("R$ ", "")</label></strong>
-            </div>
-            <div class="col-3 text-right">
-                <a href="#" class="btn btn-primary">Realizar compra</a>
-            </div>
-        </div>
+        </form>
     }
     else
     {

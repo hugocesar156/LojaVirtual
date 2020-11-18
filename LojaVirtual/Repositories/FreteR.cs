@@ -77,22 +77,27 @@ namespace LojaVirtual.Repositories
                 {
                     var diametro = pacote.Altura + pacote.Comprimento + pacote.Largura;
 
-                    cResultado resultadoSedex = await _servico.CalcPrecoAsync("", "", "04014", cepOrigem, cepDestino, pacote.Peso.ToString(),
-                     1, pacote.Comprimento, pacote.Altura, pacote.Largura, diametro, maoPropria, 0, avisoRecebimento);
-
-                    cResultado resultadoPac = await _servico.CalcPrecoAsync("", "", "04510", cepOrigem, cepDestino, pacote.Peso.ToString(),
-                    1, pacote.Comprimento, pacote.Altura, pacote.Largura, diametro, maoPropria, 0, avisoRecebimento);
-
-                    if (resultadoSedex.Servicos[0].Erro == "") 
+                    var resultado = new cResultado[] 
                     {
-                        frete.ValorSedex += float.Parse(resultadoSedex.Servicos[0].Valor);
-                        frete.PrazoSedex = resultadoSedex.Servicos[0].PrazoEntrega;
+                        //SEDEX
+                        await _servico.CalcPrecoAsync("", "", "04014", cepOrigem, cepDestino, pacote.Peso.ToString(),
+                        1, pacote.Comprimento, pacote.Altura, pacote.Largura, diametro, maoPropria, 0, avisoRecebimento),
+
+                         //PAC
+                        await _servico.CalcPrecoAsync("", "", "04510", cepOrigem, cepDestino, pacote.Peso.ToString(),
+                        1, pacote.Comprimento, pacote.Altura, pacote.Largura, diametro, maoPropria, 0, avisoRecebimento)
+                    };
+
+                    if (resultado[0].Servicos[0].Erro == "") 
+                    {
+                        frete.ValorSedex += float.Parse(resultado[0].Servicos[0].Valor);
+                        frete.PrazoSedex = resultado[0].Servicos[0].PrazoEntrega;
                     }
 
-                    if (resultadoPac.Servicos[0].Erro == "")
+                    if (resultado[1].Servicos[0].Erro == "")
                     {
-                        frete.ValorPac += float.Parse(resultadoPac.Servicos[0].Valor);
-                        frete.PrazoPac = resultadoPac.Servicos[0].PrazoEntrega;
+                        frete.ValorPac += float.Parse(resultado[1].Servicos[0].Valor);
+                        frete.PrazoPac = resultado[1].Servicos[0].PrazoEntrega;
                     }
                 }
 
