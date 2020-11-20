@@ -12,6 +12,7 @@ namespace LojaVirtual.Data
 
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Cliente> Cliente { get; set; }
+        public DbSet<Endereco> Endereco { get; set; }
         public DbSet<Produto> Produto { get; set; }
         public DbSet<Categoria> Categoria { get; set; }
         public DbSet<Imagem> Imagem { get; set; }

@@ -111,10 +111,7 @@ function ValidaRegistro() {
 }
 
 function ValidaSenha(senha) {
-    if (senha.val() == "") {
-        $('.msg-senha').html("Preencha este campo.");
-    }
-    else if (senha.val().length < 6) {
+    if (senha.val().length < 6) {
         senha.removeClass('is-valid');
         senha.addClass('is-invalid');
 

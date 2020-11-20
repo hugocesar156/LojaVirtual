@@ -69,7 +69,7 @@ using Newtonsoft.Json;
             WriteLiteral("\r\n<div class=\"text-center\">\r\n    <h4>Login</h4>\r\n\r\n    ");
             EndContext();
             BeginContext(97, 1228, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7a8b29e8bd0748a7bb9ee263bc30fdb8", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c4ce00e00ab94496b811352c77ed1bb8", async() => {
                 BeginContext(127, 1191, true);
                 WriteLiteral(@"
         <div class=""row justify-content-center mt-4"">
@@ -113,7 +113,7 @@ using Newtonsoft.Json;
             WriteLiteral("\r\n</div>\r\n\r\n");
             EndContext();
             BeginContext(1337, 45, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a032934560984b97bc3cc40a3c59b6f8", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "68e55926c72f4a069c65dcfa526e4c27", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

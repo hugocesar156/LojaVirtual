@@ -50,7 +50,8 @@ namespace LojaVirtual.Repositories
         {
             try
             {
-                return _banco.Categoria.ToDictionary(c => c.IdCategoria, c => c.Nome);
+                return _banco.Categoria.OrderBy(c => c.Nome)
+                    .ToDictionary(c => c.IdCategoria, c => c.Nome);
             }
             catch (Exception erro)
             {

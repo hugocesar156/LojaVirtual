@@ -15,14 +15,35 @@
     });
 }
 
-function CalcularFrete() {
+function ValidaCep() {
+    let cep = $('#cep').val().replace("-", "");
+
+    $.ajax({
+        type: "GET",
+        url: "https://viacep.com.br/ws/"+ cep +"/json",
+        dataType: "jsonp",
+        success: function (endereco) {
+            if (endereco.cep != undefined) {
+                $('#cep').removeClass('is-invalid');
+
+                CalcularFrete(cep);
+            }
+            else {
+                $('#cep').addClass('is-invalid');
+            }
+        },
+        error: function () {
+            alert("Erro ao tentar buscar endereço");
+        }
+    });
+}
+
+function CalcularFrete(cep) {
     $('#btn-frete').attr('disabled', true);
     $('#div-frete').addClass('d-none');
 
     $('#load').removeClass('d-none');
     $('#load-gif').attr('src', '/images/load.gif');
-
-    let cep = $('.cep').val().replace("-", "");
 
     $.ajax({
         type: "GET",
@@ -117,7 +138,8 @@ function SelecionaFrete(tipo) {
     $('#frete').html(frete.replace(".", ","));
     $('#total').html(total.toFixed(2).replace(".", ","));
 
-    $('#valorFrete').val(frete);
+    $('#valorTotal').val(total.toFixed(2).replace(".", ","));
+    $('#valorFrete').val(frete.replace(".", ","));
 
     if (tipo.html() == $('#sedex').html()) {
         $('#tipoFrete').val("1");

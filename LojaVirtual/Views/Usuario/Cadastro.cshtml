@@ -1,21 +1,20 @@
 ﻿@model LojaVirtual.Models.Acesso.Usuario
 
 @{
-    ViewData["Title"] = "Cadastro e usuário";
+    ViewData["Title"] = "Cadastro de cliente";
 }
 
 <div class="text-center">
-    <h4>Cadastro</h4>
+    <h4>Cadastro de cliente</h4>
 
     <form action="" method="post" id="form-cadastro">
         <div class="row justify-content-center mt-4">
-            <div class="col-10 col-sm-9 col-md-6 text-center text-md-left">
-                <label>Nome de usuário</label>
+            <div class="col-10 col-sm-9 col-md-5 col-xl-4 text-center text-md-left">
+                <label>Nome</label>
                 <input class="form-control" id="nome" name="nome" type="text" maxlength="50"
                        onchange="ValidaCampo(this)" value="@Model.Cliente.Nome"/>
-                <div class="invalid-feedback text-left" id="nome">Preencha este campo</div>
             </div>
-            <div class="col-6 col-sm-4 col-md-3 text-center mt-2 mt-md-0">
+            <div class="col-5 col-sm-4 col-md-3 col-xl-2 text-center mt-2 mt-md-0">
                 <label>CPF</label>
                 <input class="form-control cpf" id="cpf" type="text" placeholder="000.000.000-00" name="cpf"
                        style="text-align: center" onchange="ValidaCampo(this)" value="@Model.Cliente.Cpf" />
@@ -23,7 +22,7 @@
             </div>
         </div>
         <div class="row justify-content-center mt-4">
-            <div class="col-9 col-sm-8 col-md-8 text-center">
+            <div class="col-9 col-sm-8 col-md-8 col-xl-6 text-center">
                 <label>Endereço de Email</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -32,19 +31,19 @@
                     <input class="form-control" id="email" type="text" maxlength="35" name="email"
                            placeholder="exemplo@@email.com" style="text-align: center"
                            onchange="ValidaCampo(this)" value="@Model.Email" />
-                    <div class="invalid-feedback text-left" id="email">Preencha este campo</div>
+                    <div class="invalid-feedback text-left" id="email"></div>
                 </div>
             </div>
         </div>
         <div class="row justify-content-center mt-4">
-            <div class="col-9 col-sm-7 col-md-4 text-center text-md-left">
+            <div class="col-9 col-sm-7 col-md-4 col-xl-3 text-center text-md-left">
                 <label>Senha</label>
                 <input class="form-control senha" id="senha" type="password" maxlength="30"
                        placeholder="*******" style="text-align: center" name="senha"
                        onchange="ValidaCampo(this)" value="@Model.Senha" />
                 <div class="invalid-feedback text-left msg-senha" id="senha"></div>
             </div>
-            <div class="col-9 col-sm-7 col-md-4 text-center text-md-left mt-2 mt-md-0">
+            <div class="col-9 col-sm-7 col-md-4 col-xl-3 text-center text-md-left mt-2 mt-md-0">
                 <label>Confirme sua senha</label>
                 <input class="form-control conf" id="confirma" type="password" maxlength="30"
                        style="text-align: center" onchange="ValidaCampo(this)" />

@@ -12,7 +12,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
-        <a class="navbar-brand" href="#">Loja Virtual</a>
+        <a class="navbar-brand" href="@Url.Action("Inicio", "Home")">Loja Virtual</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -34,7 +34,7 @@
                         <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false" id="dropdown-produto">Cliente</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown-produto">
-                            <a class="dropdown-item" href="#">Novo</a>
+                            <a class="dropdown-item" href="@Url.Action("Cadastro", "Usuario")">Novo</a>
                             <a class="dropdown-item" href="#">Listar</a>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                         <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false" id="dropdown-produto">Vendedores</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown-produto">
-                            <a class="dropdown-item" href="@Url.Action("Cadastro", "Usuario")">Novo</a>
+                            <a class="dropdown-item" href="#">Novo</a>
                             <a class="dropdown-item" href="#">Listar</a>
                         </div>
                     </div>
@@ -70,12 +70,12 @@
                     </div>
                 </li>
                 <li class="nav-item text-center d-block d-sm-none d-md-none d-sm-none d-xl-none mt-2">
-                    <a class="nav-link" href="#">Conta</a>
+                    <a class="nav-link" href="@Url.Action("Entrar", "Login")">Conta</a>
                 </li>
             </ul>
         </div>
         <div class="nav-item text-right d-none d-sm-block">
-            <a class="nav-link" href="#">Conta</a>
+            <a class="nav-link" href="@Url.Action("Entrar", "Login")">Conta</a>
         </div>
     </nav>
 

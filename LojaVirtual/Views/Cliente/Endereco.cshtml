@@ -1,0 +1,70 @@
+﻿@model LojaVirtual.Models.Cliente.Endereco
+
+@{
+    ViewData["Title"] = "Cadastro de endereço";
+}
+
+<div class="text-center">
+    <h4>Endereço</h4>
+
+    <form action="" method="post" id="form-cadastro">
+        <div class="row justify-content-center mt-4">
+            <div class="col-10 col-sm-9 col-md-5 col-xl-2 text-center text-md-left">
+                <label>CEP</label>
+                <input class="form-control cep" id="cep" name="cep" type="text" maxlength="50"
+                       placeholder="00000-000" style="text-align: center;" onchange="BuscaEndereco()" value="" />
+                <div class="invalid-feedback text-left" id="cpf">Insira um CEP válido</div>
+            </div>
+            <div class="col-5 col-sm-4 col-md-3 col-xl-4 text-left mt-2 mt-md-0">
+                <label>Logradouro</label>
+                <input class="form-control" id="logradouro" type="text" name="logradouro"
+                       onchange="ValidaCampo(this)" value="" />
+            </div>
+            <div class="col-5 col-sm-4 col-md-3 col-xl-2 text-left mt-2 mt-md-0">
+                <label>Número</label>
+                <input class="form-control" id="numero" type="text" placeholder="000" name="numero"
+                       maxlength="5" style="text-align: center" onchange="ValidaCampo(this)" value="" />
+            </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-10 col-sm-9 col-md-5 col-xl-3 text-center text-md-left">
+                <label>Bairro</label>
+                <input class="form-control" id="bairro" name="bairro" type="text" maxlength="50"
+                       onchange="ValidaCampo(this)" value="" />
+            </div>
+            <div class="col-10 col-sm-9 col-md-5 col-xl-3 text-center text-md-left">
+                <label>Cidade</label>
+                <input class="form-control" id="cidade" name="cidade" type="text" maxlength="50"
+                       onchange="ValidaCampo(this)" value="" />
+            </div>
+            <div class="col-10 col-sm-9 col-md-5 col-xl-2 text-center text-md-left">
+                <label>UF</label>
+                <select id="uf" class="custom-select form-control" onchange="ValidaCampo(this)">
+                    <option value="" selected>--</option>
+
+                    @foreach (var uf in ViewBag.Estados)
+                    {
+                        <option value="@uf">@uf</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-4 ">
+            <div class="col-10 col-sm-9 col-md-5 col-xl-5 text-center text-md-left">
+                <label>Complemento</label>
+                <input class="form-control campo-nulo" id="complemento" name="complemento" type="text" maxlength="50"
+                       onchange="ValidaCampo(this)" value="" />
+            </div>
+            <div class="col-10 col-sm-9 col-md-5 col-xl-3 text-center text-md-left">
+                <label>Código IBGE</label>
+                <input class="form-control campo-nulo num-7" id="ibge" name="ibge" type="text" maxlength="50" placeholder="0000000"
+                       style="text-align: center" onchange="ValidaCampo(this)" value="" />
+            </div>
+        </div>
+        <div class="row justify-content-center mt-5 mb-3">
+            <button class="btn btn-success col-6 col-sm-5 col-md-3" type="button" onclick="ValidaRegistro()">Registrar</button>
+        </div>
+    </form>
+</div>
+
+<script src="~/js/Endereco/endereco.js"></script>

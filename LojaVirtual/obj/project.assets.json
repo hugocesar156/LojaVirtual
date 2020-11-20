@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.1": {
+      "BouncyCastle/1.7.0": {
+        "type": "package",
+        "compile": {
+          "lib/Net40-Client/BouncyCastle.Crypto.dll": {}
+        },
+        "runtime": {
+          "lib/Net40-Client/BouncyCastle.Crypto.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
         "type": "package",
         "dependencies": {
@@ -2647,6 +2656,19 @@
           "lib/netstandard1.3/Newtonsoft.Json.Bson.dll": {}
         }
       },
+      "Pagar.me/2.7.1": {
+        "type": "package",
+        "dependencies": {
+          "BouncyCastle": "1.7.0",
+          "Newtonsoft.Json": "6.0.8"
+        },
+        "compile": {
+          "lib/net45/PagarMe.dll": {}
+        },
+        "runtime": {
+          "lib/net45/PagarMe.dll": {}
+        }
+      },
       "Pomelo.EntityFrameworkCore.MySql/2.1.4": {
         "type": "package",
         "dependencies": {
@@ -4512,6 +4534,22 @@
     }
   },
   "libraries": {
+    "BouncyCastle/1.7.0": {
+      "sha512": "yvrW1NCFBC+l53Kchlk1iRYlnafpZ+o6oy0tFpFM2G28gz3H0PubyJFLc8KoYys3N0UPYo6TN2NRegpouDxRTw==",
+      "type": "package",
+      "path": "bouncycastle/1.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Readme.txt",
+        "bouncycastle.1.7.0.nupkg.sha512",
+        "bouncycastle.nuspec",
+        "lib/Net20/BouncyCastle.Crypto.dll",
+        "lib/Net40-Client/BouncyCastle.Crypto.dll",
+        "lib/Net40-Client/BouncyCastle.Crypto.pdb",
+        "lib/Net40-Client/crypto.xml"
+      ]
+    },
     "Microsoft.AspNet.WebApi.Client/5.2.6": {
       "sha512": "owAlEIUZXWSnkK8Z1c+zR47A0X6ykF4XjbPok4lQKNuciUfHLGPd6QnI+rt/8KlQ17PmF+I4S3f+m+Qe4IvViw==",
       "type": "package",
@@ -7307,6 +7345,18 @@
         "lib/netstandard1.3/Newtonsoft.Json.Bson.xml",
         "newtonsoft.json.bson.1.0.1.nupkg.sha512",
         "newtonsoft.json.bson.nuspec"
+      ]
+    },
+    "Pagar.me/2.7.1": {
+      "sha512": "5lo7mFBDmPUZEoU7EJcQ10gum5TeOLW3uM9XQ9DXIvPEWdCEwD281QB+ef8rbCmkG02cbO+UT9m0/D3dTbn66g==",
+      "type": "package",
+      "path": "pagar.me/2.7.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/PagarMe.dll",
+        "pagar.me.2.7.1.nupkg.sha512",
+        "pagar.me.nuspec"
       ]
     },
     "Pomelo.EntityFrameworkCore.MySql/2.1.4": {
@@ -12442,6 +12492,7 @@
       "Microsoft.EntityFrameworkCore >= 2.1.14",
       "Microsoft.NETCore.App >= 2.1.0",
       "Newtonsoft.Json >= 12.0.3",
+      "Pagar.me >= 2.7.1",
       "Pomelo.EntityFrameworkCore.MySql >= 2.1.4",
       "System.ServiceModel.Duplex >= 4.4.*",
       "System.ServiceModel.Http >= 4.4.*",
@@ -12451,8 +12502,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Hugo Souza\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\hugoc\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -12460,14 +12510,11 @@
       "projectUniqueName": "C:\\Projetos\\Loja Virtual\\LojaVirtual\\LojaVirtual.csproj",
       "projectName": "LojaVirtual",
       "projectPath": "C:\\Projetos\\Loja Virtual\\LojaVirtual\\LojaVirtual.csproj",
-      "packagesPath": "C:\\Users\\Hugo Souza\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\hugoc\\.nuget\\packages\\",
       "outputPath": "C:\\Projetos\\Loja Virtual\\LojaVirtual\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Hugo Souza\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\hugoc\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -12516,6 +12563,10 @@
             "target": "Package",
             "version": "[12.0.3, )"
           },
+          "Pagar.me": {
+            "target": "Package",
+            "version": "[2.7.1, )"
+          },
           "Pomelo.EntityFrameworkCore.MySql": {
             "target": "Package",
             "version": "[2.1.4, )"
@@ -12551,8 +12602,30 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "O pacote 'BouncyCastle 1.7.0' foi restaurado usando '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' em vez da estrutura de destino do projeto '.NETCoreApp,Version=v2.1'. Esse pacote pode não ser totalmente compatível com o seu projeto.",
+      "libraryId": "BouncyCastle",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.1"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "O pacote 'Pagar.me 2.7.1' foi restaurado usando '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' em vez da estrutura de destino do projeto '.NETCoreApp,Version=v2.1'. Esse pacote pode não ser totalmente compatível com o seu projeto.",
+      "libraryId": "Pagar.me",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.1"
+      ]
+    }
+  ]
 }

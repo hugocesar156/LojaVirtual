@@ -10,8 +10,8 @@
     @if (Model != null && Model.Count > 0)
     {
         <div class="row mt-5">
-            <div class="col-9">
-                <div class="table-responsive mt-4" style="overflow-y: scroll; height: 250px; background-color: #fafafa;">
+            <div class="col-8">
+                <div class="table-responsive" style="overflow-y: scroll; height: 250px; background-color: #fafafa;">
                     <table class="table table-hover">
                         <thead class="text-muted" style="background-color: #f2f8fb;">
                             <tr class="small text-uppercase">
@@ -28,68 +28,91 @@
                     </table>
                 </div>
             </div>
-            <div class="col text-left">
-                <h5>Frete</h5>
+            <div class="col-4 text-center">
+                <div class="card shadow">
+                    <div class="card-body mb-3">
+                        <ul class="nav nav-pills active show nav-fill" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="pill" href="#area-resumo"><i class="fa fa-file-invoice-dollar"></i> Resumo</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="pill" href="#area-frete"><i class="fa fa-truck"></i> Frete</a>
+                            </li>
+                        </ul>
 
-                <label>CEP:</label>
-                <div class="row">
-                    <div class="col-6">
-                        <input type="text" class="form-control cep" placeholder="00000-000" style="text-align: center;" />
-                    </div>
-                    <div class="col">
-                        <button type="button" class="btn btn-outline-primary" id="btn-frete" onclick="CalcularFrete()">Calcular</button>
-                    </div>
-                </div>
-                <div class="d-none" id="load">
-                    <img src="" id="load-gif" height="150" width="150" />
-                </div>
-                <div class="d-none" id="div-frete">
-                    <div class="row mt-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="frete" id="sedex-input" onchange="SelecionaFrete($('#sedex'))">
-                            <label class="form-check-label" for="sedex-input">SEDEX</label>
-                            R$<label class="ml-2" id="sedex">0,00</label>
-                        </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="frete" id="pac-input" onchange="SelecionaFrete($('#pac'))">
-                            <label class="form-check-label" for="pac-input">PAC</label>
-                            R$<label class="ml-2" id="pac">0,00</label>
+                        <div class="tab-content">
+                            @{ var subtotal = 0; }
+
+                            @foreach (var item in Model)
+                            {
+                                subtotal += item.Valor * ViewBag.Quantidade[item.IdProduto];
+                            }
+
+                            <div class="tab-pane active" id="area-resumo">
+                                <div class="row justify-content-center mt-4">
+                                    <div class="col text-left">
+                                        <strong>Subtotal:</strong>
+                                        R$ <label id="subtotal">@subtotal.ToString("C").Replace("R$", "")</label>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="col text-left">
+                                        <strong>Frete:</strong>
+                                        R$ <label id="frete">0,00</label>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="col text-left">
+                                        <strong>Total:</strong>
+                                        <strong>R$ <label id="total">@subtotal.ToString("C").Replace("R$", "")</label></strong>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center mt-3">
+                                    <button type="button" class="btn btn-outline-success" 
+                                            data-toggle="modal" data-target="#pagamento">Formas de pagamento</button>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="area-frete">
+                                <div class="row justify-content-start mt-4">
+                                    <div class="col-8 text-left">
+                                        <label>CEP:</label>
+                                        <div class="input-group text-left">
+                                            <input type="text" class="form-control cep" id="cep" placeholder="00000-000" style="text-align: center;" />
+                                            <div class="input-group-prepend">
+                                                <button type="button" class="btn btn-outline-dark" id="btn-frete" onclick="ValidaCep()">OK</button>
+                                            </div>
+                                            <div id="cep" class="invalid-feedback">CEP válido</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-start">
+                                    <div class="col">
+                                        <div class="d-none" id="load">
+                                            <img src="" id="load-gif" height="150" width="150" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center mt-3">
+                                    <div class="d-none" id="div-frete">
+                                        <div class="col form-check">
+                                            <input class="form-check-input" type="radio" name="frete" id="sedex-input" onchange="SelecionaFrete($('#sedex'))">
+                                            <label class="form-check-label" for="sedex-input">SEDEX - </label>
+                                            R$<label class="ml-2" id="sedex">0,00</label>
+                                        </div>
+                                        <div class="col form-check">
+                                            <input class="form-check-input" type="radio" name="frete" id="pac-input" onchange="SelecionaFrete($('#pac'))">
+                                            <label class="form-check-label" for="pac-input">PAC - </label>
+                                            R$<label class="ml-2" id="pac">0,00</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        var subtotal = 0.0;
-
-        foreach (var item in Model)
-        {
-            subtotal += (item.Valor * ViewBag.Quantidade[item.IdProduto]);
-        }
-
-        <form asp-controller="Pagamento" asp-action="Pagamento" method="post">
-            <div class="row text-left mt-4">
-                <div class="col-2">
-                    <small><strong>Subtotal:</strong></small>
-                    R$ <label id="subtotal">@subtotal.ToString("C").Replace("R$ ", "")</label>
-                </div>
-                <div class="col-2">
-                    <small><strong>Frete:</strong></small>
-                    R$ <label id="frete">0,00</label>
-                </div>
-                <div class="col-2">
-                    <small><strong>Total:</strong></small>
-                    <strong>R$ <label id="total">@subtotal.ToString("C").Replace("R$ ", "")</label></strong>
-                </div>
-                <input type="hidden" id="tipoFrete" name="tipoFrete" value="" />
-                <input type="hidden" id="valorFrete" name="valorFrete" value="" />
-                <div class="col-3 text-right">
-                    <button type="submit" class="btn btn-primary">Realizar compra</button>
-                </div>
-            </div>
-        </form>
     }
     else
     {
@@ -97,6 +120,87 @@
             <p>Você ainda não possui nenhum item no carrinho.</p>
         </div>
     }
+</div>
+
+<div class="modal fade" id="pagamento" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Pagamento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-left">
+                <div class="text-center">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card shadow">
+                                <div class="card-body mt-3 mb-3">
+                                    <ul class="nav nav-pills active show nav-fill" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="pill" href="#cartao"><i class="fa fa-credit-card"></i> Cartão de crédito</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="pill" href="#boleto"><i class="fa fa-file-alt"></i> Boleto bancário</a>
+                                        </li>
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="cartao">
+                                            <div class="row mt-4 justify-content-center">
+                                                <div class="col-10 text-left">
+                                                    <label>Número do cartão</label>
+                                                    <div class="input-group">
+                                                        <input class="form-control cartao" type="text" placeholder="0000 0000 0000 0000"
+                                                               style="text-align: center;" />
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text"><i class="fa fa-credit-card"></i></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3 justify-content-center">
+                                                <div class="col-5 text-left">
+                                                    <label>Data de expiração</label>
+                                                    <div class="input-group">
+                                                        <input class="form-control data" type="text" placeholder="mm/aa"
+                                                               style="text-align: center;" />
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-5 text-left">
+                                                    <label>Código verificador</label>
+                                                    <div class="input-group">
+                                                        <input class="form-control num-3" type="text" placeholder="000"
+                                                               style="text-align: center;" />
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text"><i class="fa fa-lock"></i></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-4 justify-content-center">
+                                                <button class="btn btn-outline-success col-8" type="button">Realizar pagamento</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="tab-pane fade" id="boleto">
+                                            <div class="row mt-5 justify-content-center">
+                                                <button class="btn btn-outline-success col-6" type="button">Imprimir boleto</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script src="~/js/Carrinho/acoes.js"></script>

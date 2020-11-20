@@ -29,6 +29,7 @@
           "Microsoft.EntityFrameworkCore": "2.1.14",
           "Microsoft.NETCore.App": "2.1.0",
           "Newtonsoft.Json": "12.0.3",
+          "Pagar.me": "2.7.1",
           "Pomelo.EntityFrameworkCore.MySql": "2.1.4",
           "System.ServiceModel.Duplex": "4.4.4",
           "System.ServiceModel.Http": "4.4.4",
@@ -41,6 +42,17 @@
         },
         "compile": {
           "LojaVirtual.dll": {}
+        }
+      },
+      "BouncyCastle/1.7.0": {
+        "runtime": {
+          "lib/Net40-Client/BouncyCastle.Crypto.dll": {
+            "assemblyVersion": "1.7.4137.9688",
+            "fileVersion": "1.7.4137.9688"
+          }
+        },
+        "compile": {
+          "lib/Net40-Client/BouncyCastle.Crypto.dll": {}
         }
       },
       "Microsoft.AspNetCore.Razor.Design/2.1.2": {},
@@ -113,6 +125,21 @@
         },
         "compile": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Pagar.me/2.7.1": {
+        "dependencies": {
+          "BouncyCastle": "1.7.0",
+          "Newtonsoft.Json": "12.0.3"
+        },
+        "runtime": {
+          "lib/net45/PagarMe.dll": {
+            "assemblyVersion": "2.6.17.0",
+            "fileVersion": "2.6.17.0"
+          }
+        },
+        "compile": {
+          "lib/net45/PagarMe.dll": {}
         }
       },
       "Pomelo.EntityFrameworkCore.MySql/2.1.4": {
@@ -3396,6 +3423,13 @@
       "serviceable": false,
       "sha512": ""
     },
+    "BouncyCastle/1.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-yvrW1NCFBC+l53Kchlk1iRYlnafpZ+o6oy0tFpFM2G28gz3H0PubyJFLc8KoYys3N0UPYo6TN2NRegpouDxRTw==",
+      "path": "bouncycastle/1.7.0",
+      "hashPath": "bouncycastle.1.7.0.nupkg.sha512"
+    },
     "Microsoft.AspNetCore.Razor.Design/2.1.2": {
       "type": "package",
       "serviceable": true,
@@ -3444,6 +3478,13 @@
       "sha512": "sha512-6mgjfnRB4jKMlzHSl+VD+oUc1IebOZabkbyWj2RiTgWwYPPuaK1H97G1sHqGwPlS5npiF5Q0OrxN1wni2n5QWg==",
       "path": "newtonsoft.json/12.0.3",
       "hashPath": "newtonsoft.json.12.0.3.nupkg.sha512"
+    },
+    "Pagar.me/2.7.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5lo7mFBDmPUZEoU7EJcQ10gum5TeOLW3uM9XQ9DXIvPEWdCEwD281QB+ef8rbCmkG02cbO+UT9m0/D3dTbn66g==",
+      "path": "pagar.me/2.7.1",
+      "hashPath": "pagar.me.2.7.1.nupkg.sha512"
     },
     "Pomelo.EntityFrameworkCore.MySql/2.1.4": {
       "type": "package",
