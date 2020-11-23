@@ -1,58 +1,39 @@
-﻿using LojaVirtual.Models.Produto;
-using LojaVirtual.Repositories;
+﻿using LojaVirtual.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using PagarMe;
-using LojaVirtual.Models.Cliente;
+using System;
 
 namespace LojaVirtual.Controllers
 {
     public class PagamentoController : Controller
     {
-        private readonly ProdutoR _reposProduto;
-        private readonly CarrinhoR _reposCarrinho;
+        private readonly ClienteR _reposCliente;
+        private readonly PagamentoR _reposPagamento;
 
-        public PagamentoController(ProdutoR reposProduto, CarrinhoR reposCarrinho)
+        public PagamentoController(ClienteR reposCliente, PagamentoR reposPagamento)
         {
-            _reposProduto = reposProduto;
-            _reposCarrinho = reposCarrinho;
+            _reposCliente = reposCliente;
+            _reposPagamento = reposPagamento;
         }
-
-        //Páginas
-        [HttpPost]
-        public IActionResult Pagamento(float valorTotal, float valorFrete, char tipoFrete)
-        {
-            var carrinho = _reposCarrinho.Buscar();
-            var produtos = new List<Produto>();
-
-            foreach (var item in carrinho)
-                produtos.Add(_reposProduto.Buscar(item.IdProduto));
-
-            ViewBag.Quantidade = carrinho.ToDictionary(i => i.IdProduto, i => i.Quantidade);
-
-            ViewBag.Total = valorTotal.ToString("C");
-            ViewBag.Frete = valorFrete.ToString("C");
-
-            if (tipoFrete == '1')
-                ViewBag.Tipo = "SEDEX";
-            else
-                ViewBag.Tipo = "PAC";
-
-            return View(produtos);
-        }
-
 
         //Operações
-        public JsonResult RealizarPagamento(char pagamento)
+        [HttpPost]
+        public JsonResult PagamentoCartao(string numero, string vencimento, string verificador, string cep, string servico)
         {
-            var cliente = new Cliente();
+            var cliente = _reposCliente.Buscar();
 
             var transacao = new Transaction
             {
                 Amount = 2000,
-                PaymentMethod = PaymentMethod.Boleto,
+                PaymentMethod = PaymentMethod.CreditCard,
+
+                Card = new Card
+                {
+                    Number = numero,
+                    HolderName = "",
+                    ExpirationDate = vencimento,
+                    Cvv = verificador
+                },
 
                 Customer = new Customer
                 {
@@ -79,11 +60,11 @@ namespace LojaVirtual.Controllers
                     Birthday = new DateTime(1991, 12, 12).ToString("yyyy-MM-dd")
                 },
 
-                Billing = new Billing 
-                { 
+                Billing = new Billing
+                {
                     Name = cliente.Nome,
 
-                    Address = new Address 
+                    Address = new Address
                     {
                         Country = "br",
                         State = cliente.Endereco.Uf,
@@ -93,13 +74,13 @@ namespace LojaVirtual.Controllers
                         StreetNumber = cliente.Endereco.Numero,
                         Zipcode = cliente.Endereco.Cep
                     }
+                },
+
+                Shipping = new Shipping
+                {
+                    Name = "",
                 }
             };
-
-            if (pagamento == '1')
-                PagamentoR.GerarBoleto(transacao);
-            else
-                PagamentoR.PagamentoCartao(transacao);
 
             return Json(transacao);
         }

@@ -1,13 +1,15 @@
-﻿function AdicionarQuantidade(idProduto) {
+﻿(function () {
+    ValidaCep();
+}())
+
+function AdicionarQuantidade(idProduto) {
     $.ajax({
         type: "GET",
         url: "/Carrinho/AdicionarQuantidade/" + idProduto,
         success: function (lista) {
             $("#lista").html(lista);
 
-            if ($('.cep').val().length > 0) {
-                CalcularFrete();
-            }
+            CalcularFrete($('#cep').val().replace("-", ""));
         },
         error: function () {
             alert("Erro ao tentar atualizar carrinho.");
@@ -26,9 +28,19 @@ function ValidaCep() {
             if (endereco.cep != undefined) {
                 $('#cep').removeClass('is-invalid');
 
+                $('#endereco').html(
+                    `${endereco.logradouro}, ${endereco.bairro} - ${endereco.localidade}`
+                );
+
+                $('#area-endereco').removeClass('d-none');
+                $('#cep').attr('readonly', true);
+
                 CalcularFrete(cep);
             }
             else {
+                $('#endereco').html();
+                $('#area-endereco').addClass('d-none');
+
                 $('#cep').addClass('is-invalid');
             }
         },
@@ -42,37 +54,47 @@ function CalcularFrete(cep) {
     $('#btn-frete').attr('disabled', true);
     $('#div-frete').addClass('d-none');
 
+    $('#seleciona-endereco').attr('disabled', true);
+    $('#retira-endereco').attr('disabled', true);
+
     $('#load').removeClass('d-none');
     $('#load-gif').attr('src', '/images/load.gif');
+
+    let servico = "";
+
+    if ($('#sedex-input').prop('checked')) {
+        servico = "04014";
+    }
+    else {
+        servico = "04510";
+    }
 
     $.ajax({
         type: "GET",
         url: "/Carrinho/CalcularFrete",
-        data: { cep: cep },
+        data: { cep: cep, servico: servico },
         success: function (frete) {
-            $('#sedex').html(frete.valorSedex.toFixed(2).replace(".", ","));
-            $('#pac').html(frete.valorPac.toFixed(2).replace(".", ","));
-
             $('#btn-frete').attr('disabled', false);
-            $('#div-frete').removeClass('d-none');
+
+            $('#seleciona-endereco').attr('disabled', false);
+            $('#retira-endereco').attr('disabled', false);
 
             $('#load').addClass('d-none');
             $('#load-gif').attr('src', '');
 
+            $('#frete').html(frete.valor.toFixed(2).replace(".", ","));
+
             CalculaValores();
 
-            if ($('#sedex-input').prop('checked')) {
-                SelecionaFrete($('#sedex'))
-            }
-
-            if ($('#pac-input').prop('checked')) {
-                SelecionaFrete($('#pac'))
-            }
+            $('#calculo-frete').modal('hide');
         },
         error: function () {
             alert("Erro ao tentar calcular o frete.");
 
             $('#btn-frete').attr('disabled', false);
+
+            $('#seleciona-endereco').attr('disabled', false);
+            $('#retira-endereco').attr('disabled', false);
 
             $('#load').addClass('d-none');
             $('#load-gif').attr('src', '');
@@ -102,9 +124,7 @@ function RemoverItem(idProduto) {
         success: function (lista) {
             $("#lista").html(lista);
 
-            if ($('.cep').val().length > 0) {
-                CalcularFrete();
-            }
+            CalcularFrete($('#cep').val().replace("-", ""));
         },
         error: function () {
             alert("Erro ao tentar atualizar carrinho.");
@@ -119,9 +139,7 @@ function RetirarQuantidade(idProduto) {
         success: function (lista) {
             $("#lista").html(lista);
 
-            if ($('.cep').val().length > 0) {
-                CalcularFrete();
-            }
+            CalcularFrete($('#cep').val().replace("-", ""));
         },
         error: function () {
             alert("Erro ao tentar atualizar carrinho.");
@@ -129,22 +147,11 @@ function RetirarQuantidade(idProduto) {
     });
 }
 
-function SelecionaFrete(tipo) {
-    let frete = tipo.html().replace(",", ".");
+function RetiraEndereco() {
+    $('#endereco').html();
+    $('#area-endereco').addClass('d-none');
 
-    let total = parseFloat($('#subtotal').html().replace(".", "").replace(",", "."));
-    total += parseFloat(frete);
-
-    $('#frete').html(frete.replace(".", ","));
-    $('#total').html(total.toFixed(2).replace(".", ","));
-
-    $('#valorTotal').val(total.toFixed(2).replace(".", ","));
-    $('#valorFrete').val(frete.replace(".", ","));
-
-    if (tipo.html() == $('#sedex').html()) {
-        $('#tipoFrete').val("1");
-    }
-    else {
-        $('#tipoFrete').val("2");
-    }
+    $('#cep').attr('readonly', false);
+    $('#cep').val("");
+    $('#cep').focus();
 }

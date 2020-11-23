@@ -10,9 +10,7 @@
 
     public class Frete
     {
-        public float ValorSedex { get; set; }
-        public float ValorPac { get; set; }
-        public string PrazoSedex { get; set; }
-        public string PrazoPac { get; set; }
+        public float Valor { get; set; }
+        public string Prazo { get; set; }
     }
 }

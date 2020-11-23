@@ -13,14 +13,16 @@ namespace LojaVirtual.Controllers
         private readonly ProdutoR _reposProduto;
         private readonly CarrinhoR _reposCarrinho;
         private readonly FreteR _reposFrete;
+        private readonly ClienteR _reposCliente;
 
         private static List<Carrinho> _carrinho;
 
-        public CarrinhoController(ProdutoR reposProduto, CarrinhoR reposCarrinho, FreteR reposFrete)
+        public CarrinhoController(ProdutoR reposProduto, CarrinhoR reposCarrinho, FreteR reposFrete, ClienteR reposCliente)
         {
             _reposProduto = reposProduto;
             _reposCarrinho = reposCarrinho;
             _reposFrete = reposFrete;
+            _reposCliente = reposCliente;
         }
 
         //Páginas
@@ -36,6 +38,8 @@ namespace LojaVirtual.Controllers
 
             ViewBag.Quantidade = carrinho.ToDictionary(i => i.IdProduto, i => i.Quantidade);
 
+            ViewBag.Cep = _reposCliente.BuscaEndereco().Cep;
+         
             return View(produtos);
         }
 
@@ -56,7 +60,7 @@ namespace LojaVirtual.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> CalcularFrete(string cep)
+        public async Task<JsonResult> CalcularFrete(string cep, string servico)
         {
             var lista = new List<Produto>();
             var carrinho = _reposCarrinho.Buscar();
@@ -69,7 +73,7 @@ namespace LojaVirtual.Controllers
                 quantidade.Add(item.IdProduto, item.Quantidade);
             }
 
-            return Json(await _reposFrete.CalcularFrete(cep, FreteR.PrepararPacotes(lista, quantidade)));
+            return Json(await _reposFrete.CalcularFrete(cep, FreteR.PrepararPacotes(lista, quantidade), servico));
         }
 
         [HttpGet]

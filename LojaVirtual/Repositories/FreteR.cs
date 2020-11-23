@@ -63,7 +63,7 @@ namespace LojaVirtual.Repositories
             }
         }
 
-        public async Task<Frete> CalcularFrete(string cepDestino, List<Pacote> lista)
+        public async Task<Frete> CalcularFrete(string cepDestino, List<Pacote> lista, string servico)
         {
             try
             {
@@ -77,27 +77,13 @@ namespace LojaVirtual.Repositories
                 {
                     var diametro = pacote.Altura + pacote.Comprimento + pacote.Largura;
 
-                    var resultado = new cResultado[] 
-                    {
-                        //SEDEX
-                        await _servico.CalcPrecoAsync("", "", "04014", cepOrigem, cepDestino, pacote.Peso.ToString(),
-                        1, pacote.Comprimento, pacote.Altura, pacote.Largura, diametro, maoPropria, 0, avisoRecebimento),
+                    var resultado = await _servico.CalcPrecoAsync("", "", servico, cepOrigem, cepDestino, pacote.Peso.ToString(),
+                        1, pacote.Comprimento, pacote.Altura, pacote.Largura, diametro, maoPropria, 0, avisoRecebimento);
 
-                         //PAC
-                        await _servico.CalcPrecoAsync("", "", "04510", cepOrigem, cepDestino, pacote.Peso.ToString(),
-                        1, pacote.Comprimento, pacote.Altura, pacote.Largura, diametro, maoPropria, 0, avisoRecebimento)
-                    };
-
-                    if (resultado[0].Servicos[0].Erro == "") 
+                    if (resultado.Servicos[0].Erro == "") 
                     {
-                        frete.ValorSedex += float.Parse(resultado[0].Servicos[0].Valor);
-                        frete.PrazoSedex = resultado[0].Servicos[0].PrazoEntrega;
-                    }
-
-                    if (resultado[1].Servicos[0].Erro == "")
-                    {
-                        frete.ValorPac += float.Parse(resultado[1].Servicos[0].Valor);
-                        frete.PrazoPac = resultado[1].Servicos[0].PrazoEntrega;
+                        frete.Valor += float.Parse(resultado.Servicos[0].Valor);
+                        frete.Prazo = resultado.Servicos[0].PrazoEntrega;
                     }
                 }
 

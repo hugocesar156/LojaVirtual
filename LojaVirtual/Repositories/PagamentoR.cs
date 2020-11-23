@@ -1,16 +1,24 @@
-﻿using PagarMe;
+﻿using Microsoft.Extensions.Configuration;
+using PagarMe;
 using System;
 
 namespace LojaVirtual.Repositories
 {
     public class PagamentoR
     {
-        public static void GerarBoleto(Transaction transacao)
+        private readonly IConfiguration _configuration;
+
+        public PagamentoR(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public void GerarBoleto(Transaction transacao)
         {
             try
             {
-                PagarMeService.DefaultApiKey = "SUA_CHAVE_DE_API";
-                PagarMeService.DefaultEncryptionKey = "SUA_CHAVE_DE_CRIPTOGRAFIA";
+                PagarMeService.DefaultApiKey = _configuration.GetValue<string>("Pagamento:DefaultApiKey");
+                PagarMeService.DefaultEncryptionKey = _configuration.GetValue<string>("Pagamento:DefaultEncryptionKey");
 
                 transacao.Save();
             }
@@ -20,12 +28,12 @@ namespace LojaVirtual.Repositories
             }
         }
 
-        public static void PagamentoCartao(Transaction transacao)
+        public void PagamentoCartao(Transaction transacao)
         {
             try
             {
-                PagarMeService.DefaultApiKey = "SUA_CHAVE_DE_API";
-                PagarMeService.DefaultEncryptionKey = "SUA_CHAVE_DE_CRIPTOGRAFIA";
+                PagarMeService.DefaultApiKey = _configuration.GetValue<string>("Pagamento:DefaultApiKey");
+                PagarMeService.DefaultEncryptionKey = _configuration.GetValue<string>("Pagamento:DefaultEncryptionKey");
 
                 transacao.Save();
             }
