@@ -32,6 +32,9 @@
                 endereco.uf = enderecoJson.uf;
                 endereco.ibge = enderecoJson.ibge;
 
+                endereco.nome = $('#nome-endereco').val();
+                endereco.numero = $('#numero-endereco').val();
+
                 let frete = { };
 
                 $.ajax({

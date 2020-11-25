@@ -32,6 +32,12 @@ function ValidaCep() {
                     `${endereco.logradouro}, ${endereco.bairro} - ${endereco.localidade}`
                 );
 
+                $('#exibe-endereco').html(`<strong>Endereço salvo atual:</strong> 
+                    ${endereco.cep} | ${endereco.logradouro}, ${endereco.bairro} - ${endereco.localidade}`
+                );
+
+                $('#cep-confirma').val(endereco.cep);
+
                 $('#area-endereco').removeClass('d-none');
                 $('#cep').attr('readonly', true);
 

@@ -32,9 +32,6 @@ namespace LojaVirtual.Models.Cliente
         [Required, MaxLength(2)]
         public string Uf { get; set; }
 
-        [Required, MaxLength(7)]
-        public string CodigoIbge { get; set; }
-
         [ForeignKey("IdCliente")]
         public Cliente Cliente { get; set; }
 

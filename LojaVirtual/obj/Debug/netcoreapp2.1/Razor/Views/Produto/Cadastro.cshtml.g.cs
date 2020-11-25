@@ -75,7 +75,7 @@ using Newtonsoft.Json;
             WriteLiteral("\r\n<div class=\"text-center\">\r\n    <h4>Cadastro de produto</h4>\r\n\r\n    ");
             EndContext();
             BeginContext(169, 6246, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fe8a1dc2ec4e48fba928de98aced5fd0", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7a5e9dca784041329b0ec55ad2433a3d", async() => {
                 BeginContext(218, 625, true);
                 WriteLiteral(@"
         <div class=""row justify-content-center text-center text-md-left mt-4"">
@@ -90,7 +90,7 @@ using Newtonsoft.Json;
                     ");
                 EndContext();
                 BeginContext(843, 48, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7a38d65878654e0ca1e6bf8229970f10", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7080a4d6457441278966a8fb1d500a95", async() => {
                     BeginContext(860, 22, true);
                     WriteLiteral("Selecione uma opção...");
                     EndContext();
@@ -123,7 +123,7 @@ using Newtonsoft.Json;
                 WriteLiteral("                            ");
                 EndContext();
                 BeginContext(1093, 46, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c7751ec7b1464b6db894baac52ffe270", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5f4264b8b40b4f0088080d02fe8298ec", async() => {
                     BeginContext(1120, 10, false);
 #line 25 "C:\Projetos\Loja Virtual\LojaVirtual\Views\Produto\Cadastro.cshtml"
                                                  Write(item.Value);
@@ -282,7 +282,7 @@ using Newtonsoft.Json;
             WriteLiteral("\r\n</div>\r\n\r\n");
             EndContext();
             BeginContext(6427, 49, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "79e3d251016f4a2bb1483399cfb56de2", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dfb454cb14b74f9e837130fc7c7c7146", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

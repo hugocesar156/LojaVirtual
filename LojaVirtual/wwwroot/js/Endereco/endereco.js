@@ -13,7 +13,6 @@
                     $('#cidade').val(endereco.localidade);
                     $('#uf').val(endereco.uf);
                     $('#complemento').val(endereco.complemento);
-                    $('#ibge').val(endereco.ibge);
 
                     ValidaCampo();
                 }

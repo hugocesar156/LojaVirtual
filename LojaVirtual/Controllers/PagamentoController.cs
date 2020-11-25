@@ -38,9 +38,18 @@ namespace LojaVirtual.Controllers
             var carrinho = _reposCarrinho.Buscar();
             var lista = new List<Produto>();
 
-            foreach (var item in carrinho)
-                lista.Add(_reposProduto.Buscar(item.IdProduto));
+            var total = 0.0F;
 
+            foreach (var item in carrinho)
+            {
+                var produto = _reposProduto.Buscar(item.IdProduto);
+                lista.Add(produto);
+
+                total += produto.Valor * item.Quantidade;
+            }
+
+            total += frete.Valor;
+                
             try
             {
                 PagarMeService.DefaultApiKey = _configuration.GetValue<string>("Pagamento:DefaultApiKey");
@@ -48,7 +57,7 @@ namespace LojaVirtual.Controllers
 
                 var transacao = new Transaction
                 {
-                    Amount = Convert.ToInt32(frete.Valor.ToString().Replace(",", "")),
+                    Amount = Convert.ToInt32(total.ToString("C").Replace("R$", "").Replace(".", "").Replace(",", "")),
                     PaymentMethod = PaymentMethod.CreditCard,
 
                     Card = new Card
@@ -105,8 +114,8 @@ namespace LojaVirtual.Controllers
 
                 transacao.Shipping = new Shipping
                 {
-                    Name = "Endereço de entrega",
-                    Fee = Convert.ToInt32(frete.Valor.ToString().Replace(",", "")),
+                    Name = endereco.Nome,
+                    Fee = Convert.ToInt32(frete.Valor.ToString("C").Replace("R$", "").Replace(".", "").Replace(",", "")),
                     DeliveryDate = DateTime.Today.AddDays(Convert.ToInt32(frete.Prazo)).ToString("yyyy-MM-dd"),
                     Expedited = false,
 
@@ -117,7 +126,7 @@ namespace LojaVirtual.Controllers
                         City = endereco.Cidade,
                         Neighborhood = endereco.Bairro,
                         Street = endereco.Logradouro,
-                        StreetNumber = "123",
+                        StreetNumber = endereco.Numero,
                         Zipcode = endereco.Cep
                     }
                 };
@@ -133,7 +142,7 @@ namespace LojaVirtual.Controllers
                         Title = produto.Nome,
                         Quantity = (int)carrinho[i].Quantidade,
                         Tangible = true,
-                        UnitPrice = Convert.ToInt32(produto.Valor.ToString().Replace(",", ""))
+                        UnitPrice = Convert.ToInt32(produto.Valor.ToString("C").Replace("R$", "").Replace(".", "").Replace(",", ""))
                     };
 
                     transacao.Item[i] = item;
@@ -142,8 +151,7 @@ namespace LojaVirtual.Controllers
 
                 transacao.Save();
 
-                return transacao.Id != "0" ?
-                    Json(true) : Json(false);
+                return transacao.Id != "0" ? Json(true) : Json(false);
             }
             catch (Exception erro)
             {

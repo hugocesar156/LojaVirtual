@@ -80,7 +80,7 @@ using Newtonsoft.Json;
             WriteLiteral("\r\n<div class=\"text-center\">\r\n    <h4>Edição de produto</h4>\r\n\r\n    ");
             EndContext();
             BeginContext(165, 6968, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "622c873bcebf46668fc08b6d79ab7a88", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "93b1b21f2c3c462aa8dcd9a549e39a6d", async() => {
                 BeginContext(214, 251, true);
                 WriteLiteral("\r\n        <div class=\"row justify-content-center text-center text-md-left mt-4\">\r\n            <div class=\"col-10 col-md-6 col-xl-5\">\r\n                <label>Nome</label>\r\n                <input id=\"nome\" type=\"text\" class=\"form-control\" maxlength=\"30\"");
                 EndContext();
@@ -101,7 +101,7 @@ WriteAttributeValue("", 473, Model.Nome, 473, 11, false);
                     ");
                 EndContext();
                 BeginContext(859, 48, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "965a9d50db2f4ef7be63892bbded2ec3", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f01e28edc7444b29a24a5bed1192bde2", async() => {
                     BeginContext(876, 22, true);
                     WriteLiteral("Selecione uma opção...");
                     EndContext();
@@ -134,7 +134,7 @@ WriteAttributeValue("", 473, Model.Nome, 473, 11, false);
                 WriteLiteral("                            ");
                 EndContext();
                 BeginContext(1110, 55, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "452045df9f5743748a54a06221488b44", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7b0c1be5a8644703ba032c524524ff59", async() => {
                     BeginContext(1146, 10, false);
 #line 25 "C:\Projetos\Loja Virtual\LojaVirtual\Views\Produto\Edicao.cshtml"
                                                           Write(item.Value);
@@ -180,7 +180,7 @@ WriteAttributeValue("", 473, Model.Nome, 473, 11, false);
                 WriteLiteral("                            ");
                 EndContext();
                 BeginContext(1279, 46, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "be08799746134e06b30158f97b703d86", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "28510d2617bc4e32a23ab8544f59eebe", async() => {
                     BeginContext(1306, 10, false);
 #line 29 "C:\Projetos\Loja Virtual\LojaVirtual\Views\Produto\Edicao.cshtml"
                                                  Write(item.Value);
@@ -222,7 +222,7 @@ WriteAttributeValue("", 473, Model.Nome, 473, 11, false);
                 WriteLiteral("                </select>\r\n            </div>\r\n        </div>\r\n        <div class=\"row justify-content-center mt-4\">\r\n            <div class=\"col-10 col-md-6 col-xl-5 text-center text-md-left\">\r\n                <label>Descrição</label>\r\n                ");
                 EndContext();
                 BeginContext(1630, 122, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("textarea", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "19fa58a0ea084a3d97be9bf7cb9696cf", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("textarea", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a5b8f06953354c7fbb3c68991bb5fab8", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_TextAreaTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.TextAreaTagHelper>();
@@ -460,7 +460,7 @@ WriteAttributeValue("", 6718, Url.Action("Imagem", "Produto", new { id = Model.I
             WriteLiteral("\r\n</div>\r\n\r\n");
             EndContext();
             BeginContext(7145, 49, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dd5a1419adf04b2abff41024ee13df57", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d11a37f09aeb4b3eb555caec54d2c4c9", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

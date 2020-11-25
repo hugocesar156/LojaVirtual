@@ -82,7 +82,7 @@ using Newtonsoft.Json;
                 ");
             EndContext();
             BeginContext(431, 30, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0dcce1fca8bc47338eecb2a5c3c3e06b", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "eb8862fac813463aa13fccdf40eedcc0", async() => {
                 BeginContext(450, 2, true);
                 WriteLiteral("10");
                 EndContext();
@@ -104,7 +104,7 @@ using Newtonsoft.Json;
             WriteLiteral("\r\n                ");
             EndContext();
             BeginContext(479, 39, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "92b7d6a8dcbc4fa08f17c9d173085b05", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e5cfc18d533e4050bce44a77e8ed95b0", async() => {
                 BeginContext(507, 2, true);
                 WriteLiteral("25");
                 EndContext();
@@ -129,7 +129,7 @@ using Newtonsoft.Json;
             WriteLiteral("\r\n                ");
             EndContext();
             BeginContext(536, 30, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "355096dc0d8a46afb16caf00f29e7807", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4b0435d9b18348c6a7ca32d09dadbd61", async() => {
                 BeginContext(555, 2, true);
                 WriteLiteral("50");
                 EndContext();
@@ -151,7 +151,7 @@ using Newtonsoft.Json;
             WriteLiteral("\r\n                ");
             EndContext();
             BeginContext(584, 32, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "51bbb707252342ca9eee36c443cfe57d", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6f35b7be7b3843e5a91c642c844cf221", async() => {
                 BeginContext(604, 3, true);
                 WriteLiteral("100");
                 EndContext();
@@ -202,7 +202,7 @@ WriteAttributeValue("", 794, Url.Action("Cadastro", "Produto"), 794, 34, false);
             WriteLiteral("\r\n    </div>\r\n</div>\r\n\r\n");
             EndContext();
             BeginContext(1172, 45, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4e97ff5f4b12496ba0ce22b07868ec03", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "479165f59d94414aa5900ce91d8ec252", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
