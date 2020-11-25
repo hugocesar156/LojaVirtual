@@ -1,6 +1,6 @@
 ﻿function PreparaTransacao() {
     let cartao = {
-        nome: "",
+        nome: $('#nome').val(),
         numero: $('#numero').val().replace(" ", "").replace(" ", "").replace(" ", ""),
         vencimento: $('#vencimento').val(),
         verificador: $('#verificador').val()

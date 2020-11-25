@@ -8,7 +8,7 @@ namespace LojaVirtual.Models.Cliente
         [Key]
         public uint IdEndereco { get; set; }
 
-        [NotMapped, Required, MaxLength(20)]
+        [Required, MaxLength(20)]
         public string Nome { get; set; }
 
         [Required, MaxLength(8)]
@@ -32,7 +32,7 @@ namespace LojaVirtual.Models.Cliente
         [Required, MaxLength(2)]
         public string Uf { get; set; }
 
-        [NotMapped, Required, MaxLength(7)]
+        [Required, MaxLength(7)]
         public string CodigoIbge { get; set; }
 
         [ForeignKey("IdCliente")]

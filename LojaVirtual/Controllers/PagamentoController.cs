@@ -4,26 +4,29 @@ using LojaVirtual.Models.Produto;
 using LojaVirtual.Models.Venda;
 using LojaVirtual.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using PagarMe;
 using System;
+using PagarMe;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 
 namespace LojaVirtual.Controllers
 {
     public class PagamentoController : Controller
     {
         private readonly ClienteR _reposCliente;
-        private readonly PagamentoR _reposPagamento;
         private readonly ProdutoR _reposProduto;
         private readonly CarrinhoR _reposCarrinho;
 
-        public PagamentoController(ClienteR reposCliente, PagamentoR reposPagamento, 
-            ProdutoR reposProduto, CarrinhoR reposCarrinho)
+        private readonly IConfiguration _configuration;
+
+        public PagamentoController(ClienteR reposCliente, ProdutoR reposProduto, 
+            CarrinhoR reposCarrinho, IConfiguration configuration)
         {
             _reposCliente = reposCliente;
-            _reposPagamento = reposPagamento;
             _reposProduto = reposProduto;
             _reposCarrinho = reposCarrinho;
+
+            _configuration = configuration;
         }
 
         //Operações
@@ -40,6 +43,9 @@ namespace LojaVirtual.Controllers
 
             try
             {
+                PagarMeService.DefaultApiKey = _configuration.GetValue<string>("Pagamento:DefaultApiKey");
+                PagarMeService.DefaultEncryptionKey = _configuration.GetValue<string>("Pagamento:DefaultEncryptionKey");
+
                 var transacao = new Transaction
                 {
                     Amount = Convert.ToInt32(frete.Valor.ToString().Replace(",", "")),
@@ -47,9 +53,9 @@ namespace LojaVirtual.Controllers
 
                     Card = new Card
                     {
-                        Number = cartao.Numero,
                         HolderName = cartao.Nome,
-                        ExpirationDate = cartao.Vencimento,
+                        Number = cartao.Numero,
+                        ExpirationDate = cartao.Vencimento.Replace("/", ""),
                         Cvv = cartao.Verificador
                     }
                 };
@@ -99,7 +105,7 @@ namespace LojaVirtual.Controllers
 
                 transacao.Shipping = new Shipping
                 {
-                    Name = endereco.Nome,
+                    Name = "Endereço de entrega",
                     Fee = Convert.ToInt32(frete.Valor.ToString().Replace(",", "")),
                     DeliveryDate = DateTime.Today.AddDays(Convert.ToInt32(frete.Prazo)).ToString("yyyy-MM-dd"),
                     Expedited = false,
@@ -111,7 +117,7 @@ namespace LojaVirtual.Controllers
                         City = endereco.Cidade,
                         Neighborhood = endereco.Bairro,
                         Street = endereco.Logradouro,
-                        StreetNumber = endereco.Numero,
+                        StreetNumber = "123",
                         Zipcode = endereco.Cep
                     }
                 };
@@ -134,7 +140,7 @@ namespace LojaVirtual.Controllers
                     i++;
                 }
 
-                _reposPagamento.PagamentoCartao(transacao);
+                transacao.Save();
 
                 return transacao.Id != "0" ?
                     Json(true) : Json(false);

@@ -79,6 +79,10 @@ namespace LojaVirtual.Migrations
                         .IsRequired()
                         .HasMaxLength(30);
 
+                    b.Property<string>("CodigoIbge")
+                        .IsRequired()
+                        .HasMaxLength(7);
+
                     b.Property<string>("Complemento")
                         .IsRequired()
                         .HasMaxLength(20);
@@ -88,6 +92,10 @@ namespace LojaVirtual.Migrations
                     b.Property<string>("Logradouro")
                         .IsRequired()
                         .HasMaxLength(30);
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(20);
 
                     b.Property<string>("Numero")
                         .IsRequired()
@@ -99,7 +107,8 @@ namespace LojaVirtual.Migrations
 
                     b.HasKey("IdEndereco");
 
-                    b.HasIndex("IdCliente");
+                    b.HasIndex("IdCliente")
+                        .IsUnique();
 
                     b.ToTable("Endereco");
                 });
@@ -223,8 +232,8 @@ namespace LojaVirtual.Migrations
             modelBuilder.Entity("LojaVirtual.Models.Cliente.Endereco", b =>
                 {
                     b.HasOne("LojaVirtual.Models.Cliente.Cliente", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("IdCliente")
+                        .WithOne("Endereco")
+                        .HasForeignKey("LojaVirtual.Models.Cliente.Endereco", "IdCliente")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
