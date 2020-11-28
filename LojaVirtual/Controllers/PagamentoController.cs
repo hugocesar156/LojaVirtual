@@ -8,6 +8,7 @@ using System;
 using PagarMe;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
+using System.Linq;
 
 namespace LojaVirtual.Controllers
 {
@@ -16,62 +17,206 @@ namespace LojaVirtual.Controllers
         private readonly ClienteR _reposCliente;
         private readonly ProdutoR _reposProduto;
         private readonly CarrinhoR _reposCarrinho;
+        private readonly PedidoR _reposPedido;
 
         private readonly IConfiguration _configuration;
 
         public PagamentoController(ClienteR reposCliente, ProdutoR reposProduto, 
-            CarrinhoR reposCarrinho, IConfiguration configuration)
+            CarrinhoR reposCarrinho, PedidoR reposPedido, IConfiguration configuration)
         {
             _reposCliente = reposCliente;
             _reposProduto = reposProduto;
             _reposCarrinho = reposCarrinho;
+            _reposPedido = reposPedido;
 
             _configuration = configuration;
         }
 
         //Operações
         [HttpPost]
-        public JsonResult PagamentoCartao(Cartao cartao, Endereco endereco, Frete frete)
+        public JsonResult CalculaParcelas(float valor, float frete)
         {
-            var cliente = _reposCliente.Buscar();
+            try
+            {
+                var total = new string[12];
+                var parcelas = new string[12];
 
+                var taxa = (valor * 3.79 / 100) + 1.2;
+                valor += (float)taxa;
+
+                total[0] = (valor + frete).ToString("C");
+
+                for (var i = 2; i <= 12; i++)
+                {
+                    if (i <= 6)
+                    {
+                        taxa = (valor * 4.19 / 100) + 1.2;
+                        valor += (float)taxa;
+
+                        total[i -1] = (valor + frete).ToString("C");
+                    }
+                    else
+                    {
+                        taxa = (valor * 4.59 / 100) + 1.2;
+                        valor += (float)taxa;
+
+                        total[i -1] = (valor + frete).ToString("C");
+                    }
+
+                    parcelas[i -1] = (float.Parse(total[i -1].Replace("R$", "").Replace(".", "")) / i).ToString("C");
+                }
+
+                return Json(new[] { parcelas, total });
+            }
+            catch (Exception erro)
+            {
+                Console.WriteLine(erro);
+                return Json(0);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult PagamentoBoleto(Endereco endereco, Frete frete)
+        {
             var carrinho = _reposCarrinho.Buscar();
-            var lista = new List<Produto>();
+            var produtos = new List<Produto>();
 
             var total = 0.0F;
 
             foreach (var item in carrinho)
             {
                 var produto = _reposProduto.Buscar(item.IdProduto);
-                lista.Add(produto);
+                produtos.Add(produto);
 
                 total += produto.Valor * item.Quantidade;
             }
 
             total += frete.Valor;
-                
+
             try
             {
-                PagarMeService.DefaultApiKey = _configuration.GetValue<string>("Pagamento:DefaultApiKey");
-                PagarMeService.DefaultEncryptionKey = _configuration.GetValue<string>("Pagamento:DefaultEncryptionKey");
+                var transacao = PreparaTranscao(endereco, frete, produtos, carrinho);
 
-                var transacao = new Transaction
+                transacao.PaymentMethod = PaymentMethod.Boleto;
+                transacao.Amount = Convert.ToInt32(total.ToString("C").Replace("R$", "").Replace(".", "").Replace(",", ""));
+               
+                transacao.Save();
+
+                return transacao.Id != "0" ? Json(true) : Json(false);
+            }
+            catch (Exception erro)
+            {
+                Console.WriteLine(erro);
+                return Json(false);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult PagamentoCartao(Cartao cartao, Endereco endereco, Frete frete, byte parcelas)
+        {
+            var carrinho = _reposCarrinho.Buscar();
+            var produtos = new List<Produto>();
+
+            var total = 0.0F;
+
+            foreach (var item in carrinho)
+            {
+                var produto = _reposProduto.Buscar(item.IdProduto);
+                produtos.Add(produto);
+
+                total += produto.Valor * item.Quantidade;
+            }
+
+            try
+            {
+                var transacao = PreparaTranscao(endereco, frete, produtos, carrinho);
+
+                transacao.PaymentMethod = PaymentMethod.CreditCard;
+
+                transacao.Card = new Card
                 {
-                    Amount = Convert.ToInt32(total.ToString("C").Replace("R$", "").Replace(".", "").Replace(",", "")),
-                    PaymentMethod = PaymentMethod.CreditCard,
-
-                    Card = new Card
-                    {
-                        HolderName = cartao.Nome,
-                        Number = cartao.Numero,
-                        ExpirationDate = cartao.Vencimento.Replace("/", ""),
-                        Cvv = cartao.Verificador
-                    }
+                    HolderName = cartao.Nome,
+                    Number = cartao.Numero,
+                    ExpirationDate = cartao.Vencimento.Replace("/", ""),
+                    Cvv = cartao.Verificador
                 };
 
                 transacao.Card.Save();
 
-                transacao.Customer = new Customer
+                if (parcelas == 1)
+                    total += (total * (float)3.79 / 100) + (float)1.2;
+
+                else if (parcelas <= 6)
+                    total += (total * (float)4.19 / 100) + (float)1.2;
+
+                else
+                    total += (total * (float)4.59 / 100) + (float)1.2;
+
+                total += frete.Valor;
+
+                transacao.Amount = Convert.ToInt32(total.ToString("C").Replace("R$", "").Replace(".", "").Replace(",", ""));
+                transacao.Installments = parcelas;
+
+                transacao.Save();
+
+                if (transacao.Id != "0")
+                {
+                    var pedido = new Pedido
+                    {
+                        IdTransacao = Convert.ToUInt32(transacao.Id),
+                        FormaPagamento = '1',
+                        Total = total,
+                        Situacao = '1',
+                        DataCriacao = DateTime.Now,
+
+                        Parcelamento = new Parcelamento
+                        {
+                            Parcelas = parcelas,
+                            ValorParcela = total / parcelas,
+                            ValorTotal = total,
+                            Juros = false
+                        }
+                    };
+
+                    pedido.Cliente = _reposCliente.Buscar();
+                    pedido.Frete = frete;
+
+                    pedido.Produto = new List<ProdutoHistorico>();
+                    var produto = new ProdutoHistorico();
+
+                    foreach (var item in produtos)
+                    {
+                        produto.IdProdutoHistorico = item.IdProduto;
+                        produto.Nome = item.Nome;
+                        produto.Valor = item.Valor;
+                        produto.Quantidade = carrinho.FirstOrDefault(c => 
+                        c.IdProduto == produto.IdProdutoHistorico).Quantidade;
+
+                        pedido.Produto.Add(produto);
+                    }
+
+                    return _reposPedido.Registrar(pedido) > 0 ? Json(true) : Json(false);
+                }
+
+                return Json(false);
+            }
+            catch (Exception erro)
+            {
+                Console.WriteLine(erro);
+                return Json(false);
+            }
+        }
+
+        public Transaction PreparaTranscao(Endereco endereco, Frete frete, List<Produto> produtos, List<Carrinho> carrinho)
+        {
+            PagarMeService.DefaultApiKey = _configuration.GetValue<string>("Pagamento:DefaultApiKey");
+            PagarMeService.DefaultEncryptionKey = _configuration.GetValue<string>("Pagamento:DefaultEncryptionKey");
+
+            var cliente = _reposCliente.Buscar();
+
+            var transacao = new Transaction
+            {
+                Customer = new Customer
                 {
                     ExternalId = cliente.IdCliente.ToString(),
                     Name = cliente.Nome,
@@ -94,9 +239,9 @@ namespace LojaVirtual.Controllers
                     },
 
                     Birthday = new DateTime(1991, 12, 12).ToString("yyyy-MM-dd")
-                };
+                },
 
-                transacao.Billing = new Billing
+                Billing = new Billing
                 {
                     Name = cliente.Nome,
 
@@ -110,13 +255,13 @@ namespace LojaVirtual.Controllers
                         StreetNumber = cliente.Endereco.Numero,
                         Zipcode = cliente.Endereco.Cep
                     }
-                };
+                },
 
-                transacao.Shipping = new Shipping
+                Shipping = new Shipping
                 {
                     Name = endereco.Nome,
                     Fee = Convert.ToInt32(frete.Valor.ToString("C").Replace("R$", "").Replace(".", "").Replace(",", "")),
-                    DeliveryDate = DateTime.Today.AddDays(Convert.ToInt32(frete.Prazo)).ToString("yyyy-MM-dd"),
+                    DeliveryDate = frete.Prazo.ToString("yyyy-MM-dd"),
                     Expedited = false,
 
                     Address = new Address
@@ -129,35 +274,29 @@ namespace LojaVirtual.Controllers
                         StreetNumber = endereco.Numero,
                         Zipcode = endereco.Cep
                     }
+                },
+
+                Item = new Item[produtos.Count]
+            };
+
+            var i = 0;
+
+            foreach (var produto in produtos)
+            {
+                var item = new Item
+                {
+                    Id = produto.IdProduto.ToString(),
+                    Title = produto.Nome,
+                    Quantity = (int)carrinho[i].Quantidade,
+                    Tangible = true,
+                    UnitPrice = Convert.ToInt32(produto.Valor.ToString("C").Replace("R$", "").Replace(".", "").Replace(",", ""))
                 };
 
-                transacao.Item = new Item[lista.Count];
-                var i = 0;
-
-                foreach (var produto in lista)
-                {
-                    var item = new Item
-                    {
-                        Id = produto.IdProduto.ToString(),
-                        Title = produto.Nome,
-                        Quantity = (int)carrinho[i].Quantidade,
-                        Tangible = true,
-                        UnitPrice = Convert.ToInt32(produto.Valor.ToString("C").Replace("R$", "").Replace(".", "").Replace(",", ""))
-                    };
-
-                    transacao.Item[i] = item;
-                    i++;
-                }
-
-                transacao.Save();
-
-                return transacao.Id != "0" ? Json(true) : Json(false);
+                transacao.Item[i] = item;
+                i++;
             }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
-                return Json(false);
-            }
+
+            return transacao;
         }
     }
 }

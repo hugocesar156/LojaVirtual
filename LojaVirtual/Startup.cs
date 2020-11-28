@@ -42,6 +42,7 @@ namespace LojaVirtual
             services.AddScoped<CarrinhoR>();
             services.AddScoped<FreteR>();
             services.AddScoped<ClienteR>();
+            services.AddScoped<PedidoR>();
 
             services.AddScoped<CalcPrecoPrazoWSSoap>(options => {
                 return new CalcPrecoPrazoWSSoapClient(CalcPrecoPrazoWSSoapClient.EndpointConfiguration.CalcPrecoPrazoWSSoap);

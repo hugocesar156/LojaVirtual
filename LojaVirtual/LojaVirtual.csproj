@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20201127233731_ParcelamentoFrete.cs" />
+    <Compile Remove="Migrations\20201127233731_ParcelamentoFrete.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.14" />
@@ -23,7 +28,7 @@
 
   <ItemGroup>
     <Reference Include="PagarMeCore">
-      <HintPath>..\PagarMe\pagarme-net-master\PagarMeCore\bin\Debug\netstandard2.0\PagarMeCore.dll</HintPath>
+      <HintPath>..\PagarMe\pagarme-net-master\PagarMeCore\bin\Release\netstandard2.0\PagarMeCore.dll</HintPath>
     </Reference>
   </ItemGroup>
 

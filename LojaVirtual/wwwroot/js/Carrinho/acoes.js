@@ -48,15 +48,30 @@ function ValidaCep() {
                 $('#area-endereco').addClass('d-none');
 
                 $('#cep').addClass('is-invalid');
+
+                $('#load-frete').addClass('d-none');
+                $('#load-gif-frete').attr('src', '');
+
+                $('#continuar').attr('disabled', false);
             }
         },
         error: function () {
             alert("Erro ao tentar buscar endereço");
+
+            $('#load-frete').addClass('d-none');
+            $('#load-gif-frete').attr('src', '');
+
+            $('#continuar').attr('disabled', false);
         }
     });
 }
 
 function CalcularFrete(cep) {
+    $('#load-frete').removeClass('d-none');
+    $('#load-gif-frete').attr('src', '/images/load.gif');
+
+    $('#continuar').attr('disabled', true);
+
     $('#btn-frete').attr('disabled', true);
     $('#div-frete').addClass('d-none');
 
@@ -121,6 +136,11 @@ function CalculaValores() {
 
     $('#subtotal').html(subtotal.toFixed(2).replace(".", ","));
     $('#total').html((subtotal + frete).toFixed(2).replace(".", ","));
+
+    $('#load-frete').addClass('d-none');
+    $('#load-gif-frete').attr('src', '');
+
+    $('#continuar').attr('disabled', false);
 }
 
 function RemoverItem(idProduto) {

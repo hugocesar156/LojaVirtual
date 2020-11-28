@@ -3,14 +3,16 @@ using System;
 using LojaVirtual.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LojaVirtual.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20201127234040_Pedido")]
+    partial class Pedido
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -263,9 +265,6 @@ namespace LojaVirtual.Migrations
                     b.Property<uint>("IdPedido")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("DATETIME");
-
                     b.Property<string>("FormaPagamento")
                         .IsRequired()
                         .HasConversion(new ValueConverter<string, string>(v => default(string), v => default(string), new ConverterMappingHints(size: 1)))
@@ -279,7 +278,7 @@ namespace LojaVirtual.Migrations
 
                     b.Property<uint>("IdTransacao");
 
-                    b.Property<DateTime?>("PrazoPagamento")
+                    b.Property<DateTime>("PrazoPagamento")
                         .HasColumnType("DATETIME");
 
                     b.Property<string>("Situacao")

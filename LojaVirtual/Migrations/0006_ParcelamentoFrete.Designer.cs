@@ -3,14 +3,16 @@ using System;
 using LojaVirtual.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LojaVirtual.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20201127233915_ParcelamentoFrete")]
+    partial class ParcelamentoFrete
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -258,72 +260,6 @@ namespace LojaVirtual.Migrations
                     b.ToTable("Frete");
                 });
 
-            modelBuilder.Entity("LojaVirtual.Models.Venda.Pedido", b =>
-                {
-                    b.Property<uint>("IdPedido")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("DATETIME");
-
-                    b.Property<string>("FormaPagamento")
-                        .IsRequired()
-                        .HasConversion(new ValueConverter<string, string>(v => default(string), v => default(string), new ConverterMappingHints(size: 1)))
-                        .HasColumnType("CHAR(1)");
-
-                    b.Property<uint>("IdCliente");
-
-                    b.Property<uint>("IdFrete");
-
-                    b.Property<uint?>("IdParcelamento");
-
-                    b.Property<uint>("IdTransacao");
-
-                    b.Property<DateTime?>("PrazoPagamento")
-                        .HasColumnType("DATETIME");
-
-                    b.Property<string>("Situacao")
-                        .IsRequired()
-                        .HasConversion(new ValueConverter<string, string>(v => default(string), v => default(string), new ConverterMappingHints(size: 1)))
-                        .HasColumnType("CHAR(1)");
-
-                    b.Property<float>("Total")
-                        .HasColumnType("FLOAT");
-
-                    b.HasKey("IdPedido");
-
-                    b.HasIndex("IdCliente");
-
-                    b.HasIndex("IdFrete");
-
-                    b.HasIndex("IdParcelamento");
-
-                    b.ToTable("Pedido");
-                });
-
-            modelBuilder.Entity("LojaVirtual.Models.Venda.ProdutoHistorico", b =>
-                {
-                    b.Property<uint>("IdProdutoHistorico")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<uint>("IdPedido");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(30);
-
-                    b.Property<uint>("Quantidade");
-
-                    b.Property<float>("Valor")
-                        .HasColumnType("FLOAT");
-
-                    b.HasKey("IdProdutoHistorico");
-
-                    b.HasIndex("IdPedido");
-
-                    b.ToTable("ProdutoHistorico");
-                });
-
             modelBuilder.Entity("LojaVirtual.Models.Acesso.Usuario", b =>
                 {
                     b.HasOne("LojaVirtual.Models.Cliente.Cliente", "Cliente")
@@ -378,31 +314,6 @@ namespace LojaVirtual.Migrations
                     b.HasOne("LojaVirtual.Models.Produto.Produto", "Produto")
                         .WithMany()
                         .HasForeignKey("IdProduto")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("LojaVirtual.Models.Venda.Pedido", b =>
-                {
-                    b.HasOne("LojaVirtual.Models.Cliente.Cliente", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("IdCliente")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("LojaVirtual.Models.Venda.Frete", "Frete")
-                        .WithMany()
-                        .HasForeignKey("IdFrete")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("LojaVirtual.Models.Pagamento.Parcelamento", "Parcelamento")
-                        .WithMany()
-                        .HasForeignKey("IdParcelamento");
-                });
-
-            modelBuilder.Entity("LojaVirtual.Models.Venda.ProdutoHistorico", b =>
-                {
-                    b.HasOne("LojaVirtual.Models.Venda.Pedido", "Pedido")
-                        .WithMany("Produto")
-                        .HasForeignKey("IdPedido")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

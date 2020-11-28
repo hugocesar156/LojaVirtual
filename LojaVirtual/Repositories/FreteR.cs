@@ -71,20 +71,22 @@ namespace LojaVirtual.Repositories
                 var maoPropria = _configuration.GetValue<string>("Frete:MaoPropria");
                 var avisoRecebimento = _configuration.GetValue<string>("Frete:AvisoRecebimento");
 
+                var prazo = await _servico.CalcPrazoAsync(servico, cepOrigem, cepDestino);
+
                 var frete = new Frete();
+
+                if (prazo.Servicos[0].Erro == "")
+                    frete.Prazo = Convert.ToDateTime(prazo.Servicos[0].DataMaxEntrega);
 
                 foreach (var pacote in lista)
                 {
                     var diametro = pacote.Altura + pacote.Comprimento + pacote.Largura;
 
-                    var resultado = await _servico.CalcPrecoAsync("", "", servico, cepOrigem, cepDestino, pacote.Peso.ToString(),
+                    var valor = await _servico.CalcPrecoAsync("", "", servico, cepOrigem, cepDestino, pacote.Peso.ToString(),
                         1, pacote.Comprimento, pacote.Altura, pacote.Largura, diametro, maoPropria, 0, avisoRecebimento);
 
-                    if (resultado.Servicos[0].Erro == "") 
-                    {
-                        frete.Valor += float.Parse(resultado.Servicos[0].Valor);
-                        frete.Prazo = resultado.Servicos[0].PrazoEntrega;
-                    }
+                    if (valor.Servicos[0].Erro == "")
+                        frete.Valor += float.Parse(valor.Servicos[0].Valor);
                 }
 
                 return frete;

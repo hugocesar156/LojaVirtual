@@ -1,5 +1,6 @@
 ﻿using LojaVirtual.Models.Acesso;
 using LojaVirtual.Models.Cliente;
+using LojaVirtual.Models.Pagamento;
 using LojaVirtual.Models.Produto;
 using LojaVirtual.Models.Venda;
 using Microsoft.EntityFrameworkCore;
@@ -17,5 +18,9 @@ namespace LojaVirtual.Data
         public DbSet<Categoria> Categoria { get; set; }
         public DbSet<Imagem> Imagem { get; set; }
         public DbSet<Carrinho> Carrinho { get; set; }
+        public DbSet<Parcelamento> Parcelamento { get; set; }
+        public DbSet<Frete> Frete { get; set; }
+        public DbSet<Pedido> Pedido { get; set; }
+        public DbSet<ProdutoHistorico> ProdutoHistorico { get; set; }
     }
 }
