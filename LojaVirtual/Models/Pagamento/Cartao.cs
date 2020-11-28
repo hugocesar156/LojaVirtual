@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace LojaVirtual.Models.Pagamento
+﻿namespace LojaVirtual.Models.Pagamento
 {
     public class Cartao
     {

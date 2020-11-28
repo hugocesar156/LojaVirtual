@@ -54,6 +54,9 @@ namespace LojaVirtual.Models.Venda
         [Key]
         public uint IdProdutoHistorico { get; set; }
 
+        [Required]
+        public uint IdProduto { get; set; }
+
         [Required, MaxLength(30)]
         public string Nome { get; set; }
 

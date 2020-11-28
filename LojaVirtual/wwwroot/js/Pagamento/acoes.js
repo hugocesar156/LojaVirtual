@@ -82,6 +82,13 @@ function PagamentoCartao() {
                             frete.valor = data.valor.toFixed(2).replace(".", ",");
                             frete.prazo = data.prazo;
 
+                            if (servico == "04014") {
+                                frete.servico = '1';
+                            }
+                            else {
+                                frete.servico = '2';
+                            }
+
                             let parcelas = $('#parcelas').val();
 
                             $.ajax({
@@ -90,7 +97,7 @@ function PagamentoCartao() {
                                 data: { cartao: cartao, endereco: endereco, frete: frete, parcelas: parcelas },
                                 success: function (transacao) {
                                     if (transacao) {
-                                        $('#btn-cartao').attr('disabled', false);
+                                        window.location.pathname = "Pedido/Menu";
                                     }
                                     else {
                                         $('#btn-cartao').attr('disabled', false);
@@ -152,16 +159,23 @@ function PagamentoBoleto() {
                         frete.valor = data.valor.toFixed(2).replace(".", ",");
                         frete.prazo = data.prazo;
 
+                        if (servico == "04014") {
+                            frete.servico = '1';
+                        }
+                        else {
+                            frete.servico = '2';
+                        }
+
                         $.ajax({
                             type: "POST",
                             url: "/Pagamento/PagamentoBoleto",
                             data: { endereco: endereco, frete: frete },
                             success: function (transacao) {
                                 if (transacao) {
-
+                                    window.location.pathname = "Pedido/Menu";
                                 }
                                 else {
-                                    alert("Erro, confira os dados antes de continuar.");
+                                    alert("Erro ao gerar boleto.");
                                 }
                             }
                         });
@@ -237,7 +251,7 @@ function ValidaFormCartao() {
             validos++;
     });
 
-    return validos == $('.form-cartao').length ? true : false;
+    return validos == $('.form-cartao').length;
 };
 
 function ValidaNome() {

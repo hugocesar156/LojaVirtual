@@ -52,7 +52,8 @@ namespace LojaVirtual.Repositories
                     }
                 }
 
-                if (pacotes.LastOrDefault() != pacote) pacotes.Add(pacote);
+                if (pacotes.LastOrDefault() != pacote) 
+                    pacotes.Add(pacote);
 
                 return pacotes;
             }

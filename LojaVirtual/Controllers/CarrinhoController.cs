@@ -86,13 +86,10 @@ namespace LojaVirtual.Controllers
                 if (_reposCarrinho.Atualizar(item, 2) > 0)
                     return PartialView("_Carrinho", BuscaProdutosCarrinho(_carrinho));
             }
-            else
+            else if (_reposCarrinho.RemoverItem(item) > 0)
             {
-                if (_reposCarrinho.RemoverItem(item) > 0)
-                {
-                    _carrinho.Remove(item);
-                    return PartialView("_Carrinho", BuscaProdutosCarrinho(_carrinho));
-                }
+                _carrinho.Remove(item);
+                return PartialView("_Carrinho", BuscaProdutosCarrinho(_carrinho));
             }
 
             return BadRequest();

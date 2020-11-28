@@ -105,6 +105,10 @@ function CalcularFrete(cep) {
 
             $('#frete').html(frete.valor.toFixed(2).replace(".", ","));
 
+            let data = frete.prazo.split("T");
+            let prazo = data[0].split("-");
+            $('#prazo').html(`Prazo de entrega: ${prazo[2]}/${prazo[1]}/${prazo[0]}`);
+
             CalculaValores();
 
             $('#calculo-frete').modal('hide');

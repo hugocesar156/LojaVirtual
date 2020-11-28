@@ -76,7 +76,7 @@ namespace LojaVirtual.Controllers
                     var caminho = $"wwwroot/images/produto/{id}/{nomeArquivo}";
 
                     var lista = _reposImagem.BuscaLista(Convert.ToUInt32(id));
-                    var imagem = lista.Where(i => i.Caminho == caminho).FirstOrDefault();
+                    var imagem = lista.FirstOrDefault(i => i.Caminho == caminho);
 
                     ImagemR.RemoveImagem(caminho);
                     lista.Remove(imagem);

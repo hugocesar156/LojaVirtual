@@ -394,33 +394,33 @@ namespace WSCorreios
         {
             if ((endpointConfiguration == EndpointConfiguration.CalcPrecoPrazoWSSoap))
             {
-                var result = new System.ServiceModel.BasicHttpBinding 
+                return new BasicHttpBinding 
                 {
                     MaxBufferSize = int.MaxValue,
                     ReaderQuotas = System.Xml.XmlDictionaryReaderQuotas.Max,
                     MaxReceivedMessageSize = int.MaxValue,
                     AllowCookies = true
                 };
-
-                return result;
             }
 
             if ((endpointConfiguration == EndpointConfiguration.CalcPrecoPrazoWSSoap12))
             {
                 var result = new CustomBinding();
-                var textBindingElement = new TextMessageEncodingBindingElement();
 
-                textBindingElement.MessageVersion = MessageVersion.CreateVersion(EnvelopeVersion.Soap12, AddressingVersion.None);
+                var textBindingElement = new TextMessageEncodingBindingElement 
+                {
+                    MessageVersion = MessageVersion.CreateVersion(EnvelopeVersion.Soap12, AddressingVersion.None)
+                };
+
                 result.Elements.Add(textBindingElement);
 
-                var httpBindingElement = new HttpTransportBindingElement
+                result.Elements.Add(new HttpTransportBindingElement
                 {
                     AllowCookies = true,
                     MaxBufferSize = int.MaxValue,
                     MaxReceivedMessageSize = int.MaxValue
-                };
+                });
 
-                result.Elements.Add(httpBindingElement);
                 return result;
             }
 

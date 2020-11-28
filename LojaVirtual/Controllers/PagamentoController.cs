@@ -99,10 +99,42 @@ namespace LojaVirtual.Controllers
 
                 transacao.PaymentMethod = PaymentMethod.Boleto;
                 transacao.Amount = Convert.ToInt32(total.ToString("C").Replace("R$", "").Replace(".", "").Replace(",", ""));
-               
+
                 transacao.Save();
 
-                return transacao.Id != "0" ? Json(true) : Json(false);
+                if (transacao.Id != "0")
+                {
+                    var pedido = new Pedido
+                    {
+                        IdTransacao = Convert.ToUInt32(transacao.Id),
+                        FormaPagamento = '2',
+                        Total = total,
+                        Situacao = '0',
+                        DataCriacao = DateTime.Now,
+                        PrazoPagamento = transacao.BoletoExpirationDate
+                    };
+
+                    pedido.Cliente = _reposCliente.Buscar();
+                    pedido.Frete = frete;
+
+                    pedido.Produto = new List<ProdutoHistorico>();
+
+                    foreach (var item in produtos)
+                    {
+                        pedido.Produto.Add(new ProdutoHistorico {
+                            IdProduto = item.IdProduto,
+                            Nome = item.Nome,
+                            Valor = item.Valor,
+                            Quantidade = carrinho.FirstOrDefault(c =>
+                            c.IdProduto == item.IdProduto).Quantidade
+                        });
+                    }
+
+                    return _reposPedido.Registrar(pedido) > 0 ?
+                        Json(true) : Json(false);
+                }
+
+                return Json(false);
             }
             catch (Exception erro)
             {
@@ -182,20 +214,31 @@ namespace LojaVirtual.Controllers
                     pedido.Frete = frete;
 
                     pedido.Produto = new List<ProdutoHistorico>();
-                    var produto = new ProdutoHistorico();
 
                     foreach (var item in produtos)
                     {
-                        produto.IdProdutoHistorico = item.IdProduto;
-                        produto.Nome = item.Nome;
-                        produto.Valor = item.Valor;
-                        produto.Quantidade = carrinho.FirstOrDefault(c => 
-                        c.IdProduto == produto.IdProdutoHistorico).Quantidade;
-
-                        pedido.Produto.Add(produto);
+                        pedido.Produto.Add(new ProdutoHistorico
+                        {
+                            IdProduto = item.IdProduto,
+                            Nome = item.Nome,
+                            Valor = item.Valor,
+                            Quantidade = carrinho.FirstOrDefault(c =>
+                            c.IdProduto == item.IdProduto).Quantidade
+                        });
                     }
 
-                    return _reposPedido.Registrar(pedido) > 0 ? Json(true) : Json(false);
+                    if (_reposPedido.Registrar(pedido) > 0)
+                    {
+                        foreach (var produto in produtos)
+                        {
+                            produto.Estoque -= carrinho.FirstOrDefault(c =>
+                            c.IdProduto == produto.IdProduto).Quantidade;
+
+                            _reposProduto.Atualizar(produto);
+                        }
+
+                        return Json(true);
+                    }
                 }
 
                 return Json(false);

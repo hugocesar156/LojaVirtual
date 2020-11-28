@@ -88,7 +88,7 @@
                     Alterar endereço
                 </button>
             </div>
-            <div class="col-2 text-right">
+            <div class="col-2 text-left">
                 <label>Serviço de entrega:</label>
             </div>
             <div class="col-1 text-right">
@@ -98,6 +98,9 @@
             <div class="col-1">
                 <input class="form-check-input" type="radio" name="frete" id="sedex-input" onchange="CalcularFrete($('#cep').val().replace('-', ''))">
                 <label class="form-check-label" for="sedex-input">PAC</label>
+            </div>
+            <div class="col text-right" id="prazo">
+                Prazo de entrega: 00/00/0000
             </div>
         </div>
     }
