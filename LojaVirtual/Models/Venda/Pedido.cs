@@ -20,6 +20,9 @@ namespace LojaVirtual.Models.Venda
         [Column(TypeName = "CHAR(1)"), Required]
         public char FormaPagamento { get; set; }
 
+        [Column(TypeName = "DATETIME"), Required]
+        public DateTime DataCriacao { get; set; }
+
         [Column(TypeName = "CHAR(1)"), Required]
         public char Situacao { get; set; }
 
@@ -35,16 +38,21 @@ namespace LojaVirtual.Models.Venda
         [Required]
         public uint IdFrete { get; set; }
 
+        [ForeignKey("IdEnderecoPedido")]
+        public EnderecoPedido Endereco { get; set; }
+
+        [Required]
+        public uint IdEnderecoPedido { get; set; }
+
         [ForeignKey("IdParcelamento")]
         public Parcelamento Parcelamento { get; set; }
 
         public uint? IdParcelamento { get; set; }
 
-        [Column(TypeName = "DATETIME")] 
-        public DateTime? PrazoPagamento { get; set; }
+        [ForeignKey("IdBoleto")]
+        public Boleto Boleto { get; set; }
 
-        [Column(TypeName = "DATETIME"), Required]
-        public DateTime DataCriacao { get; set; }
+        public uint? IdBoleto { get; set; }
 
         public List<ProdutoHistorico> Produto { get; set; }
     }
@@ -71,5 +79,11 @@ namespace LojaVirtual.Models.Venda
 
         [Required]
         public uint IdPedido { get; set; }
+    }
+
+    public class EnderecoPedido : Endereco.Endereco
+    {
+        [Key]
+        public uint IdEnderecoPedido { get; set; }
     }
 }

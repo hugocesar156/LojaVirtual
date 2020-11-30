@@ -61,5 +61,23 @@ namespace LojaVirtual.Repositories
                 return 0;
             }
         }
+
+        public int RemoverTodos(uint idCliente)
+        {
+            try
+            {
+                var carrinho = _banco.Carrinho.Where(c => c.IdCliente == idCliente);
+
+                foreach (var item in carrinho)
+                    _banco.Remove(item);
+
+                return _banco.SaveChanges();
+            }
+            catch (Exception erro)
+            {
+                Console.WriteLine(erro);
+                return 0;
+            }
+        }
     }
 }

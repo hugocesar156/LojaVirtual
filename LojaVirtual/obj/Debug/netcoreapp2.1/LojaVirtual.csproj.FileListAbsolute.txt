@@ -155,4 +155,5 @@ C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.csproj.
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Cliente\Endereco.cshtml.g.cs
 C:\Projetos\Loja Virtual\LojaVirtual\bin\Debug\netcoreapp2.1\PagarMeCore.dll
 C:\Projetos\Loja Virtual\LojaVirtual\bin\Debug\netcoreapp2.1\PagarMeCore.pdb
-C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Pedido\Menu.cshtml.g.cs
+C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Pedido\Detalhe.cshtml.g.cs
+C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Pedido\Lista.cshtml.g.cs

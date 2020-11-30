@@ -31,7 +31,7 @@ namespace LojaVirtual.Repositories
             }
         }
 
-        public Endereco BuscaEndereco()
+        public EnderecoCliente BuscaEndereco()
         {
             try
             {
@@ -40,7 +40,7 @@ namespace LojaVirtual.Repositories
             catch (Exception erro)
             {
                 Console.WriteLine(erro);
-                return new Endereco();
+                return new EnderecoCliente();
             }
         }
     }

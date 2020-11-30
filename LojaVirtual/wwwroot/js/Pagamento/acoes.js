@@ -96,12 +96,11 @@ function PagamentoCartao() {
                                 url: "/Pagamento/PagamentoCartao",
                                 data: { cartao: cartao, endereco: endereco, frete: frete, parcelas: parcelas },
                                 success: function (transacao) {
-                                    if (transacao) {
-                                        window.location.pathname = "Pedido/Menu";
+                                    if (transacao > 0) {
+                                        window.location.pathname = "Pedido/Detalhe/" + transacao;
                                     }
                                     else {
                                         $('#btn-cartao').attr('disabled', false);
-
                                         alert("Erro, confira os dados antes de continuar.");
                                     }
                                 }
@@ -112,7 +111,6 @@ function PagamentoCartao() {
             },
             error: function () {
                 $('#btn-cartao').attr('disabled', false);
-
                 alert("Erro ao preparar transação.");
             }
         });
@@ -120,6 +118,8 @@ function PagamentoCartao() {
 }
 
 function PagamentoBoleto() {
+    $('#btn-boleto').attr('disabled', true);
+
     let cep = $('#cep').val().replace("-", "");
     let servico = "";
 
@@ -171,10 +171,11 @@ function PagamentoBoleto() {
                             url: "/Pagamento/PagamentoBoleto",
                             data: { endereco: endereco, frete: frete },
                             success: function (transacao) {
-                                if (transacao) {
-                                    window.location.pathname = "Pedido/Menu";
+                                if (transacao > 0) {
+                                    window.location.pathname = "Pedido/Detalhe/" + transacao;
                                 }
                                 else {
+                                    $('#btn-boleto').attr('disabled', false);
                                     alert("Erro ao gerar boleto.");
                                 }
                             }
@@ -184,11 +185,11 @@ function PagamentoBoleto() {
             }
         },
         error: function () {
+            $('#btn-boleto').attr('disabled', false);
             alert("Erro ao preparar transação.");
         }
     });
 }
-
 
 //Validações de campos
 function ValidaCampo(campo) {

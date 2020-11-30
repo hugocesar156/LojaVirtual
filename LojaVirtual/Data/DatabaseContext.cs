@@ -13,7 +13,7 @@ namespace LojaVirtual.Data
 
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Cliente> Cliente { get; set; }
-        public DbSet<Endereco> Endereco { get; set; }
+        public DbSet<EnderecoCliente> Endereco { get; set; }
         public DbSet<Produto> Produto { get; set; }
         public DbSet<Categoria> Categoria { get; set; }
         public DbSet<Imagem> Imagem { get; set; }
@@ -22,5 +22,6 @@ namespace LojaVirtual.Data
         public DbSet<Frete> Frete { get; set; }
         public DbSet<Pedido> Pedido { get; set; }
         public DbSet<ProdutoHistorico> ProdutoHistorico { get; set; }
+        public DbSet<Boleto> Boleto { get; set; }
     }
 }

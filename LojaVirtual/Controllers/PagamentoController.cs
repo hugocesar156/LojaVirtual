@@ -76,7 +76,7 @@ namespace LojaVirtual.Controllers
         }
 
         [HttpPost]
-        public JsonResult PagamentoBoleto(Endereco endereco, Frete frete)
+        public JsonResult PagamentoBoleto(EnderecoCliente endereco, Frete frete)
         {
             var carrinho = _reposCarrinho.Buscar();
             var produtos = new List<Produto>();
@@ -111,7 +111,25 @@ namespace LojaVirtual.Controllers
                         Total = total,
                         Situacao = '0',
                         DataCriacao = DateTime.Now,
-                        PrazoPagamento = transacao.BoletoExpirationDate
+
+                        Boleto = new Boleto
+                        {
+                            DataExpiracao = Convert.ToDateTime(transacao.BoletoExpirationDate),
+                            Url = transacao.BoletoUrl,
+                            CodigoBarras = transacao.BoletoBarcode
+                        },
+
+                        Endereco = new EnderecoPedido
+                        {
+                            Nome = endereco.Nome,
+                            Cep = endereco.Cep,
+                            Logradouro = endereco.Logradouro,
+                            Numero = endereco.Numero,
+                            Bairro = endereco.Bairro,
+                            Cidade = endereco.Cidade,
+                            Uf = endereco.Uf,
+                            Complemento = endereco.Complemento ?? ""
+                        }
                     };
 
                     pedido.Cliente = _reposCliente.Buscar();
@@ -130,21 +148,23 @@ namespace LojaVirtual.Controllers
                         });
                     }
 
+                    _reposCarrinho.RemoverTodos(_reposCliente.Buscar().IdCliente);
+
                     return _reposPedido.Registrar(pedido) > 0 ?
-                        Json(true) : Json(false);
+                        Json(Convert.ToInt32(transacao.Id)) : Json(0);
                 }
 
-                return Json(false);
+                return Json(0);
             }
             catch (Exception erro)
             {
                 Console.WriteLine(erro);
-                return Json(false);
+                return Json(0);
             }
         }
 
         [HttpPost]
-        public JsonResult PagamentoCartao(Cartao cartao, Endereco endereco, Frete frete, byte parcelas)
+        public JsonResult PagamentoCartao(Cartao cartao, EnderecoCliente endereco, Frete frete, byte parcelas)
         {
             var carrinho = _reposCarrinho.Buscar();
             var produtos = new List<Produto>();
@@ -207,6 +227,18 @@ namespace LojaVirtual.Controllers
                             ValorParcela = total / parcelas,
                             ValorTotal = total,
                             Juros = false
+                        },
+
+                        Endereco = new EnderecoPedido
+                        {
+                            Nome = endereco.Nome,
+                            Cep = endereco.Cep,
+                            Logradouro = endereco.Logradouro,
+                            Numero = endereco.Numero,
+                            Bairro = endereco.Bairro,
+                            Cidade = endereco.Cidade,
+                            Uf = endereco.Uf,
+                            Complemento = endereco.Complemento ?? ""
                         }
                     };
 
@@ -227,6 +259,8 @@ namespace LojaVirtual.Controllers
                         });
                     }
 
+                    _reposCarrinho.RemoverTodos(_reposCliente.Buscar().IdCliente);
+
                     if (_reposPedido.Registrar(pedido) > 0)
                     {
                         foreach (var produto in produtos)
@@ -237,20 +271,20 @@ namespace LojaVirtual.Controllers
                             _reposProduto.Atualizar(produto);
                         }
 
-                        return Json(true);
+                        return Json(Convert.ToInt32(transacao.Id));
                     }
                 }
 
-                return Json(false);
+                return Json(0);
             }
             catch (Exception erro)
             {
                 Console.WriteLine(erro);
-                return Json(false);
+                return Json(0);
             }
         }
 
-        public Transaction PreparaTranscao(Endereco endereco, Frete frete, List<Produto> produtos, List<Carrinho> carrinho)
+        public Transaction PreparaTranscao(EnderecoCliente endereco, Frete frete, List<Produto> produtos, List<Carrinho> carrinho)
         {
             PagarMeService.DefaultApiKey = _configuration.GetValue<string>("Pagamento:DefaultApiKey");
             PagarMeService.DefaultEncryptionKey = _configuration.GetValue<string>("Pagamento:DefaultEncryptionKey");

@@ -13,6 +13,6 @@ namespace LojaVirtual.Models.Cliente
         [Required, MaxLength(11), MinLength(11)]
         public string Cpf { get; set; }
 
-        public Endereco Endereco { get; set; }
+        public EnderecoCliente Endereco { get; set; }
     }
 }

@@ -7,6 +7,16 @@
   <ItemGroup>
     <Compile Remove="Migrations\20201127233731_ParcelamentoFrete.cs" />
     <Compile Remove="Migrations\20201127233731_ParcelamentoFrete.Designer.cs" />
+    <Compile Remove="Migrations\20201129232822_AddBoletoEnderecoPedido.cs" />
+    <Compile Remove="Migrations\20201129232822_AddBoletoEnderecoPedido.Designer.cs" />
+    <Compile Remove="Migrations\20201129234343_AtualizaBanco.cs" />
+    <Compile Remove="Migrations\20201129234343_AtualizaBanco.Designer.cs" />
+    <Compile Remove="Migrations\20201129235430_AdBoletoEnderecoPedido.cs" />
+    <Compile Remove="Migrations\20201129235430_AdBoletoEnderecoPedido.Designer.cs" />
+    <Compile Remove="Migrations\20201129235455_AddBoletoEnderecoPedido.cs" />
+    <Compile Remove="Migrations\20201129235455_AddBoletoEnderecoPedido.Designer.cs" />
+    <Compile Remove="Migrations\20201130121424_AddBoletoEnderecoPedido.cs" />
+    <Compile Remove="Migrations\20201130121424_AddBoletoEnderecoPedido.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,13 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace LojaVirtual.Models.Cliente
+namespace LojaVirtual.Models.Endereco
 {
-    public class Endereco
+    public abstract class Endereco
     {
-        [Key]
-        public uint IdEndereco { get; set; }
-
         [Required, MaxLength(20)]
         public string Nome { get; set; }
 
@@ -31,11 +27,5 @@ namespace LojaVirtual.Models.Cliente
 
         [Required, MaxLength(2)]
         public string Uf { get; set; }
-
-        [ForeignKey("IdCliente")]
-        public Cliente Cliente { get; set; }
-
-        [Required]
-        public uint IdCliente { get; set; }
     }
 }
