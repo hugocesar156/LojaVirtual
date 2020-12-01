@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Rastreamento.Authorizations;
+using LojaVirtual.Authorizations;
 
 namespace LojaVirtual.Controllers
 {

@@ -28,8 +28,13 @@ using Newtonsoft.Json;
 
 #line default
 #line hidden
+#line 4 "C:\Projetos\Loja Virtual\LojaVirtual\Views\_ViewImports.cshtml"
+using LojaVirtual.Sessions;
+
+#line default
+#line hidden
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"dc13cbbf17fe0ff837613d1999fbe3adec4af205", @"/Views/Produto/_Imagens.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"a3b6397a813ab2e3f29c2c4626f1b3aa86fa5744", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"68d2072dd14da1bd32ce19021c2028f21b13d598", @"/Views/_ViewImports.cshtml")]
     public class Views_Produto__Imagens : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<List<LojaVirtual.Models.Produto.Imagem>>
     {
         #pragma warning disable 1998

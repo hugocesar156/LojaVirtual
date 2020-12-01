@@ -59,7 +59,7 @@ namespace LojaVirtual.Repositories
             }
         }
 
-        public IPagedList<Produto> ListarPaginado(int pagina = 1, int quantidade = 25, string pesquisa = "")
+        public IPagedList<Produto> ListarPaginado(uint idUsuario, int pagina = 1, int quantidade = 25, string pesquisa = "")
         {
             try
             {
@@ -70,10 +70,11 @@ namespace LojaVirtual.Repositories
                     return _banco.Produto.Include(p => p.Imagem).Where(p => 
                     p.Nome.Contains(pesquisa) ||
                     p.Fabricante.Contains(pesquisa) ||
-                    p.Modelo.Contains(pesquisa)).OrderBy(p => p.Nome).ToPagedList(pagina, quantidade);
+                    p.Modelo.Contains(pesquisa) && p.IdUsuario == idUsuario)
+                        .OrderBy(p => p.Nome).ToPagedList(pagina, quantidade);
                 }
 
-                return _banco.Produto.Include(p => p.Imagem)
+                return _banco.Produto.Include(p => p.Imagem).Where(p => p.IdUsuario == idUsuario)
                     .OrderBy(p => p.Nome).ToPagedList(pagina, quantidade);
             }
             catch (Exception erro)

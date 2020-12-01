@@ -2,17 +2,19 @@
 using LojaVirtual.Models.Cliente;
 using LojaVirtual.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Rastreamento.Authorizations;
+using LojaVirtual.Authorizations;
+using LojaVirtual.Sessions;
 
 namespace LojaVirtual.Controllers
 {
-    [AcessoAutorizacao]
     public class UsuarioController : Controller
     {
+        private readonly Sessao _sessao;
         private readonly UsuarioR _reposUsuario;
 
-        public UsuarioController(UsuarioR reposUsuario)
+        public UsuarioController(Sessao sessao, UsuarioR reposUsuario)
         {
+            _sessao = sessao;
             _reposUsuario = reposUsuario;
         }
 
@@ -22,9 +24,17 @@ namespace LojaVirtual.Controllers
             return View(new Usuario { Cliente = new Cliente() });
         }
 
+        [AcessoAutorizacao]
+        public IActionResult Perfil()
+        {
+            var usuario = _reposUsuario.Buscar(_sessao.UsuarioSessao().IdUsuario);
+            return View(usuario);
+        }
+
 
         //Operações
         [HttpPost]
+        [AcessoAutorizacao]
         public JsonResult Registrar(Usuario usuario)
         {
             return _reposUsuario.Registrar(usuario) > 0 ? 

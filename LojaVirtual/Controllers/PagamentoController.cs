@@ -9,8 +9,8 @@ using PagarMe;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
-using Rastreamento.Authorizations;
-using Rastreamento.Sessions;
+using LojaVirtual.Authorizations;
+using LojaVirtual.Sessions;
 
 namespace LojaVirtual.Controllers
 {

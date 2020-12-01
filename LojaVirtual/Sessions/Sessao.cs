@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
-namespace Rastreamento.Sessions
+namespace LojaVirtual.Sessions
 {
     public class Sessao
     {
+        public static Sessao sessao;
+
         private readonly IHttpContextAccessor _context;
 
         public Sessao(IHttpContextAccessor context)
@@ -38,6 +40,11 @@ namespace Rastreamento.Sessions
         {
             return JsonConvert.DeserializeObject<Usuario>
                 (_context.HttpContext.Session.GetString("Acesso"));
+        }
+
+        public static bool ExisteSessao()
+        {
+            return sessao.Buscar("Acesso") != null;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using LojaVirtual.Data;
 using LojaVirtual.Models.Acesso;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
@@ -12,6 +13,20 @@ namespace LojaVirtual.Repositories
         public UsuarioR(DatabaseContext banco)
         {
             _banco = banco;
+        }
+
+        public Usuario Buscar(uint idUsuario)
+        {
+            try
+            {
+                return _banco.Usuario.Include(u => u.Cliente.Endereco)
+                    .FirstOrDefault(u => u.IdUsuario == idUsuario);
+            }
+            catch (Exception erro)
+            {
+                Console.WriteLine(erro);
+                return new Usuario();
+            }
         }
 
         public int Registrar(Usuario usuario)

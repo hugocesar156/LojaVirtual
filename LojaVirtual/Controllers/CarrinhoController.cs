@@ -2,8 +2,8 @@
 using LojaVirtual.Models.Venda;
 using LojaVirtual.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Rastreamento.Authorizations;
-using Rastreamento.Sessions;
+using LojaVirtual.Authorizations;
+using LojaVirtual.Sessions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

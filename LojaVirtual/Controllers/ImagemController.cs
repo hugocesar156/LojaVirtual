@@ -2,7 +2,7 @@
 using LojaVirtual.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Rastreamento.Authorizations;
+using LojaVirtual.Authorizations;
 using System;
 using System.Collections.Generic;
 using System.IO;

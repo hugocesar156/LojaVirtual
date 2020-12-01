@@ -108,6 +108,7 @@ function ValidaRegistro(acao) {
 
         if (acao == 2) {
             action = "Atualizar";
+            produto.idProduto = $('#id-produto').val();
         }
 
         $.ajax({

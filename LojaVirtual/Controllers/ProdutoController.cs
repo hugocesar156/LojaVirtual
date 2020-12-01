@@ -1,7 +1,8 @@
 ﻿using LojaVirtual.Models.Produto;
 using LojaVirtual.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Rastreamento.Authorizations;
+using LojaVirtual.Authorizations;
+using LojaVirtual.Sessions;
 using System.Linq;
 using X.PagedList;
 
@@ -10,11 +11,12 @@ namespace LojaVirtual.Controllers
     [AcessoAutorizacao]
     public class ProdutoController : Controller
     {
+        private readonly Sessao _sessao;
         private readonly ProdutoR _reposProduto;
-        private static Produto _produto;
 
-        public ProdutoController(ProdutoR reposProduto)
+        public ProdutoController(Sessao sessao, ProdutoR reposProduto)
         {
+            _sessao = sessao;
             _reposProduto = reposProduto;
         }
 
@@ -22,7 +24,6 @@ namespace LojaVirtual.Controllers
         public IActionResult Cadastro()
         {
             ViewBag.Categorias = _reposProduto.BuscarCategorias();
-
             return View(new Produto());
         }
 
@@ -30,10 +31,11 @@ namespace LojaVirtual.Controllers
         public IActionResult Edicao(uint id)
         {
             var produto = _reposProduto.Buscar(id);
-            _produto = produto;
+
+            if (produto.IdUsuario != _sessao.UsuarioSessao().IdUsuario)
+                return RedirectToAction("Incio", "Home");
 
             ViewBag.Categorias = _reposProduto.BuscarCategorias();
-
             return View(produto);
         }
 
@@ -41,12 +43,16 @@ namespace LojaVirtual.Controllers
         public IActionResult Imagem(uint id)
         {
             var produto = _reposProduto.Buscar(id);
+
+            if (produto.IdUsuario != _sessao.UsuarioSessao().IdUsuario)
+                return RedirectToAction("Incio", "Home");
+
             return View(produto);
         }
 
         public IActionResult Lista()
         {
-            var lista = _reposProduto.ListarPaginado();
+            var lista = _reposProduto.ListarPaginado(_sessao.UsuarioSessao().IdUsuario);
             return View(lista);
         }
 
@@ -55,8 +61,7 @@ namespace LojaVirtual.Controllers
         [HttpPost]
         public JsonResult Atualizar(Produto produto)
         {
-            produto.IdProduto = _produto.IdProduto;
-            produto.IdUsuario = _produto.IdUsuario;
+            produto.IdUsuario = _sessao.UsuarioSessao().IdUsuario;
 
             return _reposProduto.Atualizar(produto) > 0 ?
               Json(true) : Json(false);
@@ -86,14 +91,14 @@ namespace LojaVirtual.Controllers
         [HttpGet]
         public IActionResult PesquisarLista(int pagina, int quantidade, string pesquisa)
         {
-            var lista = _reposProduto.ListarPaginado(pagina, quantidade, pesquisa);
+            var lista = _reposProduto.ListarPaginado(_sessao.UsuarioSessao().IdUsuario, pagina, quantidade, pesquisa);
             return PartialView("_Tabela", lista);
         }
 
         [HttpPost]
         public JsonResult Registrar(Produto produto)
         {
-            produto.IdUsuario = 1; 
+            produto.IdUsuario = _sessao.UsuarioSessao().IdUsuario; 
 
             return _reposProduto.Registrar(produto) > 0 ?
               Json(true) : Json(false);

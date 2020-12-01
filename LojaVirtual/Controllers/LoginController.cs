@@ -1,8 +1,8 @@
 ﻿using LojaVirtual.Models.Acesso;
 using LojaVirtual.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Rastreamento.Authorizations;
-using Rastreamento.Sessions;
+using LojaVirtual.Authorizations;
+using LojaVirtual.Sessions;
 using System;
 
 namespace LojaVirtual.Controllers
@@ -46,6 +46,13 @@ namespace LojaVirtual.Controllers
                 Console.WriteLine(erro);
                 return Json(false);
             }
+        }
+
+        [AcessoAutorizacao]
+        public IActionResult Sair()
+        {
+            _sessao.Remover("Acesso");
+            return View("Entrar");
         }
     }
 }

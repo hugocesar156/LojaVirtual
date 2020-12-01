@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Rastreamento.Sessions;
+using LojaVirtual.Sessions;
 
-namespace Rastreamento.Authorizations
+namespace LojaVirtual.Authorizations
 {
     public class AcessoAutorizacao : Attribute, IAuthorizationFilter
     {

@@ -11,7 +11,7 @@
     <title>@ViewData["Title"] - Loja Virtual</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
         <a class="navbar-brand" href="@Url.Action("Inicio", "Home")">Loja Virtual</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -69,16 +69,34 @@
                         </div>
                     </div>
                 </li>
-                <li class="nav-item text-center d-block d-sm-none d-md-none d-sm-none d-xl-none mt-2">
-                    <a class="nav-link" href="@Url.Action("Entrar", "Login")">Conta</a>
-                </li>
             </ul>
         </div>
-        <div class="nav-item text-right d-none d-sm-block">
-            <a class="nav-link" href="@Url.Action("Entrar", "Login")">Conta</a>
-        </div>
+        @if (!Sessao.ExisteSessao())
+        {
+            <div class="row d-md-block d-none">
+                <div class="col">
+                    <a class="btn btn-primary" href="@Url.Action("Entrar", "Login")">Entrar</a>
+                    <a class="btn btn-outline-primary" href="@Url.Action("Cadastro", "Usuario")">Registrar-se</a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col">
+                    <div class="btn-group dropdown">
+                        <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user"></i> Conta
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="@Url.Action("Perfil", "Usuario")">Perfil</a>
+                            <a class="dropdown-item" href="@Url.Action("Sair", "Login")">Sair</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
     </nav>
-
     <div class="container mt-3 body-content">
         @RenderBody()
         <footer class="text-center mt-5">

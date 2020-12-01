@@ -1,7 +1,7 @@
 ﻿using LojaVirtual.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Rastreamento.Authorizations;
-using Rastreamento.Sessions;
+using LojaVirtual.Authorizations;
+using LojaVirtual.Sessions;
 
 namespace LojaVirtual.Controllers
 {
