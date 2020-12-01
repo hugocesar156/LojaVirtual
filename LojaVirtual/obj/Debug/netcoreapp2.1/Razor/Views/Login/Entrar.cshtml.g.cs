@@ -74,7 +74,7 @@ using LojaVirtual.Sessions;
             WriteLiteral("\r\n<div class=\"text-center\">\r\n    <h4>Login</h4>\r\n\r\n    ");
             EndContext();
             BeginContext(97, 1246, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4c3fa405c6ae498f8cea0e00de1f024b", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "26b417e24a6a47bf91eb75326f369224", async() => {
                 BeginContext(127, 1209, true);
                 WriteLiteral(@"
         <div class=""row justify-content-center mt-5"">
@@ -118,7 +118,7 @@ using LojaVirtual.Sessions;
             WriteLiteral("\r\n</div>\r\n\r\n");
             EndContext();
             BeginContext(1355, 45, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f870605446b3416abd646a13e0351c1b", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e08282bf0bff43fc8076fbadfdf2e615", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

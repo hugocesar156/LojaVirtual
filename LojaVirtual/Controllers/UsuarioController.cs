@@ -21,6 +21,13 @@ namespace LojaVirtual.Controllers
         //Páginas
         public IActionResult Cadastro()
         {
+            ViewBag.Estados = new string[]
+            {
+                "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA",
+                "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN",
+                "RO", "RR", "RS", "SC", "SE", "SP", "TO"
+            };
+
             return View(new Usuario { Cliente = new Cliente() });
         }
 
@@ -34,7 +41,15 @@ namespace LojaVirtual.Controllers
 
         //Operações
         [HttpPost]
-        [AcessoAutorizacao]
+        public JsonResult ValidaUsuario(Usuario usuario)
+        {
+            if (_reposUsuario.ValidaEmail(usuario.Email))
+                return Json(true);
+
+            return Json(false);
+        }
+
+        [HttpPost]
         public JsonResult Registrar(Usuario usuario)
         {
             return _reposUsuario.Registrar(usuario) > 0 ? 

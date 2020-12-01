@@ -80,7 +80,7 @@ using LojaVirtual.Sessions;
             WriteLiteral("\r\n<div class=\"text-center\">\r\n    <h4>Endereço</h4>\r\n\r\n    ");
             EndContext();
             BeginContext(167, 3358, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "389bd42a250748b39c6ff80b1cc10858", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f0dca1908c0c46319dd0ac93df5f08f8", async() => {
                 BeginContext(216, 2080, true);
                 WriteLiteral(@"
         <div class=""row justify-content-center mt-4"">
@@ -119,7 +119,7 @@ using LojaVirtual.Sessions;
                 WriteLiteral("po(this)\">\r\n                    ");
                 EndContext();
                 BeginContext(2296, 37, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b50ec3adc47473588c79dff64169a00", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cf751fc9bb7c46778c732da554a46cda", async() => {
                     BeginContext(2322, 2, true);
                     WriteLiteral("--");
                     EndContext();
@@ -153,7 +153,7 @@ using LojaVirtual.Sessions;
                 WriteLiteral("                        ");
                 EndContext();
                 BeginContext(2442, 32, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "21094571343d406b9adbfbdf5b7ceccf", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b76a30f8926d4cbe9cdc53f4d127fc3c", async() => {
                     BeginContext(2463, 2, false);
 #line 47 "C:\Projetos\Loja Virtual\LojaVirtual\Views\Cliente\Endereco.cshtml"
                                        Write(uf);
@@ -233,7 +233,7 @@ using LojaVirtual.Sessions;
             WriteLiteral("\r\n</div>\r\n\r\n");
             EndContext();
             BeginContext(3537, 49, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "90061fe8c5c44bf7b4f60884103d291c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "410434477fc24e5eacf717a2a1622062", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

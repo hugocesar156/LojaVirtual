@@ -1,22 +1,22 @@
 ﻿@model LojaVirtual.Models.Acesso.Usuario
 
 @{
-    ViewData["Title"] = "Cadastro de cliente";
+    ViewData["Title"] = "Cadastro de usuário";
 }
 
 <div class="text-center">
-    <h4>Cadastro de cliente</h4>
-
-    <form action="" method="post" id="form-cadastro">
-        <div class="row justify-content-center mt-4">
+    <h4>Cadastro de usuário</h4>
+    <form id="form-cliente">
+        <h5 class="mt-4">Cliente</h5>
+        <div class="row justify-content-center mt-2">
             <div class="col-10 col-sm-9 col-md-5 col-xl-4 text-center text-md-left">
                 <label>Nome</label>
-                <input class="form-control" id="nome" name="nome" type="text" maxlength="50"
+                <input class="form-control form-cliente" id="nome" type="text" maxlength="50"
                        onchange="ValidaCampo(this)" value="@Model.Cliente.Nome"/>
             </div>
             <div class="col-5 col-sm-4 col-md-3 col-xl-2 text-center mt-2 mt-md-0">
                 <label>CPF</label>
-                <input class="form-control cpf" id="cpf" type="text" placeholder="000.000.000-00" name="cpf"
+                <input class="form-control form-cliente cpf" id="cpf" type="text" placeholder="000.000.000-00" 
                        style="text-align: center" onchange="ValidaCampo(this)" value="@Model.Cliente.Cpf" />
                 <div class="invalid-feedback text-left" id="cpf">Insira um CPF válido</div>
             </div>
@@ -28,7 +28,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">@@</span>
                     </div>
-                    <input class="form-control" id="email" type="text" maxlength="35" name="email"
+                    <input class="form-control form-cliente" id="email" type="text" maxlength="35"
                            placeholder="exemplo@@email.com" style="text-align: center"
                            onchange="ValidaCampo(this)" value="@Model.Email" />
                     <div class="invalid-feedback text-left" id="email"></div>
@@ -38,22 +38,91 @@
         <div class="row justify-content-center mt-4">
             <div class="col-9 col-sm-7 col-md-4 col-xl-3 text-center text-md-left">
                 <label>Senha</label>
-                <input class="form-control senha" id="senha" type="password" maxlength="30"
-                       placeholder="*******" style="text-align: center" name="senha"
+                <input class="form-control form-cliente senha" id="senha" type="password" maxlength="30"
+                       placeholder="*******" style="text-align: center" 
                        onchange="ValidaCampo(this)" value="@Model.Senha" />
                 <div class="invalid-feedback text-left msg-senha" id="senha"></div>
             </div>
             <div class="col-9 col-sm-7 col-md-4 col-xl-3 text-center text-md-left mt-2 mt-md-0">
                 <label>Confirme sua senha</label>
-                <input class="form-control conf" id="confirma" type="password" maxlength="30"
+                <input class="form-control form-cliente conf" id="confirma" type="password" maxlength="30"
                        style="text-align: center" onchange="ValidaCampo(this)" />
                 <div class="invalid-feedback text-left msg-conf" id="confirma"></div>
             </div>
         </div>
         <div class="row justify-content-center mt-5 mb-3">
-            <button class="btn btn-success col-6 col-sm-5 col-md-3" type="button" onclick="ValidaRegistro()">Registrar</button>
+            <button class="btn btn-success col-6 col-sm-5 col-md-3" type="button" onclick="ValidaUsuario()">Contiuar</button>
+        </div>
+    </form>
+
+    <form id="form-endereco" class="d-none">
+        <h5 class="mt-4">Endereço</h5>
+        <div class="row justify-content-center mt-2">
+            <div class="col-10 col-sm-9 col-md-5 col-xl-2 text-center text-md-left">
+                <label>CEP</label>
+                <input class="form-control form-endereco cep" id="cep" type="text" maxlength="50"
+                       placeholder="00000-000" style="text-align: center;" onchange="BuscaEndereco()" value="" />
+                <div class="invalid-feedback text-left" id="cpf">Insira um CEP válido</div>
+            </div>
+            <div class="col-5 col-sm-4 col-md-3 col-xl-4 text-left mt-2 mt-md-0">
+                <label>Logradouro</label>
+                <input class="form-control form-endereco" id="logradouro" type="text"
+                       onchange="ValidaCampoEndereco(this)" value="" />
+            </div>
+            <div class="col-5 col-sm-4 col-md-3 col-xl-2 text-left mt-2 mt-md-0">
+                <label>Número</label>
+                <input class="form-control form-endereco" id="numero" type="text" placeholder="000"
+                       maxlength="5" style="text-align: center" onchange="ValidaCampoEndereco(this)" value="" />
+            </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-10 col-sm-9 col-md-5 col-xl-3 text-center text-md-left">
+                <label>Bairro</label>
+                <input class="form-control form-endereco" id="bairro" type="text" maxlength="50"
+                       onchange="ValidaCampoEndereco(this)" value="" />
+            </div>
+            <div class="col-10 col-sm-9 col-md-5 col-xl-3 text-center text-md-left">
+                <label>Cidade</label>
+                <input class="form-control form-endereco" id="cidade" type="text" maxlength="50"
+                       onchange="ValidaCampoEndereco(this)" value="" />
+            </div>
+            <div class="col-10 col-sm-9 col-md-5 col-xl-2 text-center text-md-left">
+                <label>UF</label>
+                <select id="uf" class="custom-select form-control form-endereco" onchange="ValidaCampoEndereco(this)">
+                    <option value="" selected>--</option>
+
+                    @foreach (var uf in ViewBag.Estados)
+                    {
+                        <option value="@uf">@uf</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-4 ">
+            <div class="col-10 col-sm-9 col-md-5 col-xl-3 text-center text-md-left">
+                <label>Nome de endereço</label>
+                <input class="form-control form-endereco" id="nome-endereco" type="text" maxlength="50"
+                       style="text-align: center" onchange="ValidaCampoEndereco(this)" value="" />
+            </div>
+            <div class="col-10 col-sm-9 col-md-5 col-xl-3 text-center text-md-left">
+                <label>Complemento</label>
+                <input class="form-control form-endereco campo-nulo" id="complemento" type="text" maxlength="50"
+                       onchange="ValidaCampoEndereco(this)" value="" />
+            </div>
+            <div class="col-10 col-sm-9 col-md-5 col-xl-2 text-center text-md-left">
+                <label>Telefone</label>
+                <input class="form-control telefone" id="telefone" type="text" maxlength="50" placeholder="00 00000-0000"
+                       style="text-align: center;" onchange="ValidaCampoEndereco(this)" value="" />
+            </div>
+        </div>
+        <div class="row justify-content-center mt-5 mb-3">
+            <button class="btn btn-outline-success col-6 col-sm-5 col-md-3" type="button" onclick="Voltar()">Voltar</button>
+        </div>
+        <div class="row justify-content-center mb-3">
+            <button class="btn btn-success col-6 col-sm-5 col-md-3" type="button" onclick="RegistraUsuario()">Finalizar</button>
         </div>
     </form>
 </div>
 
 <script src="~/js/Usuario/validacao.js"></script>
+<script src="~/js/Endereco/endereco.js"></script>

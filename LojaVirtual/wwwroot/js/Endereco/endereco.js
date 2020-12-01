@@ -28,9 +28,9 @@
     }
 }
 
-function ValidaCampo(campo) {
+function ValidaCampoEndereco(campo) {
     if (campo == undefined) {
-        $('.form-control').each(function () {
+        $('.form-endereco').each(function () {
             if ($(this).val() == "" && !$(this).hasClass('campo-nulo')) {
                 $(this).removeClass('is-valid');
                 $(this).addClass('is-invalid');

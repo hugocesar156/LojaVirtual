@@ -56,5 +56,18 @@ namespace LojaVirtual.Repositories
                 return new Usuario();
             }
         }
+
+        public bool ValidaEmail(string email)
+        {
+            try
+            {
+                return _banco.Usuario.FirstOrDefault(u => u.Email == email) == null;
+            }
+            catch (Exception erro)
+            {
+                Console.WriteLine(erro);
+                return false;
+            }
+        }
     }
 }

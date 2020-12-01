@@ -1,4 +1,5 @@
-﻿function ConfirmaSenha(conf) {
+﻿//Validações de campo
+function ConfirmaSenha(conf) {
     if ($('#senha').hasClass('is-valid')) {
         if (conf.val() == $('#senha').val()) {
             conf.removeClass('is-invalid');
@@ -49,19 +50,12 @@ function ValidaCpf(cpf) {
     let valor = cpf.val().replace(".", "").replace(".", "").replace("-", "");
     let soma = 0;
 
-    if (
-        valor.length != 11 ||
-        valor == "00000000000" ||
-        valor == "11111111111" ||
-        valor == "22222222222" ||
-        valor == "33333333333" ||
-        valor == "44444444444" ||
-        valor == "55555555555" ||
-        valor == "66666666666" ||
-        valor == "77777777777" ||
-        valor == "88888888888" ||
-        valor == "99999999999"
-    ) return false;
+    if (valor.length != 11 ||
+        valor == "00000000000" || valor == "11111111111" ||
+        valor == "22222222222" || valor == "33333333333" ||
+        valor == "44444444444" || valor == "55555555555" ||
+        valor == "66666666666" || valor == "77777777777" ||
+        valor == "88888888888" || valor == "99999999999") return false;
 
     for (i = 1; i <= 9; i++) soma += parseInt(valor.substring(i - 1, i)) * (11 - i);
     let resto = (soma * 10) % 11;
@@ -79,37 +73,6 @@ function ValidaCpf(cpf) {
     return true;
 }
 
-function ValidaRegistro() {
-    if ($('.form-control').length == $('.is-valid').length) {
-        let usuario = {
-            email: $('#email').val(),
-            senha: $('#senha').val(),
-
-            cliente: {
-                nome: $('#nome').val(),
-                cpf: $('#cpf').val().replace(".", "").replace(".", "").replace("-", "")
-            }
-        }
-
-        $.ajax({
-            type: "POST",
-            url: "/Usuario/Registrar",
-            data: { usuario: usuario },
-            success: function (resultado) {
-                if (resultado) {
-                    window.location.pathname = "Home/Inicio";
-                }
-                else {
-                    alert("Falha na tentativa de cadastro.");
-                }
-            },
-            error: function () {
-                alert("Falha na tentativa de cadastro.");
-            }
-        });
-    }
-}
-
 function ValidaSenha(senha) {
     if (senha.val().length < 6) {
         senha.removeClass('is-valid');
@@ -121,4 +84,109 @@ function ValidaSenha(senha) {
     if ($('#confirma').val() != "") {
         ConfirmaSenha($('#confirma'));
     }
+}
+
+//Validações de cadastro
+function ValidaUsuario() {
+    if (ValidaFormulario(1)) {
+        let usuario = MontaUsuario();
+
+        $.ajax({
+            type: "POST",
+            url: "/Usuario/ValidaUsuario",
+            data: { usuario: usuario },
+            success: function (validacao) {
+                if (validacao) {
+                    $('#form-cliente').addClass('d-none');
+                    $('#form-endereco').removeClass('d-none');
+                }
+                else {
+                    alert("Falha ao confirmar dados de cadastro.");
+                }
+            },
+            error: function () {
+                alert("Falha ao confirmar dados de cadastro.");
+            }
+        });
+    }
+}
+
+function RegistraUsuario() {
+    if (ValidaFormulario(2)) {
+        let usuario = MontaUsuario();
+
+        $.ajax({
+            type: "POST",
+            url: "/Usuario/Registrar",
+            data: { usuario: usuario },
+            success: function (validacao) {
+                if (validacao) {
+                    window.location.pathname = "Login/Entrar";
+                }
+                else {
+                    alert("Falha ao confirmar dados de cadastro.");
+                }
+            },
+            error: function () {
+                alert("Falha ao confirmar dados de cadastro.");
+            }
+        });
+    }
+}
+
+//Operações
+function MontaUsuario() {
+    return {
+        email: $('#email').val(),
+        senha: $('#senha').val(),
+        perfil: '1',
+
+        cliente: {
+            nome: $('#nome').val(),
+            cpf: $('#cpf').val().replace(".", "").replace(".", "").replace("-", "")
+        },
+
+        endereco: {
+            cep: $('#cep').val().replace("-", ""),
+            logradouro: $('#logradouro').val().toUpperCase(),
+            numero: $('#numero').val(),
+            bairro: $('#bairro').val().toUpperCase(),
+            cidade: $('#cidade').val().toUpperCase(),
+            uf: $('#uf').val().toUpperCase(),
+            nome: $('#nome-endereco').val().toUpperCase(),
+            complemento: $('#complemento').val().toUpperCase()
+        }
+    }
+}
+
+function ValidaFormulario(form) {
+    let validos = 0;
+
+    if (form == 1) {
+        $('.form-cliente').each(function () {
+            if ($(this).hasClass('is-valid'))
+                validos++;
+        });
+
+        return validos == $('.form-cliente').length;
+    }
+    else {
+        $('.form-endereco').each(function () {
+            if ($(this).hasClass('is-valid'))
+                validos++;
+        });
+
+        return validos == $('.form-endereco').length;
+    }
+}
+
+function Voltar() {
+    $('.form-endereco').each(function () {
+        $(this).val("");
+        $(this).removeClass('is-valid');
+        $(this).removeClass('is-invalid');
+    });
+
+    $('#form-endereco').addClass('d-none');
+    $('#form-cliente').removeClass('d-none');
 }
