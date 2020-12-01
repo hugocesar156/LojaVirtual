@@ -13,21 +13,11 @@
             url: "/Login/ValidaAcesso",
             data: { usuario: usuario },
             success: function (validacao) {
-                if (validacao == 0) {
+                if (validacao) {
                     window.location.pathname = "Home/Inicio";
                 }
                 else {
-                    if (validacao == 1) {
-                        $('#email').addClass('is-invalid');
-                        $('.msg-email').html("Email inválido");
-
-                        $('#senha').removeClass('is-invalid');
-                    }
-
-                    if (validacao == 2) {
-                        $('#senha').addClass('is-invalid');
-                        $('.msg-senha').html("Senha incorreta");
-                    }
+                    alert("Dados de acesso não conferem.");
                 }
             },
             error: function () {

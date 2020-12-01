@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LojaVirtual.Models.Acesso
@@ -8,16 +9,16 @@ namespace LojaVirtual.Models.Acesso
         [Key]
         public uint IdUsuario { get; set; }
 
-        [Required, MaxLength(35), EmailAddress]
+        [Required, MaxLength(35), EmailAddress, JsonIgnore]
         public string Email { get; set; }
 
-        [Required, MaxLength(30)]
+        [Required, MaxLength(30), JsonIgnore]
         public string Senha { get; set; }
 
         [Required, Column(TypeName = "CHAR(1)")]
         public char Perfil { get; set; }
 
-        [ForeignKey("IdCliente")]
+        [ForeignKey("IdCliente"), JsonIgnore]
         public Cliente.Cliente Cliente { get; set; }
 
         [Required]

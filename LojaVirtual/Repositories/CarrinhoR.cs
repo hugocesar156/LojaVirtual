@@ -35,11 +35,11 @@ namespace LojaVirtual.Repositories
             }
         }
 
-        public List<Carrinho> Buscar()
+        public List<Carrinho> Buscar(uint idCliente)
         {
             try
             {
-                return _banco.Carrinho.Where(c => c.IdCliente == 1).ToList();
+                return _banco.Carrinho.Where(c => c.IdCliente == idCliente).ToList();
             }
             catch (Exception erro)
             {

@@ -75,7 +75,7 @@ using Newtonsoft.Json;
             WriteLiteral("\r\n<div class=\"text-center\">\r\n    <h4>Endereço</h4>\r\n\r\n    ");
             EndContext();
             BeginContext(167, 3358, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3979eabaf94c4f95aca9b70e2d9f46ae", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4f183ee2b2974c64820fc83183514731", async() => {
                 BeginContext(216, 2080, true);
                 WriteLiteral(@"
         <div class=""row justify-content-center mt-4"">
@@ -114,7 +114,7 @@ using Newtonsoft.Json;
                 WriteLiteral("po(this)\">\r\n                    ");
                 EndContext();
                 BeginContext(2296, 37, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "82020cb79de84768a21b69d0aa291876", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "aa242c44d2cc4535947b153c7509feba", async() => {
                     BeginContext(2322, 2, true);
                     WriteLiteral("--");
                     EndContext();
@@ -148,7 +148,7 @@ using Newtonsoft.Json;
                 WriteLiteral("                        ");
                 EndContext();
                 BeginContext(2442, 32, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f42dca670e2a4d8b8358d70667582fd5", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bb5dbc8846d54db9b3c441b666ff998d", async() => {
                     BeginContext(2463, 2, false);
 #line 47 "C:\Projetos\Loja Virtual\LojaVirtual\Views\Cliente\Endereco.cshtml"
                                        Write(uf);
@@ -228,7 +228,7 @@ using Newtonsoft.Json;
             WriteLiteral("\r\n</div>\r\n\r\n");
             EndContext();
             BeginContext(3537, 49, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c25646b264184197b2e8819358d3a339", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "40805db2448c4c92bb543d2c67a4a394", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

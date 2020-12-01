@@ -17,12 +17,12 @@ namespace LojaVirtual.Repositories
             _banco = banco;
         }
 
-        public Cliente Buscar()
+        public Cliente Buscar(uint idCliente)
         {
             try
             {
                 return _banco.Cliente.Include(c => c.Endereco)
-                    .FirstOrDefault(c => c.IdCliente == 1);
+                    .FirstOrDefault(c => c.IdCliente == idCliente);
             }
             catch (Exception erro)
             {

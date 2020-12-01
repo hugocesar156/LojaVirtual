@@ -1,11 +1,13 @@
 ﻿using LojaVirtual.Models.Produto;
 using LojaVirtual.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Rastreamento.Authorizations;
 using System.Linq;
 using X.PagedList;
 
 namespace LojaVirtual.Controllers
 {
+    [AcessoAutorizacao]
     public class ProdutoController : Controller
     {
         private readonly ProdutoR _reposProduto;

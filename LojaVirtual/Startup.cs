@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Rastreamento.Sessions;
+using System;
 using WSCorreios;
 
 namespace LojaVirtual
@@ -30,6 +32,17 @@ namespace LojaVirtual
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
+            services.AddHttpContextAccessor();
+            services.AddScoped<Sessao>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -65,6 +78,7 @@ namespace LojaVirtual
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

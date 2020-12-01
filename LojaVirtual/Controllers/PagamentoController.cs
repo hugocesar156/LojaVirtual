@@ -9,11 +9,16 @@ using PagarMe;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
+using Rastreamento.Authorizations;
+using Rastreamento.Sessions;
 
 namespace LojaVirtual.Controllers
 {
+    [AcessoAutorizacao]
     public class PagamentoController : Controller
     {
+        private readonly Sessao _sessao;
+
         private readonly ClienteR _reposCliente;
         private readonly ProdutoR _reposProduto;
         private readonly CarrinhoR _reposCarrinho;
@@ -21,9 +26,11 @@ namespace LojaVirtual.Controllers
 
         private readonly IConfiguration _configuration;
 
-        public PagamentoController(ClienteR reposCliente, ProdutoR reposProduto, 
+        public PagamentoController(Sessao sessao, ClienteR reposCliente, ProdutoR reposProduto, 
             CarrinhoR reposCarrinho, PedidoR reposPedido, IConfiguration configuration)
         {
+            _sessao = sessao;
+
             _reposCliente = reposCliente;
             _reposProduto = reposProduto;
             _reposCarrinho = reposCarrinho;
@@ -78,7 +85,7 @@ namespace LojaVirtual.Controllers
         [HttpPost]
         public JsonResult PagamentoBoleto(EnderecoCliente endereco, Frete frete)
         {
-            var carrinho = _reposCarrinho.Buscar();
+            var carrinho = _reposCarrinho.Buscar(_sessao.UsuarioSessao().IdCliente);
             var produtos = new List<Produto>();
 
             var total = 0.0F;
@@ -132,7 +139,7 @@ namespace LojaVirtual.Controllers
                         }
                     };
 
-                    pedido.Cliente = _reposCliente.Buscar();
+                    pedido.Cliente = _reposCliente.Buscar(_sessao.UsuarioSessao().IdCliente);
                     pedido.Frete = frete;
 
                     pedido.Produto = new List<ProdutoHistorico>();
@@ -148,7 +155,7 @@ namespace LojaVirtual.Controllers
                         });
                     }
 
-                    _reposCarrinho.RemoverTodos(_reposCliente.Buscar().IdCliente);
+                    _reposCarrinho.RemoverTodos(_sessao.UsuarioSessao().IdCliente);
 
                     return _reposPedido.Registrar(pedido) > 0 ?
                         Json(Convert.ToInt32(transacao.Id)) : Json(0);
@@ -166,7 +173,7 @@ namespace LojaVirtual.Controllers
         [HttpPost]
         public JsonResult PagamentoCartao(Cartao cartao, EnderecoCliente endereco, Frete frete, byte parcelas)
         {
-            var carrinho = _reposCarrinho.Buscar();
+            var carrinho = _reposCarrinho.Buscar(_sessao.UsuarioSessao().IdCliente);
             var produtos = new List<Produto>();
 
             var total = 0.0F;
@@ -242,7 +249,7 @@ namespace LojaVirtual.Controllers
                         }
                     };
 
-                    pedido.Cliente = _reposCliente.Buscar();
+                    pedido.Cliente = _reposCliente.Buscar(_sessao.UsuarioSessao().IdCliente);
                     pedido.Frete = frete;
 
                     pedido.Produto = new List<ProdutoHistorico>();
@@ -259,7 +266,7 @@ namespace LojaVirtual.Controllers
                         });
                     }
 
-                    _reposCarrinho.RemoverTodos(_reposCliente.Buscar().IdCliente);
+                    _reposCarrinho.RemoverTodos(_sessao.UsuarioSessao().IdCliente);
 
                     if (_reposPedido.Registrar(pedido) > 0)
                     {
@@ -289,7 +296,7 @@ namespace LojaVirtual.Controllers
             PagarMeService.DefaultApiKey = _configuration.GetValue<string>("Pagamento:DefaultApiKey");
             PagarMeService.DefaultEncryptionKey = _configuration.GetValue<string>("Pagamento:DefaultEncryptionKey");
 
-            var cliente = _reposCliente.Buscar();
+            var cliente = _reposCliente.Buscar(_sessao.UsuarioSessao().IdCliente);
 
             var transacao = new Transaction
             {

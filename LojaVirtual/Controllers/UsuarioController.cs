@@ -2,9 +2,11 @@
 using LojaVirtual.Models.Cliente;
 using LojaVirtual.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Rastreamento.Authorizations;
 
 namespace LojaVirtual.Controllers
 {
+    [AcessoAutorizacao]
     public class UsuarioController : Controller
     {
         private readonly UsuarioR _reposUsuario;

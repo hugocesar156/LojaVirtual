@@ -2,6 +2,7 @@
 using LojaVirtual.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Rastreamento.Authorizations;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,6 +10,7 @@ using System.Linq;
 
 namespace LojaVirtual.Controllers
 {
+    [AcessoAutorizacao]
     public class ImagemController : Controller
     {
         private readonly ImagemR _reposImagem;

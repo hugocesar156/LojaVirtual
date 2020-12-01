@@ -2,14 +2,19 @@
 using LojaVirtual.Models.Venda;
 using LojaVirtual.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Rastreamento.Authorizations;
+using Rastreamento.Sessions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace LojaVirtual.Controllers
 {
+    [AcessoAutorizacao]
     public class CarrinhoController : Controller
     {
+        private readonly Sessao _sessao;
+
         private readonly ProdutoR _reposProduto;
         private readonly CarrinhoR _reposCarrinho;
         private readonly FreteR _reposFrete;
@@ -17,8 +22,11 @@ namespace LojaVirtual.Controllers
 
         private static List<Carrinho> _carrinho;
 
-        public CarrinhoController(ProdutoR reposProduto, CarrinhoR reposCarrinho, FreteR reposFrete, ClienteR reposCliente)
+        public CarrinhoController(Sessao sessao, ProdutoR reposProduto, CarrinhoR reposCarrinho, 
+            FreteR reposFrete, ClienteR reposCliente)
         {
+            _sessao = sessao;
+
             _reposProduto = reposProduto;
             _reposCarrinho = reposCarrinho;
             _reposFrete = reposFrete;
@@ -28,7 +36,7 @@ namespace LojaVirtual.Controllers
         //Páginas
         public IActionResult Menu()
         {
-            var carrinho = _reposCarrinho.Buscar();
+            var carrinho = _reposCarrinho.Buscar(_sessao.UsuarioSessao().IdCliente);
             var produtos = new List<Produto>();
 
             foreach (var item in carrinho)
@@ -63,7 +71,7 @@ namespace LojaVirtual.Controllers
         public async Task<JsonResult> CalcularFrete(string cep, string servico)
         {
             var lista = new List<Produto>();
-            var carrinho = _reposCarrinho.Buscar();
+            var carrinho = _reposCarrinho.Buscar(_sessao.UsuarioSessao().IdCliente);
 
             var quantidade = new Dictionary<uint, uint>();
 

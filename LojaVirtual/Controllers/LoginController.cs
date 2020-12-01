@@ -1,12 +1,25 @@
 ﻿using LojaVirtual.Models.Acesso;
+using LojaVirtual.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Rastreamento.Authorizations;
+using Rastreamento.Sessions;
 using System;
 
 namespace LojaVirtual.Controllers
 {
     public class LoginController : Controller
     {
+        private readonly UsuarioR _reposUsuario;
+        private readonly Sessao _sessao;
+
+        public LoginController(UsuarioR reposUsuario, Sessao sessao)
+        {
+            _reposUsuario = reposUsuario;
+            _sessao = sessao;
+        }
+
         //Páginas
+        [AnonimoAutorizacao]
         public IActionResult Entrar()
         {
             return View();
@@ -18,23 +31,20 @@ namespace LojaVirtual.Controllers
         {
             try
             {
-                /* 0 - Acesso validado
-                  1 - Email inválido
-                  2 - Senha incorreta 
-                  3 - Erro */
+                var usuarioBanco = _reposUsuario.ValidaAcesso(usuario);
 
-                if (usuario.Email != "admin")
-                    return Json(1);
+                if (usuarioBanco != null)
+                {
+                    _sessao.Salvar(usuarioBanco, "Acesso");
+                    return Json(true);
+                }
 
-                else if (usuario.Senha != "123456")
-                    return Json(2);
-
-                return Json(0);
+                return Json(false);
             }
             catch (Exception erro)
             {
                 Console.WriteLine(erro);
-                return Json(3);
+                return Json(false);
             }
         }
     }

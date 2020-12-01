@@ -34,7 +34,8 @@ namespace LojaVirtual.Repositories
 
         public static void RemoveImagem(string caminho)
         {
-            if (File.Exists(caminho)) File.Delete(caminho);
+            if (File.Exists(caminho)) 
+                File.Delete(caminho);
         }
 
         public int Inserir(Imagem imagem)

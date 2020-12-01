@@ -1,18 +1,22 @@
-﻿using LojaVirtual.Models.Pagamento;
-using LojaVirtual.Repositories;
+﻿using LojaVirtual.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Rastreamento.Authorizations;
+using Rastreamento.Sessions;
 
 namespace LojaVirtual.Controllers
 {
+    [AcessoAutorizacao]
     public class PedidoController : Controller
     {
-        private readonly PedidoR _reposPedido;
-        private readonly ClienteR _reposCliente;
+        private readonly Sessao _sessao;
 
-        public PedidoController(PedidoR reposPedido, ClienteR reposCliente)
+        private readonly PedidoR _reposPedido;
+
+        public PedidoController(Sessao sessao, PedidoR reposPedido)
         {
+            _sessao = sessao;
+
             _reposPedido = reposPedido;
-            _reposCliente = reposCliente;
         }
 
         //Páginas
@@ -25,7 +29,7 @@ namespace LojaVirtual.Controllers
 
         public IActionResult Lista()
         {
-            var lista = _reposPedido.Listar(_reposCliente.Buscar().IdCliente);
+            var lista = _reposPedido.Listar(_sessao.UsuarioSessao().IdCliente);
             return View(lista);
         }
 

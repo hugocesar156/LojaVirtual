@@ -73,7 +73,7 @@ using Newtonsoft.Json;
             WriteLiteral("\r\n<div class=\"text-center\">\r\n    <h4>Cadastro de cliente</h4>\r\n\r\n    ");
             EndContext();
             BeginContext(168, 2878, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3943f36e2e85461f8cf845d0ef448bb9", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "193570e60a5f457ea0be874cb76ef5b5", async() => {
                 BeginContext(217, 325, true);
                 WriteLiteral(@"
         <div class=""row justify-content-center mt-4"">
@@ -192,7 +192,7 @@ WriteAttributeValue("", 2257, Model.Senha, 2257, 12, false);
             WriteLiteral("\r\n</div>\r\n\r\n");
             EndContext();
             BeginContext(3058, 49, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "365dc0118d7c4a33be89949049caf48e", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "291a81b5897942749875fca054f2c020", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
