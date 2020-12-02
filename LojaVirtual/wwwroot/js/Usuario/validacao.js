@@ -89,7 +89,7 @@ function ValidaSenha(senha) {
 //Validações de cadastro
 function ValidaUsuario() {
     if (ValidaFormulario(1)) {
-        let usuario = MontaUsuario();
+        let usuario = CarregaUsuario();
 
         $.ajax({
             type: "POST",
@@ -113,7 +113,7 @@ function ValidaUsuario() {
 
 function RegistraUsuario() {
     if (ValidaFormulario(2)) {
-        let usuario = MontaUsuario();
+        let usuario = CarregaUsuario();
 
         $.ajax({
             type: "POST",
@@ -135,7 +135,7 @@ function RegistraUsuario() {
 }
 
 //Operações
-function MontaUsuario() {
+function CarregaUsuario() {
     return {
         email: $('#email').val(),
         senha: $('#senha').val(),
@@ -143,18 +143,18 @@ function MontaUsuario() {
 
         cliente: {
             nome: $('#nome').val(),
-            cpf: $('#cpf').val().replace(".", "").replace(".", "").replace("-", "")
-        },
+            cpf: $('#cpf').val().replace(".", "").replace(".", "").replace("-", ""),
 
-        endereco: {
-            cep: $('#cep').val().replace("-", ""),
-            logradouro: $('#logradouro').val().toUpperCase(),
-            numero: $('#numero').val(),
-            bairro: $('#bairro').val().toUpperCase(),
-            cidade: $('#cidade').val().toUpperCase(),
-            uf: $('#uf').val().toUpperCase(),
-            nome: $('#nome-endereco').val().toUpperCase(),
-            complemento: $('#complemento').val().toUpperCase()
+            endereco: {
+                cep: $('#cep').val().replace("-", ""),
+                logradouro: $('#logradouro').val().toUpperCase(),
+                numero: $('#numero').val(),
+                bairro: $('#bairro').val().toUpperCase(),
+                cidade: $('#cidade').val().toUpperCase(),
+                uf: $('#uf').val().toUpperCase(),
+                nome: $('#nome-endereco').val().toUpperCase(),
+                complemento: $('#complemento').val().toUpperCase()
+            }
         }
     }
 }

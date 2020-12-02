@@ -14,7 +14,7 @@
                     $('#uf').val(endereco.uf);
                     $('#complemento').val(endereco.complemento);
 
-                    ValidaCampo();
+                    ValidaCampoEndereco();
                 }
                 else {
                     $('#cep').removeClass('is-valid');

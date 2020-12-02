@@ -52,6 +52,9 @@ namespace LojaVirtual.Controllers
         [HttpPost]
         public JsonResult Registrar(Usuario usuario)
         {
+            if (usuario.Cliente.Endereco.Complemento == null)
+                usuario.Cliente.Endereco.Complemento = "";
+
             return _reposUsuario.Registrar(usuario) > 0 ? 
                 Json(true) : Json(false);
         }
