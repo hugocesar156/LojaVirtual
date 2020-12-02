@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace LojaVirtual.Models.Cliente
 {
@@ -14,5 +15,6 @@ namespace LojaVirtual.Models.Cliente
         public string Cpf { get; set; }
 
         public EnderecoCliente Endereco { get; set; }
+        public List<ContatoCliente> Contato { get; set; }
     }
 }

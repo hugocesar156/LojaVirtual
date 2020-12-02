@@ -23,5 +23,6 @@ namespace LojaVirtual.Data
         public DbSet<Pedido> Pedido { get; set; }
         public DbSet<ProdutoHistorico> ProdutoHistorico { get; set; }
         public DbSet<Boleto> Boleto { get; set; }
+        public DbSet<ContatoCliente> Contato { get; set; }
     }
 }

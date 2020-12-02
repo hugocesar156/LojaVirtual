@@ -1,9 +1,11 @@
-﻿using LojaVirtual.Models.Acesso;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
+using LojaVirtual.Models.Acesso;
 using LojaVirtual.Models.Cliente;
 using LojaVirtual.Repositories;
-using Microsoft.AspNetCore.Mvc;
 using LojaVirtual.Authorizations;
 using LojaVirtual.Sessions;
+using LojaVirtual.Validations;
 
 namespace LojaVirtual.Controllers
 {
@@ -31,6 +33,12 @@ namespace LojaVirtual.Controllers
             return View(new Usuario { Cliente = new Cliente() });
         }
 
+        public IActionResult Lista()
+        {
+            var lista = _reposUsuario.ListarPaginado();
+            return View(lista);
+        }
+
         [AcessoAutorizacao]
         public IActionResult Perfil()
         {
@@ -41,12 +49,17 @@ namespace LojaVirtual.Controllers
 
         //Operações
         [HttpPost]
-        public JsonResult ValidaUsuario(Usuario usuario)
+        public IActionResult ValidaUsuario(Usuario usuario)
         {
-            if (_reposUsuario.ValidaEmail(usuario.Email))
-                return Json(true);
-
-            return Json(false);
+            try
+            {
+                return Json(_reposUsuario.ValidaEmail(usuario.Email));
+            }
+            catch (Exception erro)
+            {
+                Console.WriteLine(erro);
+                return BadRequest(Mensagem.FalhaBanco);
+            }
         }
 
         [HttpPost]

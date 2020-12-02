@@ -70,9 +70,8 @@
                                 <h6>Pagamento:</h6>
                                 @if (Model.FormaPagamento == '1')
                                 {
-                                    <p>@formaPagamento: @Model.Parcelamento.Parcelas vezes de @Model.Parcelamento.ValorParcela.ToString("C")</p>
+                                    <p>@formaPagamento: @Model.Parcelamento.Parcelas x de @Model.Parcelamento.ValorParcela.ToString("C")</p>
                                     <p>Total: @Model.Total.ToString("C")</p>
-
                                 }
                                 else
                                 {

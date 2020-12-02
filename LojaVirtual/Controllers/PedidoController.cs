@@ -9,13 +9,11 @@ namespace LojaVirtual.Controllers
     public class PedidoController : Controller
     {
         private readonly Sessao _sessao;
-
         private readonly PedidoR _reposPedido;
 
         public PedidoController(Sessao sessao, PedidoR reposPedido)
         {
             _sessao = sessao;
-
             _reposPedido = reposPedido;
         }
 

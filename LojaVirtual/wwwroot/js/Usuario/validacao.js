@@ -101,18 +101,18 @@ function ValidaUsuario() {
                     $('#form-endereco').removeClass('d-none');
                 }
                 else {
-                    alert("Falha ao confirmar dados de cadastro.");
+                    alert("Email já em uso.");
                 }
             },
-            error: function () {
-                alert("Falha ao confirmar dados de cadastro.");
+            error: function (erro) {
+                alert(erro.responseText);
             }
         });
     }
 }
 
 function RegistraUsuario() {
-    if (ValidaFormulario(2)) {
+    if (ValidaFormulario(2) && ValidaFormulario(3)) {
         let usuario = CarregaUsuario();
 
         $.ajax({
@@ -154,7 +154,12 @@ function CarregaUsuario() {
                 uf: $('#uf').val().toUpperCase(),
                 nome: $('#nome-endereco').val().toUpperCase(),
                 complemento: $('#complemento').val().toUpperCase()
-            }
+            },
+
+            contato: [{
+                nome: $('#nome-contato').val().toUpperCase(),
+                numero: $('#numero-contato').val().replace(" ", "").replace("-", "")
+            }]
         }
     }
 }
@@ -170,7 +175,7 @@ function ValidaFormulario(form) {
 
         return validos == $('.form-cliente').length;
     }
-    else {
+    else if (form == 2) {
         $('.form-endereco').each(function () {
             if ($(this).hasClass('is-valid'))
                 validos++;
@@ -178,10 +183,23 @@ function ValidaFormulario(form) {
 
         return validos == $('.form-endereco').length;
     }
+
+    $('.form-contato').each(function () {
+        if ($(this).hasClass('is-valid'))
+            validos++;
+    });
+
+    return validos == $('.form-contato').length;
 }
 
 function Voltar() {
     $('.form-endereco').each(function () {
+        $(this).val("");
+        $(this).removeClass('is-valid');
+        $(this).removeClass('is-invalid');
+    });
+
+    $('.form-contato').each(function () {
         $(this).val("");
         $(this).removeClass('is-valid');
         $(this).removeClass('is-invalid');

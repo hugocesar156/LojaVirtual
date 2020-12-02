@@ -32,26 +32,6 @@
                 <li class="nav-item text-center">
                     <div class="dropdown">
                         <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false" id="dropdown-produto">Cliente</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown-produto">
-                            <a class="dropdown-item" href="@Url.Action("Cadastro", "Usuario")">Novo</a>
-                            <a class="dropdown-item" href="#">Listar</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item text-center">
-                    <div class="dropdown">
-                        <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false" id="dropdown-produto">Vendedores</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown-produto">
-                            <a class="dropdown-item" href="#">Novo</a>
-                            <a class="dropdown-item" href="#">Listar</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item text-center">
-                    <div class="dropdown">
-                        <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="false" id="dropdown-produto">Carrinho</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown-produto">
                             <a class="dropdown-item" href="@Url.Action("Menu", "Carrinho")">Meu carrinho</a>
@@ -66,6 +46,16 @@
                         <div class="dropdown-menu" aria-labelledby="dropdown-produto">
                             <a class="dropdown-item" href="@Url.Action("Lista", "Pedido")">Pedidos</a>
                             <a class="dropdown-item" href="#">Gerenciar</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item text-center">
+                    <div class="dropdown">
+                        <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false" id="dropdown-produto">Usuários</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown-produto">
+                            <a class="dropdown-item" href="@Url.Action("Cadastro", "Usuario")">Novo</a>
+                            <a class="dropdown-item" href="@Url.Action("Lista", "Usuario")">Listar</a>
                         </div>
                     </div>
                 </li>

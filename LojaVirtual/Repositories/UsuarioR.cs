@@ -2,7 +2,9 @@
 using LojaVirtual.Models.Acesso;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using X.PagedList;
 
 namespace LojaVirtual.Repositories
 {
@@ -43,6 +45,32 @@ namespace LojaVirtual.Repositories
             }
         }
 
+        public IPagedList<Usuario> ListarPaginado(int pagina = 1, int quantidade = 25, string pesquisa = "")
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(pesquisa))
+                {
+                    pesquisa = pesquisa.Trim().ToUpper();
+
+                    return _banco.Usuario.Include(p => p.Cliente.Contato).Where(p =>
+                    p.Cliente.Nome.Contains(pesquisa) ||
+                    p.Cliente.Cpf.Contains(pesquisa))
+                        .OrderBy(p => p.Cliente.Nome).ToPagedList(pagina, quantidade);
+                }
+
+                return _banco.Usuario.Include(p => p.Cliente.Contato)
+                    .OrderBy(p => p.Cliente.Nome).ToPagedList(pagina, quantidade);
+            }
+            catch (Exception erro)
+            {
+                Console.WriteLine(erro);
+
+                var lista = new List<Usuario>();
+                return lista.ToPagedList();
+            }
+        }
+
         public Usuario ValidaAcesso(Usuario usuario)
         {
             try
@@ -59,15 +87,7 @@ namespace LojaVirtual.Repositories
 
         public bool ValidaEmail(string email)
         {
-            try
-            {
-                return _banco.Usuario.FirstOrDefault(u => u.Email == email) == null;
-            }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
-                return false;
-            }
+            return _banco.Usuario.FirstOrDefault(u => u.Email == email) == null;
         }
     }
 }

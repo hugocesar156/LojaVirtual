@@ -99,20 +99,28 @@
             </div>
         </div>
         <div class="row justify-content-center mt-4 ">
-            <div class="col-10 col-sm-9 col-md-5 col-xl-3 text-center text-md-left">
+            <div class="col-10 col-sm-9 col-md-5 col-xl-4 text-center text-md-left">
                 <label>Nome de endereço</label>
                 <input class="form-control form-endereco" id="nome-endereco" type="text" maxlength="50"
                        style="text-align: center" onchange="ValidaCampoEndereco(this)" value="" />
             </div>
-            <div class="col-10 col-sm-9 col-md-5 col-xl-3 text-center text-md-left">
+            <div class="col-10 col-sm-9 col-md-5 col-xl-4 text-center text-md-left">
                 <label>Complemento</label>
                 <input class="form-control form-endereco campo-nulo" id="complemento" type="text" maxlength="50"
                        onchange="ValidaCampoEndereco(this)" value="" />
             </div>
-            <div class="col-10 col-sm-9 col-md-5 col-xl-2 text-center text-md-left">
-                <label>Telefone</label>
-                <input class="form-control telefone" id="telefone" type="text" maxlength="50" placeholder="00 00000-0000"
-                       style="text-align: center;" onchange="ValidaCampoEndereco(this)" value="" />
+        </div>
+        <h5 class="mt-5">Contato</h5>
+        <div class="row justify-content-center mt-2">
+            <div class="col-10 col-sm-9 col-md-5 col-xl-5 text-center text-md-left">
+                <label>Nome do contato</label>
+                <input class="form-control form-contato" id="nome-contato" type="text" maxlength="50"
+                       style="text-align: center;" onchange="ValidaCampo(this)" />
+            </div>
+            <div class="col-10 col-sm-9 col-md-5 col-xl-3 text-center text-md-left">
+                <label>Número</label>
+                <input class="form-control form-contato telefone" id="numero-contato" type="text" maxlength="50" placeholder="00 00000-0000"
+                       style="text-align: center;" onchange="ValidaCampo(this)" />
             </div>
         </div>
         <div class="row justify-content-center mt-5 mb-3">
