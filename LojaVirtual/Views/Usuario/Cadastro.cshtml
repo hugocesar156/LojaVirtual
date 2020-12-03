@@ -115,12 +115,17 @@
             <div class="col-10 col-sm-9 col-md-5 col-xl-5 text-center text-md-left">
                 <label>Nome do contato</label>
                 <input class="form-control form-contato" id="nome-contato" type="text" maxlength="50"
-                       style="text-align: center;" onchange="ValidaCampo(this)" />
+                       placeholder="Pessoal, familiar, trabalho" onchange="ValidaCampo(this)" />
             </div>
             <div class="col-10 col-sm-9 col-md-5 col-xl-3 text-center text-md-left">
                 <label>Número</label>
-                <input class="form-control form-contato telefone" id="numero-contato" type="text" maxlength="50" placeholder="00 00000-0000"
-                       style="text-align: center;" onchange="ValidaCampo(this)" />
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">#</span>
+                    </div>
+                    <input class="form-control form-contato telefone" id="numero-contato" type="text" maxlength="50" placeholder="00 00000-0000"
+                           style="text-align: center;" onchange="ValidaCampo(this)" />
+                </div>
             </div>
         </div>
         <div class="row justify-content-center mt-5 mb-3">

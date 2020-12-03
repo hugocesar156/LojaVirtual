@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using LojaVirtual.Authorizations;
 using LojaVirtual.Sessions;
 using System;
+using LojaVirtual.Validations;
 
 namespace LojaVirtual.Controllers
 {
@@ -39,12 +40,12 @@ namespace LojaVirtual.Controllers
                     return Json(true);
                 }
 
-                return Json(false);
+                return BadRequest(Mensagem.FalhaValidarUsuario);
             }
             catch (Exception erro)
             {
                 Console.WriteLine(erro);
-                return Json(false);
+                return BadRequest(Mensagem.FalhaBanco);
             }
         }
 

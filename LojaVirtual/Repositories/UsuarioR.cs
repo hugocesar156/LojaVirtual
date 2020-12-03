@@ -31,17 +31,33 @@ namespace LojaVirtual.Repositories
             }
         }
 
-        public int Registrar(Usuario usuario)
+        public bool Registrar(Usuario usuario)
+        {
+            _banco.Add(usuario);
+            return _banco.SaveChanges() > 0;
+        }
+
+        public List<Usuario> Listar(string pesquisa = "")
         {
             try
             {
-                _banco.Add(usuario);
-                return _banco.SaveChanges();
+                if (!string.IsNullOrEmpty(pesquisa))
+                {
+                    pesquisa = pesquisa.Trim().ToUpper();
+
+                    return _banco.Usuario.Include(u => u.Cliente.Contato).Where(u =>
+                    u.Email.Contains(pesquisa) ||
+                    u.Cliente.Nome.Contains(pesquisa) ||
+                    u.Cliente.Cpf.Contains(pesquisa) ||
+                    u.Cliente.Contato[0].Numero.Contains(pesquisa)).ToList();
+                }
+
+                return _banco.Usuario.Include(u => u.Cliente.Contato).ToList();
             }
             catch (Exception erro)
             {
                 Console.WriteLine(erro);
-                return 0;
+                return new List<Usuario>();
             }
         }
 
@@ -53,14 +69,16 @@ namespace LojaVirtual.Repositories
                 {
                     pesquisa = pesquisa.Trim().ToUpper();
 
-                    return _banco.Usuario.Include(p => p.Cliente.Contato).Where(p =>
-                    p.Cliente.Nome.Contains(pesquisa) ||
-                    p.Cliente.Cpf.Contains(pesquisa))
-                        .OrderBy(p => p.Cliente.Nome).ToPagedList(pagina, quantidade);
+                    return _banco.Usuario.Include(u => u.Cliente.Contato).Where(u =>
+                    u.Email.Contains(pesquisa) ||
+                    u.Cliente.Nome.Contains(pesquisa) ||
+                    u.Cliente.Cpf.Contains(pesquisa) || 
+                    u.Cliente.Contato[0].Numero.Contains(pesquisa)) 
+                        .OrderBy(u => u.Cliente.Nome).ToPagedList(pagina, quantidade);
                 }
 
                 return _banco.Usuario.Include(p => p.Cliente.Contato)
-                    .OrderBy(p => p.Cliente.Nome).ToPagedList(pagina, quantidade);
+                    .OrderBy(u => u.Cliente.Nome).ToPagedList(pagina, quantidade);
             }
             catch (Exception erro)
             {
@@ -73,16 +91,8 @@ namespace LojaVirtual.Repositories
 
         public Usuario ValidaAcesso(Usuario usuario)
         {
-            try
-            {
-                return _banco.Usuario.FirstOrDefault(u => 
-                u.Email == usuario.Email && u.Senha == usuario.Senha);
-            }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
-                return new Usuario();
-            }
+            return _banco.Usuario.FirstOrDefault(u =>
+               u.Email == usuario.Email && u.Senha == usuario.Senha);
         }
 
         public bool ValidaEmail(string email)

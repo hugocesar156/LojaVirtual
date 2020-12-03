@@ -1,99 +1,146 @@
 ﻿@model LojaVirtual.Models.Venda.Pedido
-@using LojaVirtual.Controllers
 
 @{
     ViewData["Title"] = "Detalhe de pedido";
 }
 
-<div class="text-center">
-    <h4>Detalhe de pedido</h4>
+    <div class="text-center">
+        <h4>Detalhe de pedido</h4>
 
-    @if (Model != null)
-    {
-        <div class="row mt-5">
-            <div class="col-8">
-                <div class="table-responsive" style="overflow-y: scroll; height: 289px; background-color: #fafafa;">
-                    <table class="table table-hover">
-                        <thead class="text-muted">
-                            <tr class="small text-uppercase">
-                                <th scope="col" width="300">Produto</th>
-                                <th scope="col" class="text-center" width="170">Quantidade</th>
-                                <th scope="col">Preço</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
+        @if (Model != null)
+        {
+            <div class="row mt-4">
+                <div class="col">
+                    <h5>Produtos</h5>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <div class="table-responsive shadow" style="overflow-y: scroll; height: 200px;">
+                        <table class="table table-hover">
+                            <thead class="text-muted">
+                                <tr class="small text-uppercase">
+                                    <th scope="col" width="300">Produto</th>
+                                    <th scope="col" class="text-center" width="170">Quantidade</th>
+                                    <th scope="col">Preço</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
 
-                        @foreach (var produto in Model.Produto)
-                        {
-                            <tr>
-                                <td><p class="text-muted small"><strong>@produto.Nome</strong></p></td>
-                                <td>@produto.Quantidade</td>
-                                <td>
-                                    <div class="price-wrap">
-                                        R$ <var class="price">@produto.Valor.ToString("C").Replace("R$", "")</var>
-                                        <small class="text-muted"> /unidade </small>
-                                    </div>
+                            @foreach (var produto in Model.Produto)
+                            {
+                                <tr>
+                                    <td><p class="text-muted small"><strong>@produto.Nome</strong></p></td>
+                                    <td>@produto.Quantidade</td>
+                                    <td>
+                                        <div class="price-wrap">
+                                            R$ <var class="price">@produto.Valor.ToString("C").Replace("R$", "")</var>
+                                            <small class="text-muted"> /unidade </small>
+                                        </div>
+                                    </td>
+                                    <td><button class="btn btn-sm btn-outline-primary"><i class="fa fa-info-circle"></i></button></td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col text-center">
+                    <h5>Situação atual</h5>
+                </div>
+            </div>
+            <div class="row mt-3 justify-content-center">
+                <div class="col-8 text-center">
+                    <div class="progress" style="height: 10px;">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 1%;" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2 justify-content-center">
+                <div class="col-2 text-left">
+                    <div>Em espera</div>
+                    <button class="btn btn-outline-success" style="border-color: white" disabled><i class="fa fa-lg fa-check-circle"></i></button>
+                </div>
+                <div class="col-2 text-center">
+                    <div>Pagamento aprovado</div>
+                    <button class="btn btn-outline-light" style="border-color: white" disabled><i class="fa fa-lg fa-check-circle"></i></button>
+                </div>
+                <div class="col-2 text-right">
+                    <div>Enviado</div>
+                    <button class="btn btn-outline-light" style="border-color: white" disabled><i class="fa fa-lg fa-check-circle"></i></button>
+                </div>
+                <div class="col-2 text-right">
+                    <div>Entregue</div>
+                    <button class="btn btn-outline-light" style="border-color: white" disabled><i class="fa fa-lg fa-check-circle"></i></button>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col text-center">
+                    <h5>Informações sobre o pedido</h5>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="row" width="200">Endereço de entrega</th>
+                            <td scope="col" colspan="1" width="180">
+                                <strong>CEP:</strong> <text class="cep">@Model.Endereco.Cep</text>
+                            </td>
+                            <td scope="col" colspan="2">
+                                <text>@Model.Endereco.Logradouro, @Model.Endereco.Numero - @Model.Endereco.Bairro</text>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" width="100">Frete</th>
+                            <td scope="col" colspan="1">
+                                @{var servico = Model.Frete.Servico == '1' ? "Sedex" : "Pac";}
+                                <strong>Serviço:</strong> <text>@servico</text>
+                            </td>
+                            <td scope="col" colspan="1" width="200">
+                                <strong>Valor:</strong> <text>@Model.Frete.Valor.ToString("C")</text>
+                            </td>
+                            <td scope="col" colspan="1">
+                                <strong>Prazo de entrega:</strong> <text>@Model.Frete.Prazo.ToShortDateString()</text>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" width="100">Pagamento</th>
+                            <td scope="col" colspan="1" width="300">
+                                @{var formaPagamento = Model.FormaPagamento == '1' ? "Cartão de crédito" : "Boleto";}
+                                <strong>Método:</strong> <text>@formaPagamento</text>
+                            </td>
+                            @if (Model.FormaPagamento == '1')
+                            {
+                                <td scope="col" colspan="1" width="300">
+                                    <strong>Número de parcelas:</strong> <text>@Model.Parcelamento.Parcelas de @Model.Parcelamento.ValorParcela.ToString("C")</text>
                                 </td>
-                                <td><button class="btn btn-sm btn-outline-primary"><i class="fa fa-info-circle"></i></button></td>
-                            </tr>
-                        }
-                    </table>
-                </div>
+                                <td scope="col" colspan="1">
+                                    <strong>Valor total:</strong> <text>@Model.Total.ToString("C")</text>
+                                </td>
+                            }
+                            else
+                            {
+                                <td scope="col" colspan="1">
+                                    <strong>Valor total:</strong> <text>@Model.Total.ToString("C")</text>
+                                </td>
+                                <td scope="col" colspan="1">
+                                    <strong>Visualizar boleto:</strong> <a href="@Model.Boleto.Url" target="_blank">Aqui</a>
+                                </td>
+                            }
+
+                        </tr>
+                    </thead>
+                </table>
             </div>
-            <div class="col-4">
-                <div class="card shadow">
-                    <div class="card-header">
-                        <h6>Informações</h6> 
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col text-left">
-                                <h6>Endereço de entrega:</h6>
-                                <p>@Model.Endereco.Cep | @Model.Endereco.Logradouro
-                                @Model.Endereco.Numero, @Model.Endereco.Bairro - 
-                                @Model.Endereco.Cidade</p>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            @{var servico = Model.Frete.Servico == '1' ? "Sedex" : "Pac";}
-                            <div class="col text-left">
-                                <h6>Frete: </h6>
-                                <p>
-                                    @servico - @Model.Frete.Valor.ToString("C"),
-                                    prazo de entrega: @Model.Frete.Prazo.ToShortDateString()
-                                </p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            @{var formaPagamento = Model.FormaPagamento == '1' ? "Cartão de crédito" : "Boleto";}
-                            <div class="col text-left">
-                                <h6>Pagamento:</h6>
-                                @if (Model.FormaPagamento == '1')
-                                {
-                                    <p>@formaPagamento: @Model.Parcelamento.Parcelas x de @Model.Parcelamento.ValorParcela.ToString("C")</p>
-                                    <p>Total: @Model.Total.ToString("C")</p>
-                                }
-                                else
-                                {
-                                    <p><a href="@Model.Boleto.Url" target="_blank">@formaPagamento:</a> @Model.Total.ToString("C")</p>
-                                }
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col text-left">
-                                <h6>Situação:</h6>
-                                <p>@PedidoController.SituacaoPedido(Model.Situacao)</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        }
+        else
+        {
+            <div class="mt-5">
+                <p>Pedido não encontrado.</p>
             </div>
-        </div>
-    }
-    else
-    {
-        <div class="mt-5">
-            <p>Pedido não encontrado.</p>
-        </div>
-    }
-</div>
+        }
+    </div>

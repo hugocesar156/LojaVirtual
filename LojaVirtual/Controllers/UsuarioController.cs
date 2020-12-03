@@ -6,6 +6,8 @@ using LojaVirtual.Repositories;
 using LojaVirtual.Authorizations;
 using LojaVirtual.Sessions;
 using LojaVirtual.Validations;
+using X.PagedList;
+using System.Linq;
 
 namespace LojaVirtual.Controllers
 {
@@ -33,6 +35,7 @@ namespace LojaVirtual.Controllers
             return View(new Usuario { Cliente = new Cliente() });
         }
 
+        [AcessoAutorizacao]
         public IActionResult Lista()
         {
             var lista = _reposUsuario.ListarPaginado();
@@ -48,6 +51,37 @@ namespace LojaVirtual.Controllers
 
 
         //Operações
+        [HttpGet]
+        public IActionResult OrdenarLista(int pagina, int quantidade, string pesquisa, byte ordenacao)
+        {
+            var lista = _reposUsuario.Listar(pesquisa);
+
+            switch (ordenacao)
+            {
+                case 1:
+                    return PartialView("_Tabela", lista.OrderBy(u => u.Cliente.Nome).ToPagedList(pagina, quantidade));
+
+                case 2:
+                    return PartialView("_Tabela", lista.OrderBy(u => u.Cliente.Contato[0].Numero).ToPagedList(pagina, quantidade));
+
+                case 3:
+                    return PartialView("_Tabela", lista.OrderBy(u => u.Email).ToPagedList(pagina, quantidade));
+
+                case 4:
+                    return PartialView("_Tabela", lista.OrderBy(u => u.Cliente.Cpf).ToPagedList(pagina, quantidade));
+
+                default:
+                    return PartialView("_Tabela", lista.ToPagedList(pagina, quantidade));
+            }
+        }
+
+        [HttpGet]
+        public IActionResult PesquisarLista(int pagina, int quantidade, string pesquisa)
+        {
+            var lista = _reposUsuario.ListarPaginado(pagina, quantidade, pesquisa);
+            return PartialView("_Tabela", lista);
+        }
+
         [HttpPost]
         public IActionResult ValidaUsuario(Usuario usuario)
         {
@@ -63,13 +97,20 @@ namespace LojaVirtual.Controllers
         }
 
         [HttpPost]
-        public JsonResult Registrar(Usuario usuario)
+        public IActionResult Registrar(Usuario usuario)
         {
-            if (usuario.Cliente.Endereco.Complemento == null)
-                usuario.Cliente.Endereco.Complemento = "";
+            try
+            {
+                if (usuario.Cliente.Endereco.Complemento == null)
+                    usuario.Cliente.Endereco.Complemento = "";
 
-            return _reposUsuario.Registrar(usuario) > 0 ? 
-                Json(true) : Json(false);
+                return Json(_reposUsuario.Registrar(usuario));
+            }
+            catch (Exception erro)
+            {
+                Console.WriteLine(erro);
+                return BadRequest(Mensagem.FalhaCadastro);
+            }
         }
     }
 }
