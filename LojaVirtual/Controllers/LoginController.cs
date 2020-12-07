@@ -40,12 +40,12 @@ namespace LojaVirtual.Controllers
                     return Json(true);
                 }
 
-                return BadRequest(Mensagem.FalhaValidarUsuario);
+                return BadRequest(Global.Mensagem.FalhaValidarUsuario);
             }
             catch (Exception erro)
             {
                 Console.WriteLine(erro);
-                return BadRequest(Mensagem.FalhaBanco);
+                return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }
 

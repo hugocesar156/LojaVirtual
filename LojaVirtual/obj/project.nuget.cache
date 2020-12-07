@@ -1,9 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "NyGD+RKp5vJR18w6z7uG+7CeArcuWLunpRtPra/YfK+t3rkVFdMpCFH6NixkPvQjTztdlI3Cj2wr7lDFgd4nvA==",
+  "dgSpecHash": "Wc7L6qc6m6OKUu/8xPJPiVZb0DH7pShJZQPnWBRGrNH0gzV7xnIoZpzJcDEBnubb/sHUOpF7E13zcEkCa5GqDw==",
   "success": true,
   "projectFilePath": "C:\\Projetos\\Loja Virtual\\LojaVirtual\\LojaVirtual.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\hugoc\\.nuget\\packages\\anglesharp\\0.14.0\\anglesharp.0.14.0.nupkg.sha512",
+    "C:\\Users\\hugoc\\.nuget\\packages\\coravel\\4.0.2\\coravel.4.0.2.nupkg.sha512",
+    "C:\\Users\\hugoc\\.nuget\\packages\\correios.net\\1.3.1\\correios.net.1.3.1.nupkg.sha512",
     "C:\\Users\\hugoc\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.6\\microsoft.aspnet.webapi.client.5.2.6.nupkg.sha512",
     "C:\\Users\\hugoc\\.nuget\\packages\\microsoft.aspnetcore\\2.1.1\\microsoft.aspnetcore.2.1.1.nupkg.sha512",
     "C:\\Users\\hugoc\\.nuget\\packages\\microsoft.aspnetcore.antiforgery\\2.1.1\\microsoft.aspnetcore.antiforgery.2.1.1.nupkg.sha512",

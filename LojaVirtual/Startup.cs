@@ -1,5 +1,6 @@
 ﻿using LojaVirtual.Data;
 using LojaVirtual.Repositories;
+using LojaVirtual.Scheduling;
 using LojaVirtual.Sessions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Coravel;
 using System;
 using WSCorreios;
 
@@ -60,6 +62,9 @@ namespace LojaVirtual
             services.AddScoped<CalcPrecoPrazoWSSoap>(options => {
                 return new CalcPrecoPrazoWSSoapClient(CalcPrecoPrazoWSSoapClient.EndpointConfiguration.CalcPrecoPrazoWSSoap);
             });
+
+            services.AddTransient<Pedido>();
+            services.AddScheduler();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,6 +84,14 @@ namespace LojaVirtual
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseSession();
+
+            app.ApplicationServices.UseScheduler(scheduler => {
+                scheduler.Schedule<Pedido>().EveryFifteenMinutes();
+            });
+
+            app.ApplicationServices.UseScheduler(scheduler => {
+                scheduler.Schedule<ProdutoPedido>().DailyAtHour(12);
+            });
 
             app.UseMvc(routes =>
             {

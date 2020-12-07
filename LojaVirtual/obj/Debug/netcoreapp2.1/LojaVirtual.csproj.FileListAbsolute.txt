@@ -151,11 +151,13 @@ C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.pdb
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.genruntimeconfig.cache
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.csproj.CopyComplete
 C:\Projetos\Loja Virtual\LojaVirtual\bin\Debug\netcoreapp2.1\Connected Services\WSCorreios\ConnectedService.json
-C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.csproj.CoreCompileInputs.cache
 C:\Projetos\Loja Virtual\LojaVirtual\bin\Debug\netcoreapp2.1\PagarMeCore.dll
 C:\Projetos\Loja Virtual\LojaVirtual\bin\Debug\netcoreapp2.1\PagarMeCore.pdb
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Pedido\Detalhe.cshtml.g.cs
-C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Pedido\Lista.cshtml.g.cs
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Usuario\Perfil.cshtml.g.cs
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Usuario\Lista.cshtml.g.cs
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Usuario\_Tabela.cshtml.g.cs
+C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Pedido\ListaCliente.cshtml.g.cs
+C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Pedido\ListaVendedor.cshtml.g.cs
+C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Pedido\Gerenciar.cshtml.g.cs
+C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.csproj.CoreCompileInputs.cache

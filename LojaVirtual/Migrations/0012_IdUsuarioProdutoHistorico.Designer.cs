@@ -3,14 +3,16 @@ using System;
 using LojaVirtual.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LojaVirtual.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20201204174730_IdUsuarioProdutoHistorico")]
+    partial class IdUsuarioProdutoHistorico
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -344,9 +346,6 @@ namespace LojaVirtual.Migrations
                     b.Property<uint>("IdPedido")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("DataAtualizaco")
-                        .HasColumnType("DATETIME");
-
                     b.Property<DateTime>("DataCriacao")
                         .HasColumnType("DATETIME");
 
@@ -395,11 +394,6 @@ namespace LojaVirtual.Migrations
                     b.Property<uint>("IdProdutoHistorico")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CodRastreamento");
-
-                    b.Property<DateTime>("DataAtualizacao")
-                        .HasColumnType("DATETIME");
-
                     b.Property<uint>("IdPedido");
 
                     b.Property<uint>("IdProduto");
@@ -411,11 +405,6 @@ namespace LojaVirtual.Migrations
                         .HasMaxLength(30);
 
                     b.Property<uint>("Quantidade");
-
-                    b.Property<string>("Situacao")
-                        .IsRequired()
-                        .HasConversion(new ValueConverter<string, string>(v => default(string), v => default(string), new ConverterMappingHints(size: 1)))
-                        .HasColumnType("CHAR(1)");
 
                     b.Property<float>("Valor")
                         .HasColumnType("FLOAT");

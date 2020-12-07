@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using LojaVirtual.Authorizations;
 using LojaVirtual.Sessions;
+using System;
+using Correios.NET;
 
 namespace LojaVirtual.Controllers
 {
@@ -25,31 +27,37 @@ namespace LojaVirtual.Controllers
             return View(pedido);
         }
 
-        public IActionResult Lista()
+        public IActionResult Gerenciar(uint id)
         {
-            var lista = _reposPedido.Listar(_sessao.UsuarioSessao().IdCliente);
+            var produto = _reposPedido.BuscarProdutoPedido(id);
+            return View(produto);
+        }
+
+        public IActionResult ListaCliente()
+        {
+            var lista = _reposPedido.ListarPedidos(_sessao.UsuarioSessao().IdCliente);
+            return View(lista);
+        }
+
+        public IActionResult ListaVendedor()
+        {
+            var lista = _reposPedido.ListarProdutoPedido(_sessao.UsuarioSessao().IdUsuario);
             return View(lista);
         }
 
         //Operações
-        public static string SituacaoPedido(char situacao)
+        [HttpPost]
+        public IActionResult RastrearProduto(string codRastreamento)
         {
-            switch (situacao)
+            try
             {
-                case '1':
-                    return "Em espera";
-                case '2':
-                    return "Aguardando pagamento";
-                case '3':
-                    return "Extornado";
-                case '4':
-                    return "Recusado";
-                case '5':
-                    return "Enviado";
-                case '6':
-                    return "Entregue";
-                default:
-                    return string.Empty;
+                var rastreamento = new Services().GetPackageTracking(codRastreamento);
+                return Json(rastreamento.TrackingHistory);
+            }
+            catch (Exception erro)
+            {
+                Console.WriteLine(erro);
+                return BadRequest();
             }
         }
     }

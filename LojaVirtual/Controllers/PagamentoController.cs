@@ -3,14 +3,15 @@ using LojaVirtual.Models.Pagamento;
 using LojaVirtual.Models.Produto;
 using LojaVirtual.Models.Venda;
 using LojaVirtual.Repositories;
+using LojaVirtual.Authorizations;
+using LojaVirtual.Sessions;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using PagarMe;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
-using LojaVirtual.Authorizations;
-using LojaVirtual.Sessions;
+using LojaVirtual.Validations;
 
 namespace LojaVirtual.Controllers
 {
@@ -114,10 +115,11 @@ namespace LojaVirtual.Controllers
                     var pedido = new Pedido
                     {
                         IdTransacao = Convert.ToUInt32(transacao.Id),
-                        FormaPagamento = '2',
+                        FormaPagamento = Global.Pagamento.Boleto,
                         Total = total,
-                        Situacao = '0',
                         DataCriacao = DateTime.Now,
+                        DataAtualizaco = DateTime.Now,
+                        Situacao = Global.Pedido.Aguardando,
 
                         Boleto = new Boleto
                         {
@@ -148,8 +150,11 @@ namespace LojaVirtual.Controllers
                     {
                         pedido.Produto.Add(new ProdutoHistorico {
                             IdProduto = item.IdProduto,
+                            IdUsuario = item.IdUsuario,
                             Nome = item.Nome,
                             Valor = item.Valor,
+                            Situacao = Global.Produto.Aguardando,
+                            DataAtualizacao = DateTime.Now,
                             Quantidade = carrinho.FirstOrDefault(c =>
                             c.IdProduto == item.IdProduto).Quantidade
                         });
@@ -223,10 +228,11 @@ namespace LojaVirtual.Controllers
                     var pedido = new Pedido
                     {
                         IdTransacao = Convert.ToUInt32(transacao.Id),
-                        FormaPagamento = '1',
+                        FormaPagamento = Global.Pagamento.CartaoCredito,
                         Total = total,
-                        Situacao = '1',
                         DataCriacao = DateTime.Now,
+                        DataAtualizaco = DateTime.Now,
+                        Situacao = Global.Pedido.Processando,
 
                         Parcelamento = new Parcelamento
                         {
@@ -259,8 +265,11 @@ namespace LojaVirtual.Controllers
                         pedido.Produto.Add(new ProdutoHistorico
                         {
                             IdProduto = item.IdProduto,
+                            IdUsuario = item.IdUsuario,
                             Nome = item.Nome,
                             Valor = item.Valor,
+                            Situacao = Global.Produto.Aguardando,
+                            DataAtualizacao = DateTime.Now,
                             Quantidade = carrinho.FirstOrDefault(c =>
                             c.IdProduto == item.IdProduto).Quantidade
                         });
@@ -268,18 +277,8 @@ namespace LojaVirtual.Controllers
 
                     _reposCarrinho.RemoverTodos(_sessao.UsuarioSessao().IdCliente);
 
-                    if (_reposPedido.Registrar(pedido) > 0)
-                    {
-                        foreach (var produto in produtos)
-                        {
-                            produto.Estoque -= carrinho.FirstOrDefault(c =>
-                            c.IdProduto == produto.IdProduto).Quantidade;
-
-                            _reposProduto.Atualizar(produto);
-                        }
-
-                        return Json(Convert.ToInt32(transacao.Id));
-                    }
+                    return _reposPedido.Registrar(pedido) > 0 ?
+                        Json(Convert.ToInt32(transacao.Id)) : Json(0);
                 }
 
                 return Json(0);

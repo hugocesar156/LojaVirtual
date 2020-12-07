@@ -1,6 +1,6 @@
-﻿(function () {
+﻿$(document).ready(function () {
     ValidaCep();
-}())
+})
 
 function AdicionarQuantidade(idProduto) {
     $.ajax({

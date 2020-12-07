@@ -3,14 +3,16 @@ using System;
 using LojaVirtual.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LojaVirtual.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20201207130740_AddDataAttPedidoProduto")]
+    partial class AddDataAttPedidoProduto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -394,8 +396,6 @@ namespace LojaVirtual.Migrations
                 {
                     b.Property<uint>("IdProdutoHistorico")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("CodRastreamento");
 
                     b.Property<DateTime>("DataAtualizacao")
                         .HasColumnType("DATETIME");

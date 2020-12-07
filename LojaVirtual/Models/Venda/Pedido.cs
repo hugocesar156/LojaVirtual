@@ -1,4 +1,5 @@
 ﻿using LojaVirtual.Models.Pagamento;
+using LojaVirtual.Validations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,13 +19,16 @@ namespace LojaVirtual.Models.Venda
         public float Total { get; set; }
 
         [Column(TypeName = "CHAR(1)"), Required]
-        public char FormaPagamento { get; set; }
+        public Global.Pagamento FormaPagamento { get; set; }
+
+        [Column(TypeName = "CHAR(1)"), Required]
+        public Global.Pedido Situacao { get; set; }
 
         [Column(TypeName = "DATETIME"), Required]
         public DateTime DataCriacao { get; set; }
 
-        [Column(TypeName = "CHAR(1)"), Required]
-        public char Situacao { get; set; }
+        [Column(TypeName = "DATETIME"), Required]
+        public DateTime DataAtualizaco { get; set; }
 
         [ForeignKey("IdCliente")]
         public Cliente.Cliente Cliente { get; set; }
@@ -73,6 +77,17 @@ namespace LojaVirtual.Models.Venda
 
         [Required]
         public uint Quantidade { get; set; }
+
+        public string CodRastreamento { get; set; }
+
+        [Required]
+        public uint IdUsuario { get; set; }
+
+        [Column(TypeName = "CHAR(1)"), Required]
+        public Global.Produto Situacao { get; set; }
+
+        [Column(TypeName = "DATETIME"), Required]
+        public DateTime DataAtualizacao { get; set; }
 
         [ForeignKey("IdPedido")]
         public Pedido Pedido { get; set; }

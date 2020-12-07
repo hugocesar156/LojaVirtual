@@ -92,7 +92,7 @@ namespace LojaVirtual.Controllers
             catch (Exception erro)
             {
                 Console.WriteLine(erro);
-                return BadRequest(Mensagem.FalhaBanco);
+                return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }
 
@@ -109,7 +109,7 @@ namespace LojaVirtual.Controllers
             catch (Exception erro)
             {
                 Console.WriteLine(erro);
-                return BadRequest(Mensagem.FalhaCadastro);
+                return BadRequest(Global.Mensagem.FalhaCadastro);
             }
         }
     }
