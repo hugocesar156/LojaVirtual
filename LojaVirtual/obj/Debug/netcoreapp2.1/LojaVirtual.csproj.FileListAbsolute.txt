@@ -121,7 +121,6 @@ C:\Projetos\Loja Virtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.dll
 C:\Projetos\Loja Virtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.pdb
 C:\Projetos\Loja Virtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.Views.dll
 C:\Projetos\Loja Virtual\LojaVirtual\bin\Debug\netcoreapp2.1\LojaVirtual.Views.pdb
-C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.csprojAssemblyReference.cache
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.AssemblyInfoInputs.cache
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.AssemblyInfo.cs
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.RazorAssemblyInfo.cache
@@ -161,3 +160,4 @@ C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Pedido\
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Pedido\ListaVendedor.cshtml.g.cs
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Pedido\Gerenciar.cshtml.g.cs
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.csproj.CoreCompileInputs.cache
+C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.csprojAssemblyReference.cache

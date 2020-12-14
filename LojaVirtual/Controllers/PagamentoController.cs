@@ -115,11 +115,11 @@ namespace LojaVirtual.Controllers
                     var pedido = new Pedido
                     {
                         IdTransacao = Convert.ToUInt32(transacao.Id),
-                        FormaPagamento = Global.Pagamento.Boleto,
+                        FormaPagamento = (byte)Global.Pagamento.Boleto,
                         Total = total,
                         DataCriacao = DateTime.Now,
                         DataAtualizaco = DateTime.Now,
-                        Situacao = Global.Pedido.Aguardando,
+                        Situacao = (byte)Global.Pedido.Aguardando,
 
                         Boleto = new Boleto
                         {
@@ -153,7 +153,7 @@ namespace LojaVirtual.Controllers
                             IdUsuario = item.IdUsuario,
                             Nome = item.Nome,
                             Valor = item.Valor,
-                            Situacao = Global.Produto.Aguardando,
+                            Situacao = (byte)Global.Produto.Aguardando,
                             DataAtualizacao = DateTime.Now,
                             Quantidade = carrinho.FirstOrDefault(c =>
                             c.IdProduto == item.IdProduto).Quantidade
@@ -228,11 +228,11 @@ namespace LojaVirtual.Controllers
                     var pedido = new Pedido
                     {
                         IdTransacao = Convert.ToUInt32(transacao.Id),
-                        FormaPagamento = Global.Pagamento.CartaoCredito,
+                        FormaPagamento = (byte)Global.Pagamento.CartaoCredito,
                         Total = total,
                         DataCriacao = DateTime.Now,
                         DataAtualizaco = DateTime.Now,
-                        Situacao = Global.Pedido.Processando,
+                        Situacao = (byte)Global.Pedido.Processando,
 
                         Parcelamento = new Parcelamento
                         {
@@ -268,7 +268,7 @@ namespace LojaVirtual.Controllers
                             IdUsuario = item.IdUsuario,
                             Nome = item.Nome,
                             Valor = item.Valor,
-                            Situacao = Global.Produto.Aguardando,
+                            Situacao = (byte)Global.Produto.Aguardando,
                             DataAtualizacao = DateTime.Now,
                             Quantidade = carrinho.FirstOrDefault(c =>
                             c.IdProduto == item.IdProduto).Quantidade

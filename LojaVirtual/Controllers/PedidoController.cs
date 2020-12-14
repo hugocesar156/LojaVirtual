@@ -2,8 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using LojaVirtual.Authorizations;
 using LojaVirtual.Sessions;
+using LojaVirtual.Validations;
 using System;
 using Correios.NET;
+using PagarMe;
+using Microsoft.Extensions.Configuration;
 
 namespace LojaVirtual.Controllers
 {
@@ -13,10 +16,14 @@ namespace LojaVirtual.Controllers
         private readonly Sessao _sessao;
         private readonly PedidoR _reposPedido;
 
-        public PedidoController(Sessao sessao, PedidoR reposPedido)
+        private readonly IConfiguration _configuration;
+
+        public PedidoController(Sessao sessao, PedidoR reposPedido, IConfiguration configuration)
         {
             _sessao = sessao;
             _reposPedido = reposPedido;
+
+            _configuration = configuration;
         }
 
         //Páginas
@@ -46,6 +53,49 @@ namespace LojaVirtual.Controllers
         }
 
         //Operações
+        [HttpPost]
+        public IActionResult EstornarPedido(uint idTransacao)
+        {
+            try
+            {
+                PagarMeService.DefaultApiKey = _configuration.GetValue<string>("Pagamento:DefaultApiKey");
+
+                var transacao = PagarMeService.GetDefaultService().Transactions.Find(idTransacao.ToString());
+                transacao.Refund();
+
+                var pedido = _reposPedido.Buscar(idTransacao);
+                pedido.Situacao = (byte)Global.Pedido.Estornado;
+                pedido.DataAtualizaco = DateTime.Now;
+
+                return _reposPedido.Atualizar(pedido) > 0 ?
+                    Json(Global.Mensagem.SucessoOperacao) : Json(Global.Mensagem.FalhaAtualizacao); 
+            }
+            catch (Exception erro)
+            {
+                Console.WriteLine(erro);
+                return BadRequest(Global.Mensagem.FalhaBanco);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult LiberarProduto(uint id)
+        {
+            try
+            {
+                var produto = _reposPedido.BuscarProdutoPedido(id);
+                produto.Situacao = (byte)Global.Produto.Enviado;
+                produto.DataAtualizacao = DateTime.Now;
+
+                return _reposPedido.AtualizarProdutoPedido(produto) > 0 ?
+                   Json(Global.Mensagem.SucessoOperacao) : Json(Global.Mensagem.FalhaAtualizacao);
+            }
+            catch (Exception erro)
+            {
+                Console.WriteLine(erro);
+                return BadRequest();
+            }
+        }
+
         [HttpPost]
         public IActionResult RastrearProduto(string codRastreamento)
         {

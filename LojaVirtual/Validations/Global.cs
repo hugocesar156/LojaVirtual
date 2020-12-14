@@ -6,7 +6,9 @@
         {
             //Geral
             public const string FalhaBanco = "Falha ao tentar acessar o Banco de Dados.";
+            public const string FalhaAtualizacao = "Falha ao tentar atualizar registro.";
             public const string FalhaCadastro = "Falha ao tentar realizar cadastro.";
+            public const string SucessoOperacao = "Operação realizada com sucesso.";
 
             //Usuário
             public const string FalhaValidarUsuario = "Falha na validação de usuário";
@@ -23,7 +25,7 @@
             Aguardando,
             Processando,
             Aprovado,
-            Extornado,
+            Estornado,
             Recusado,
             Finalizado
         }
@@ -38,8 +40,7 @@
         public enum Produto : byte
         {
             Aguardando,
-            Reservado,
-            Autorizado,
+            Aprovado,
             Enviado,
             Entregue,
             Cancelado

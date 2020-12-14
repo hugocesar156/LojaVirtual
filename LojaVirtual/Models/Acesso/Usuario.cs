@@ -15,8 +15,8 @@ namespace LojaVirtual.Models.Acesso
         [Required, MaxLength(30), JsonIgnore]
         public string Senha { get; set; }
 
-        [Required, Column(TypeName = "CHAR(1)")]
-        public char Perfil { get; set; }
+        [Required, Column(TypeName = "TINYINT")]
+        public byte Perfil { get; set; }
 
         [ForeignKey("IdCliente"), JsonIgnore]
         public Cliente.Cliente Cliente { get; set; }

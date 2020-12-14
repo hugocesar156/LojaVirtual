@@ -18,11 +18,11 @@ namespace LojaVirtual.Models.Venda
         [Column(TypeName = "FLOAT"), Required]
         public float Total { get; set; }
 
-        [Column(TypeName = "CHAR(1)"), Required]
-        public Global.Pagamento FormaPagamento { get; set; }
+        [Column(TypeName = "TINYINT"), Required]
+        public byte FormaPagamento { get; set; }
 
-        [Column(TypeName = "CHAR(1)"), Required]
-        public Global.Pedido Situacao { get; set; }
+        [Column(TypeName = "TINYINT"), Required]
+        public byte Situacao { get; set; }
 
         [Column(TypeName = "DATETIME"), Required]
         public DateTime DataCriacao { get; set; }
@@ -83,8 +83,8 @@ namespace LojaVirtual.Models.Venda
         [Required]
         public uint IdUsuario { get; set; }
 
-        [Column(TypeName = "CHAR(1)"), Required]
-        public Global.Produto Situacao { get; set; }
+        [Column(TypeName = "TINYINT"), Required]
+        public byte Situacao { get; set; }
 
         [Column(TypeName = "DATETIME"), Required]
         public DateTime DataAtualizacao { get; set; }

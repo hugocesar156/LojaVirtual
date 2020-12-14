@@ -51,6 +51,41 @@
 
         <div class="row mt-5">
             <div class="col text-center">
+                <h5>Situação</h5>
+            </div>
+        </div>
+        <div class="row mt-2 justify-content-center">
+            <div class="col-9 text-center">
+                <div class="progress" style="height: 10px;">
+                    <div class="progress-bar bg-primary" id="bar-situacao-pedido" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2 justify-content-center">
+            <input type="hidden" id="situacao-pedido" value="@Model.Situacao" />
+            <div class="col-3 text-left">
+                @if (Model.FormaPagamento == (byte)Global.Pagamento.CartaoCredito)
+                {
+                    <div>Aguardando pagamento</div>
+                }
+                else
+                {
+                    <div>Processando pagamento</div>
+                }
+                <button class="btn btn-outline-light" id="btn-aguardo" style="border-color: white" disabled><i class="fa fa-lg fa-check-circle"></i></button>
+            </div>
+            <div class="col-3 text-center">
+                <div>Aprovado</div>
+                <button class="btn btn-outline-light" id="btn-pedido-aprovado" style="border-color: white" disabled><i class="fa fa-lg fa-check-circle"></i></button>
+            </div>
+            <div class="col-3 text-right">
+                <div>Finalizado</div>
+                <button class="btn btn-outline-light" id="btn-finalizado" style="border-color: white" disabled><i class="fa fa-lg fa-check-circle"></i></button>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col text-center">
                 <h5>Informações sobre o pedido</h5>
             </div>
         </div>
@@ -82,10 +117,10 @@
                     <tr>
                         <th scope="row" width="100">Pagamento</th>
                         <td scope="col" colspan="1" width="300">
-                            @{var formaPagamento = Model.FormaPagamento == Global.Pagamento.CartaoCredito ? "Cartão de crédito" : "Boleto";}
+                            @{var formaPagamento = Model.FormaPagamento == (byte)Global.Pagamento.CartaoCredito ? "Cartão de crédito" : "Boleto";}
                             <strong>Método:</strong> <text>@formaPagamento</text>
                         </td>
-                        @if (Model.FormaPagamento == Global.Pagamento.CartaoCredito)
+                        @if (Model.FormaPagamento == (byte)Global.Pagamento.CartaoCredito)
                         {
                             <td scope="col" colspan="1" width="300">
                                 <strong>Número de parcelas:</strong> <text>@Model.Parcelamento.Parcelas de @Model.Parcelamento.ValorParcela.ToString("C")</text>
@@ -129,17 +164,17 @@
                 <div class="row mt-3 justify-content-center">
                     <div class="col-8 text-center">
                         <div class="progress" style="height: 10px;">
-                            <div class="progress-bar bg-primary" id="bar-situacao" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-primary" id="bar-situacao-produto" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
                 </div>
-                <div class="row mt-2 justify-content-center">
+                <div class="row mt-2 justify-content-center" id="div-situacao">
                     <div class="col-2 text-left">
                         <div>Em espera</div>
                         <button class="btn btn-outline-light" id="btn-espera" style="border-color: white" disabled><i class="fa fa-lg fa-check-circle"></i></button>
                     </div>
                     <div class="col-2 text-center">
-                        <div>Aprovado</div>
+                        <div>Pagamento aprovado</div>
                         <button class="btn btn-outline-light" id="btn-aprovado" style="border-color: white" disabled><i class="fa fa-lg fa-check-circle"></i></button>
                     </div>
                     <div class="col-2 text-right">
@@ -151,6 +186,12 @@
                         <button class="btn btn-outline-light" id="btn-entregue" style="border-color: white" disabled><i class="fa fa-lg fa-check-circle"></i></button>
                     </div>
                 </div>
+                <div class="row mt-2 justify-content-center d-none" id="div-cancelado">
+                    <div class="col text-center">
+                        <div>Cancelado</div>
+                        <button class="btn btn-outline-light" id="btn-cancelado" style="border-color: white" disabled><i class="fa fa-lg fa-times"></i></button>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Voltar</button>
@@ -160,4 +201,4 @@
 </div>
 
 <script src="~/jquery/jquery-3.5.1.min.js"></script>
-<script src="~/js/Pedido/situacao.js"></script>
+<script src="~/js/Pedido/detalhe.js"></script>

@@ -44,7 +44,7 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            @{var formaPagamento = item.FormaPagamento == Global.Pagamento.CartaoCredito ? "Cartão de crédito" : "Boleto";}
+                            @{var formaPagamento = item.FormaPagamento == (byte)Global.Pagamento.CartaoCredito ? "Cartão de crédito" : "Boleto";}
                             <td width="100">@item.DataCriacao.ToShortDateString()</td>
                             <td width="100">@formaPagamento</td>
                             <td width="100">@item.Total.ToString("C")</td>
