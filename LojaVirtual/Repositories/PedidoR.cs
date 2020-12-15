@@ -75,7 +75,7 @@ namespace LojaVirtual.Repositories
                         _banco.ProdutoHistorico.Update(produtoPedido);
                     }
                 }
-                else if (transacao.Status == TransactionStatus.Chargedback)
+                /*else if (transacao.Status == TransactionStatus.Chargedback)
                 {
                     //pedido estornado
                     item.Situacao = (byte)Global.Pedido.Estornado;
@@ -98,7 +98,7 @@ namespace LojaVirtual.Repositories
 
                         _banco.ProdutoHistorico.Update(produtoPedido);
                     }
-                }
+                }*/
                 else if (transacao.Status == TransactionStatus.Refused)
                 {
                     //pedido recusado

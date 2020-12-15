@@ -48,11 +48,11 @@
             </div>
 
             <div id="div-aprovado">
-                <div class="row mt-4 justify-content-center">
+                @*<div class="row mt-4 justify-content-center">
                     <button class="btn btn-primary col-3" onclick="LiberarProduto('@Model.IdProdutoHistorico')">Liberar produto</button>
-                </div>
+                </div>*@
                 <div class="row mt-3 justify-content-center">
-                    <button class="btn btn-outline-danger col-3">Cancelar compra</button>
+                    <button class="btn btn-danger col-3">Cancelar envio de produto</button>
                 </div>
             </div>
             <div id="div-enviado" class="d-none">
@@ -72,7 +72,7 @@
                         <tr>
                             <th scope="row" width="200">Cliente</th>
                             <td scope="col" colspan="2" width="180">
-                                <strong>Nome:</strong> <text>@Model.Pedido.Cliente.Nome</text>
+                                <strong>Nome:</strong> <text class="text-capitalize">@Model.Pedido.Cliente.Nome.ToLower()</text>
                             </td>
                             <td scope="col" colspan="1">
                                 <strong>CPF:</strong> <text class="cpf">@Model.Pedido.Cliente.Cpf</text>

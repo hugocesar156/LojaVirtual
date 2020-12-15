@@ -85,7 +85,7 @@ using LojaVirtual.Validations;
             WriteLiteral("\r\n<div class=\"text-center\">\r\n    <h4>Cadastro de produto</h4>\r\n\r\n    ");
             EndContext();
             BeginContext(169, 6238, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0f779c566f7a476a938baa329b9811cf", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e07652595316428fa8f937ed1d7e1228", async() => {
                 BeginContext(218, 625, true);
                 WriteLiteral(@"
         <div class=""row justify-content-center text-center text-md-left mt-4"">
@@ -100,7 +100,7 @@ using LojaVirtual.Validations;
                     ");
                 EndContext();
                 BeginContext(843, 48, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "32d9dd7ecb0246f8ae7a8446e4848b51", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "10d9fdaa9a064f4ebeb197872bc5db73", async() => {
                     BeginContext(860, 22, true);
                     WriteLiteral("Selecione uma opção...");
                     EndContext();
@@ -133,7 +133,7 @@ using LojaVirtual.Validations;
                 WriteLiteral("                            ");
                 EndContext();
                 BeginContext(1093, 46, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "515dc0b733084424a553a2b065be9f03", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0724fb492c504f95bb2d108bfe1fcd07", async() => {
                     BeginContext(1120, 10, false);
 #line 25 "C:\Projetos\Loja Virtual\LojaVirtual\Views\Produto\Cadastro.cshtml"
                                                  Write(item.Value);
@@ -292,7 +292,7 @@ using LojaVirtual.Validations;
             WriteLiteral("\r\n</div>\r\n\r\n");
             EndContext();
             BeginContext(6419, 49, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e8e3b54447dd416f897e94fb9ad94cab", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e60430fadf0a48b38988411ea045a9c3", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
