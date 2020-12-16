@@ -28,7 +28,7 @@ namespace LojaVirtual.Models.Venda
         public DateTime DataCriacao { get; set; }
 
         [Column(TypeName = "DATETIME"), Required]
-        public DateTime DataAtualizaco { get; set; }
+        public DateTime DataAtualizacao { get; set; }
 
         [ForeignKey("IdCliente")]
         public Cliente.Cliente Cliente { get; set; }

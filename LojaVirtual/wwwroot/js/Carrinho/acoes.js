@@ -18,7 +18,7 @@ function AdicionarQuantidade(idProduto) {
 }
 
 function ValidaCep() {
-    let cep = $('#cep').val().replace("-", "");
+    let cep = $('#cep-salvo').val().replace("-", "");
 
     $.ajax({
         type: "GET",
@@ -26,33 +26,15 @@ function ValidaCep() {
         dataType: "jsonp",
         success: function (endereco) {
             if (endereco.cep != undefined) {
-                $('#cep').removeClass('is-invalid');
-
-                $('#endereco').html(
-                    `${endereco.logradouro}, ${endereco.bairro} - ${endereco.localidade}`
-                );
-
                 $('#exibe-endereco').html(`<strong>Endereço salvo atual:</strong> 
                     ${endereco.cep} | ${endereco.logradouro}, ${endereco.bairro} - ${endereco.localidade}`
                 );
 
-                $('#cep-confirma').val(endereco.cep);
-
-                $('#area-endereco').removeClass('d-none');
-                $('#cep').attr('readonly', true);
-
                 CalcularFrete(cep);
             }
             else {
-                $('#endereco').html();
-                $('#area-endereco').addClass('d-none');
-
-                $('#cep').addClass('is-invalid');
-
                 $('#load-frete').addClass('d-none');
                 $('#load-gif-frete').attr('src', '');
-
-                $('#continuar').attr('disabled', false);
             }
         },
         error: function () {
@@ -177,11 +159,12 @@ function RetirarQuantidade(idProduto) {
     });
 }
 
-function RetiraEndereco() {
-    $('#endereco').html();
-    $('#area-endereco').addClass('d-none');
-
-    $('#cep').attr('readonly', false);
-    $('#cep').val("");
-    $('#cep').focus();
-}
+$('.form-endereco').change(function () {
+    if ($('.form-endereco').length == $('.is-valid').length) {
+        $('#cep-salvo').val($('#cep').val().replace("-", ""));
+        $('#btn-endereco').attr('disabled', false);
+    }
+    else {
+        $('#btn-endereco').attr('disabled', true);
+    }
+})

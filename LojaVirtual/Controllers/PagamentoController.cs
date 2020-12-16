@@ -118,7 +118,7 @@ namespace LojaVirtual.Controllers
                         FormaPagamento = (byte)Global.Pagamento.Boleto,
                         Total = total,
                         DataCriacao = DateTime.Now,
-                        DataAtualizaco = DateTime.Now,
+                        DataAtualizacao = DateTime.Now,
                         Situacao = (byte)Global.Pedido.Aguardando,
 
                         Boleto = new Boleto
@@ -231,7 +231,7 @@ namespace LojaVirtual.Controllers
                         FormaPagamento = (byte)Global.Pagamento.CartaoCredito,
                         Total = total,
                         DataCriacao = DateTime.Now,
-                        DataAtualizaco = DateTime.Now,
+                        DataAtualizacao = DateTime.Now,
                         Situacao = (byte)Global.Pedido.Processando,
 
                         Parcelamento = new Parcelamento

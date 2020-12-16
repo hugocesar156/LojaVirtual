@@ -2,9 +2,9 @@
 
 @if (Model.Count > 0)
 {
-    <div class="table-responsive mt-4" style="overflow-y: scroll; height: 400px; background-color: #fafafa;">
+    <div class="table-responsive shadow mt-4" style="overflow-y: scroll; height: 400px;">
         <table id="cabecalho" class="table table-hover">
-            <thead class="cabecalho">
+            <thead class="cabecalho" style="background-color: #f7f3f3;">
                 <tr>
                     <th scope="col" onmousemove="$(this).css('cursor', 'pointer')" onclick="Ordenacao(1)">Nome</th>
                     <th scope="col" onmousemove="$(this).css('cursor', 'pointer')" onclick="Ordenacao(2)">Contato</th>

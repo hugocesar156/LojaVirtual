@@ -24,18 +24,7 @@ namespace LojaVirtual.Repositories
             _configuration = configuration;
         }
 
-        public int Atualizar(Pedido pedido)
-        {
-            _banco.Pedido.Update(pedido);
-            return _banco.SaveChanges();
-        }
-
-        public int AtualizarProdutoPedido(ProdutoHistorico produto)
-        {
-            _banco.ProdutoHistorico.Update(produto);
-            return _banco.SaveChanges();
-        }
-
+        //métodos agendados
         public void AtualizarPedidos()
         {
             PagarMeService.DefaultApiKey = _configuration.GetValue<string>("Pagamento:DefaultApiKey");
@@ -53,14 +42,14 @@ namespace LojaVirtual.Repositories
                 {
                     //pedido aprovado
                     item.Situacao = (byte)Global.Pedido.Aprovado;
-                    item.DataAtualizaco = Convert.ToDateTime(transacao.DateUpdated);
+                    item.DataAtualizacao = Convert.ToDateTime(transacao.DateUpdated);
 
                     _banco.Pedido.Update(item);
 
                     foreach (var produtoPedido in item.Produto)
                     {
                         var produto = _banco.Produto.Find(produtoPedido.IdProduto);
-                        
+
                         if (produto.Estoque >= produtoPedido.Quantidade)
                         {
                             produto.Estoque -= produtoPedido.Quantidade;
@@ -75,35 +64,11 @@ namespace LojaVirtual.Repositories
                         _banco.ProdutoHistorico.Update(produtoPedido);
                     }
                 }
-                /*else if (transacao.Status == TransactionStatus.Chargedback)
-                {
-                    //pedido estornado
-                    item.Situacao = (byte)Global.Pedido.Estornado;
-                    item.DataAtualizaco = Convert.ToDateTime(transacao.DateUpdated);
-
-                    _banco.Pedido.Update(item);
-
-                    foreach (var produtoPedido in item.Produto)
-                    {
-                        if (produtoPedido.Situacao == (byte)Global.Produto.Aprovado)
-                        {
-                            var produto = _banco.Produto.Find(produtoPedido.IdProduto);
-                            produto.Estoque += produtoPedido.Quantidade;
-
-                            _banco.Produto.Update(produto);
-                        }
-
-                        produtoPedido.Situacao = (byte)Global.Produto.Cancelado;
-                        produtoPedido.DataAtualizacao = DateTime.Now;
-
-                        _banco.ProdutoHistorico.Update(produtoPedido);
-                    }
-                }*/
                 else if (transacao.Status == TransactionStatus.Refused)
                 {
                     //pedido recusado
                     item.Situacao = (byte)Global.Pedido.Recusado;
-                    item.DataAtualizaco = Convert.ToDateTime(transacao.DateUpdated);
+                    item.DataAtualizacao = Convert.ToDateTime(transacao.DateUpdated);
 
                     _banco.Pedido.Update(item);
 
@@ -140,6 +105,58 @@ namespace LojaVirtual.Repositories
                     }
                 }
             }
+        }
+
+        public void EnviarProdutosPedido()
+        {
+            var lista = _banco.ProdutoHistorico.Where(p => 
+            p.Situacao == (byte)Global.Produto.Aprovado).ToList();
+
+            foreach (var produto in lista)
+            {
+                produto.Situacao = (byte)Global.Produto.Enviado;
+                produto.DataAtualizacao = DateTime.Now;
+
+                _banco.ProdutoHistorico.Update(produto);
+            }
+
+            _banco.SaveChanges();
+        }
+
+        public void FinalizarPedido()
+        {
+            //lista de pedidos aprovados
+            var lista = _banco.Pedido.Where(p => p.Situacao == (byte)Global.Pedido.Aprovado).ToList();
+
+            foreach (var pedido in lista)
+            {
+                //número de produtos finalizados de cada pedido aprovado
+                var finalizados = pedido.Produto.Where(p => p.Situacao == (byte)Global.Produto.Entregue ||
+                p.Situacao == (byte)Global.Produto.Cancelado).Count();
+
+                if (finalizados == pedido.Produto.Count())
+                {
+                    pedido.Situacao = (byte)Global.Pedido.Finalizado;
+                    pedido.DataAtualizacao = DateTime.Now;
+
+                    _banco.Pedido.Update(pedido);
+                }
+            }
+
+            _banco.SaveChanges();
+        }
+
+
+        public int Atualizar(Pedido pedido)
+        {
+            _banco.Pedido.Update(pedido);
+            return _banco.SaveChanges();
+        }
+
+        public int AtualizarProdutoPedido(ProdutoHistorico produto)
+        {
+            _banco.ProdutoHistorico.Update(produto);
+            return _banco.SaveChanges();
         }
 
         public Pedido Buscar(uint idTransacao)
@@ -194,8 +211,7 @@ namespace LojaVirtual.Repositories
             try
             {
                 return _banco.ProdutoHistorico.Include(p => p.Pedido)
-                    .Where(p => p.Situacao != (char)Global.Produto.Aguardando && p.Situacao != (char)Global.Produto.Cancelado
-                    && p.IdUsuario == idUsuario).OrderByDescending(p => p.Pedido.DataCriacao).ToPagedList(1, 10);
+                    .Where(p => p.IdUsuario == idUsuario).OrderByDescending(p => p.Pedido.DataCriacao).ToPagedList(1, 10);
             }
             catch (Exception erro)
             {

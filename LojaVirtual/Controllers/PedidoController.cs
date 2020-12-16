@@ -15,13 +15,15 @@ namespace LojaVirtual.Controllers
     {
         private readonly Sessao _sessao;
         private readonly PedidoR _reposPedido;
+        private readonly ProdutoR _reposProduto;
 
         private readonly IConfiguration _configuration;
 
-        public PedidoController(Sessao sessao, PedidoR reposPedido, IConfiguration configuration)
+        public PedidoController(Sessao sessao, PedidoR reposPedido, ProdutoR reposProduto, IConfiguration configuration)
         {
             _sessao = sessao;
             _reposPedido = reposPedido;
+            _reposProduto = reposProduto;
 
             _configuration = configuration;
         }
@@ -54,45 +56,36 @@ namespace LojaVirtual.Controllers
 
         //Operações
         [HttpPost]
-        public IActionResult EstornarPedido(uint idTransacao)
+        public IActionResult EstornarProduto(uint idTransacao, uint idProduto)
         {
             try
             {
                 PagarMeService.DefaultApiKey = _configuration.GetValue<string>("Pagamento:DefaultApiKey");
 
+                var produtoPedido = _reposPedido.BuscarProdutoPedido(idProduto);
+                var valorEstorno = Convert.ToInt32((produtoPedido.Valor * produtoPedido.Quantidade).ToString().Replace(".", ""));
+
                 var transacao = PagarMeService.GetDefaultService().Transactions.Find(idTransacao.ToString());
-                transacao.Refund();
+                transacao.Refund(valorEstorno);
 
-                var pedido = _reposPedido.Buscar(idTransacao);
-                pedido.Situacao = (byte)Global.Pedido.Estornado;
-                pedido.DataAtualizaco = DateTime.Now;
+                produtoPedido.Situacao = (byte)Global.Produto.Cancelado;
+                produtoPedido.DataAtualizacao = DateTime.Now;
 
-                return _reposPedido.Atualizar(pedido) > 0 ?
-                    Json(Global.Mensagem.SucessoOperacao) : Json(Global.Mensagem.FalhaAtualizacao); 
+                if (_reposPedido.AtualizarProdutoPedido(produtoPedido) > 0)
+                {
+                    var produto = _reposProduto.Buscar(produtoPedido.IdProduto);
+                    produto.Estoque += produtoPedido.Quantidade;
+
+                    return _reposProduto.Atualizar(produto) > 0 ?
+                        Json(Global.Mensagem.SucessoOperacao) : Json(Global.Mensagem.FalhaAtualizacao);
+                }
+
+                return Json(Global.Mensagem.FalhaAtualizacao);
             }
             catch (Exception erro)
             {
                 Console.WriteLine(erro);
                 return BadRequest(Global.Mensagem.FalhaBanco);
-            }
-        }
-
-        [HttpPost]
-        public IActionResult LiberarProduto(uint id)
-        {
-            try
-            {
-                var produto = _reposPedido.BuscarProdutoPedido(id);
-                produto.Situacao = (byte)Global.Produto.Enviado;
-                produto.DataAtualizacao = DateTime.Now;
-
-                return _reposPedido.AtualizarProdutoPedido(produto) > 0 ?
-                   Json(Global.Mensagem.SucessoOperacao) : Json(Global.Mensagem.FalhaAtualizacao);
-            }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
-                return BadRequest();
             }
         }
 

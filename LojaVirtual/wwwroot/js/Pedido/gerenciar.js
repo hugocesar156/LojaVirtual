@@ -87,17 +87,3 @@
             break;
     }
 })
-
-function LiberarProduto(idProduto) {
-    $.ajax({
-        type: "POST",
-        url: "/Pedido/LiberarProduto",
-        data: { id: idProduto },
-        success: function () {
-            
-        },
-        error: function (data) {
-            alert("Falha na busca de dados.");
-        }
-    });
-}

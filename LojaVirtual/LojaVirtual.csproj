@@ -17,6 +17,8 @@
     <Compile Remove="Migrations\20201129235455_AddBoletoEnderecoPedido.Designer.cs" />
     <Compile Remove="Migrations\20201130121424_AddBoletoEnderecoPedido.cs" />
     <Compile Remove="Migrations\20201130121424_AddBoletoEnderecoPedido.Designer.cs" />
+    <Compile Remove="Migrations\20201216144550_CorrigeNoemCmapoPedido.cs" />
+    <Compile Remove="Migrations\20201216144550_CorrigeNoemCmapoPedido.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -24,12 +24,10 @@ namespace LojaVirtual
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
@@ -67,7 +65,6 @@ namespace LojaVirtual
             services.AddScheduler();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -85,12 +82,24 @@ namespace LojaVirtual
             app.UseCookiePolicy();
             app.UseSession();
 
+            //Verifica pedidos aguardando pagamento
             app.ApplicationServices.UseScheduler(scheduler => {
                 scheduler.Schedule<Pedido>().EveryFifteenMinutes();
             });
 
+            //Verifica se produtos de pedidos foram entregues
             app.ApplicationServices.UseScheduler(scheduler => {
                 scheduler.Schedule<ProdutoPedido>().DailyAtHour(12);
+            });
+
+            //Libera produtos de pedidos para envio
+            app.ApplicationServices.UseScheduler(scheduler => {
+                scheduler.Schedule<EnviarProduto>().Hourly();
+            });
+
+            //Vefifica se pedido está finalizado
+            app.ApplicationServices.UseScheduler(scheduler => {
+                scheduler.Schedule<FinalizarPedido>().Hourly();
             });
 
             app.UseMvc(routes =>
