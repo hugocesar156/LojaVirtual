@@ -2,7 +2,7 @@
 
 namespace LojaVirtual.Migrations
 {
-    public partial class CorrigeNoemCampoPedido : Migration
+    public partial class CorrigeNomeCampoPedido : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

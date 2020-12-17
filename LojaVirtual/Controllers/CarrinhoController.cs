@@ -46,7 +46,10 @@ namespace LojaVirtual.Controllers
 
             ViewBag.Quantidade = carrinho.ToDictionary(i => i.IdProduto, i => i.Quantidade);
 
-            ViewBag.Cep = _reposCliente.BuscaEndereco().Cep;
+            var endereco = _reposCliente.BuscaEndereco();
+            ViewBag.Cep = endereco.Cep;
+            ViewBag.Numero = endereco.Numero;
+            ViewBag.Nome = endereco.Nome;
 
             ViewBag.Estados = new string[]
             {

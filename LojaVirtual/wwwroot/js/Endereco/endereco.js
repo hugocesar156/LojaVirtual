@@ -1,10 +1,10 @@
 ﻿function BuscaEndereco() {
-    if ($('#cep').val().length == 9) {
-        let cep = $('#cep').val().replace("-", "");
+    let cep = $('#cep').val().replace("-", "");
 
+    if (cep.length == 8) {
         $.ajax({
             type: "GET",
-            url: "https://viacep.com.br/ws/"+ cep +"/json",
+            url: "https://viacep.com.br/ws/" + cep + "/json",
             dataType: "jsonp",
             success: function (endereco) {
                 if (endereco.cep != undefined) {
@@ -25,6 +25,10 @@
                 alert("Erro ao tentar buscar endereço");
             }
         });
+    }
+    else {
+        $('#cep').removeClass('is-valid');
+        $('#cep').addClass('is-invalid');
     }
 }
 

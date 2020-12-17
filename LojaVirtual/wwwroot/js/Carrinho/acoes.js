@@ -91,9 +91,10 @@ function CalcularFrete(cep) {
             let prazo = data[0].split("-");
             $('#prazo').html(`Prazo de entrega: ${prazo[2]}/${prazo[1]}/${prazo[0]}`);
 
+            CalculaParcelas();
             CalculaValores();
 
-            $('#calculo-frete').modal('hide');
+            $('#total-boleto').html("R$ " + $('#total').html());
         },
         error: function () {
             alert("Erro ao tentar calcular o frete.");
@@ -159,12 +160,69 @@ function RetirarQuantidade(idProduto) {
     });
 }
 
-$('.form-endereco').change(function () {
-    if ($('.form-endereco').length == $('.is-valid').length) {
-        $('#cep-salvo').val($('#cep').val().replace("-", ""));
-        $('#btn-endereco').attr('disabled', false);
+function ValidaCampoEndereco(campo) {
+    if (campo == undefined) {
+        $('.form-endereco').each(function () {
+            if ($(this).val() == "" && !$(this).hasClass('campo-nulo')) {
+                $(this).removeClass('is-valid');
+                $(this).addClass('is-invalid');
+            }
+            else {
+                $(this).removeClass('is-invalid');
+                $(this).addClass('is-valid');
+            }
+        });
     }
     else {
-        $('#btn-endereco').attr('disabled', true);
+        if ($(campo).val() == "" && !$(campo).hasClass('campo-nulo')) {
+            $(campo).removeClass('is-valid');
+            $(campo).addClass('is-invalid');
+        }
+        else {
+            $(campo).removeClass('is-invalid');
+            $(campo).addClass('is-valid');
+        }
     }
-})
+}
+
+function SalvaEndereco() {
+    ValidaCampoEndereco();
+
+    if ($('#cep').hasClass('is-valid') && $('.form-endereco').length == $('.is-valid').length) {
+        $('.form-endereco').each(function () {
+            $(this).removeClass('is-valid');
+        })
+
+        $('#cep-salvo').val($('#cep').val());
+        $('#numero-salvo').val($('#numero-endereco').val());
+        $('#nome-endereco-salvo').val($('#nome-endereco').val());
+        $('#modal-endereco').modal('hide');
+
+        ValidaCep();
+    }
+}
+
+function CalculaParcelas() {
+    let valor = $('#subtotal').html();
+    let frete = $('#frete').html();
+
+    $.ajax({
+        type: "POST",
+        url: "/Pagamento/CalculaParcelas",
+        data: { valor: valor, frete: frete },
+        success: function (data) {
+            let campos = "";
+
+            campos += `<option value="1">Pagamento à vista: R$ ${data[1][0]}`;
+
+            for (let i = 2; i <= 12; i++) {
+                campos += `<option value="${i}">${i}x de R$ ${data[0][i - 1]} | Total: R$ ${data[1][i - 1]}</option>`;
+            }
+
+            $('#parcelas').html(campos);
+        },
+        error: function () {
+            alert("Erro ao calcular parcelas do pagamento.");
+        }
+    });
+}

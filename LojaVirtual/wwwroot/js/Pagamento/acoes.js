@@ -1,38 +1,4 @@
-﻿function CalculaParcelas() {
-    if ($('#nome-endereco').hasClass('is-valid') && $('#numero-endereco').hasClass('is-valid')) {
-        $('#btn-confirma-endereco').attr({ 'data-target': '#pagamento', 'data-dismiss': 'modal' });
-
-        let valor = $('#subtotal').html();
-        let frete = $('#frete').html();
-
-        $('#total-boleto').html("R$ " + $('#total').html());
-
-        $.ajax({
-            type: "POST",
-            url: "/Pagamento/CalculaParcelas",
-            data: { valor: valor, frete: frete },
-            success: function (data) {
-                let campos = "";
-
-                campos += `<option value="1">Pagamento à vista: R$ ${data[1][0]}`;
-
-                for (let i = 2; i <= 12; i++) {
-                    campos += `<option value="${i}">${i}x de R$ ${data[0][i - 1]} | Total: R$ ${data[1][i - 1]}</option>`;
-                }
-
-                $('#parcelas').html(campos);
-            },
-            error: function () {
-                alert("Erro ao calcular parcelas do pagamento.");
-            }
-        });
-    }
-    else {
-        $('#btn-confirma-endereco').attr({ 'data-target': '', 'data-dismiss': '' });
-    }
-}
-
-function PagamentoCartao() {
+﻿function PagamentoCartao() {
     if (ValidaFormCartao()) {
         $('#btn-cartao').attr('disabled', true);
 
@@ -43,7 +9,7 @@ function PagamentoCartao() {
             verificador: $('#verificador').val()
         };
 
-        let cep = $('#cep').val().replace("-", "");
+        let cep = $('#cep-salvo').val().replace("-", "");
         let servico = "";
 
         if ($('#sedex-input').prop('checked')) {
@@ -69,8 +35,8 @@ function PagamentoCartao() {
                     endereco.uf = enderecoJson.uf;
                     endereco.ibge = enderecoJson.ibge;
 
-                    endereco.nome = $('#nome-endereco').val();
-                    endereco.numero = $('#numero-endereco').val();
+                    endereco.nome = $('#nome-endereco-salvo').val();
+                    endereco.numero = $('#numero-salvo').val();
 
                     let frete = {};
 
@@ -120,7 +86,7 @@ function PagamentoCartao() {
 function PagamentoBoleto() {
     $('#btn-boleto').attr('disabled', true);
 
-    let cep = $('#cep').val().replace("-", "");
+    let cep = $('#cep-salvo').val().replace("-", "");
     let servico = "";
 
     if ($('#sedex-input').prop('checked')) {
@@ -146,8 +112,8 @@ function PagamentoBoleto() {
                 endereco.uf = enderecoJson.uf;
                 endereco.ibge = enderecoJson.ibge;
 
-                endereco.nome = $('#nome-endereco').val();
-                endereco.numero = $('#numero-endereco').val();
+                endereco.nome = $('#nome-endereco-salvo').val();
+                endereco.numero = $('#numero-salvo').val();
 
                 let frete = {};
 

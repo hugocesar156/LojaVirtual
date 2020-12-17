@@ -10,7 +10,7 @@ namespace LojaVirtual.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
     [Migration("20201216144612_CorrigeNoemCampoPedido")]
-    partial class CorrigeNoemCampoPedido
+    partial class CorrigeNomeCampoPedido
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
