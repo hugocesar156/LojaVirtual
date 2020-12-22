@@ -1,5 +1,23 @@
 ﻿//Validações de campos
-function ValidaAltura() {
+$('.form-control').change(function () {
+    if ($(this).val() == "") {
+        $(this).removeClass('is-valid');
+        $(this).addClass('is-invalid');
+    }
+    else {
+        $(this).removeClass('is-invalid');
+        $(this).addClass('is-valid');
+    }
+
+    if ($(this).val() == 0 && ($(this).hasClass('real') || $(this).hasClass('quantidade'))) {
+        $(this).removeClass('is-valid');
+        $(this).addClass('is-invalid');
+
+        $('.msg-valor').html("O valor não pode ser 0.");
+    }
+})
+
+$('#altura').change(function () {
     if ($('#altura').val() < 2 || $('#altura').val() > 105) {
         $('#altura').removeClass('is-valid');
         $('#altura').addClass('is-invalid');
@@ -7,22 +25,13 @@ function ValidaAltura() {
         $('.msg-altura').html("A altura deve ser entre 2cm e 105cm.");
     }
     else {
-        ValidaCampo($('#altura'));
+        $('#dimensao').removeClass('is-invalid');
+        $('#altura').removeClass('is-invalid');
+        $('#altura').addClass('is-valid');
     }
-}
+})
 
-function ValidaCampo(campo) {
-    if ($(campo).val() == "") {
-        $(campo).removeClass('is-valid');
-        $(campo).addClass('is-invalid');
-    }
-    else {
-        $(campo).removeClass('is-invalid');
-        $(campo).addClass('is-valid');
-    }
-}
-
-function ValidaComprimento() {
+$('#comprimento').change(function () {
     if ($('#comprimento').val() < 16 || $('#comprimento').val() > 105) {
         $('#comprimento').removeClass('is-valid');
         $('#comprimento').addClass('is-invalid');
@@ -30,11 +39,13 @@ function ValidaComprimento() {
         $('.msg-comprimento').html("O comprimento deve ser entre 16cm e 105cm.");
     }
     else {
-        ValidaCampo($('#comprimento'));
+        $('#dimensao').removeClass('is-invalid');
+        $('#comprimento').removeClass('is-invalid');
+        $('#comprimento').addClass('is-valid');
     }
-}
+})
 
-function ValidaLargura() {
+$('#largura').change(function () {
     if ($('#largura').val() < 11 || $('#largura').val() > 105) {
         $('#largura').removeClass('is-valid');
         $('#largura').addClass('is-invalid');
@@ -42,11 +53,13 @@ function ValidaLargura() {
         $('.msg-largura').html("A largura deve ser entre 11cm e 105cm.");
     }
     else {
-        ValidaCampo($('#largura'));
+        $('#dimensao').removeClass('is-invalid');
+        $('#largura').removeClass('is-invalid');
+        $('#largura').addClass('is-valid');
     }
-}
+})
 
-function ValidaPeso() {
+$('#peso').change(function () {
     if ($('#peso').val() == 0 || $('#peso').val() > 30) {
         $('#peso').removeClass('is-valid');
         $('#peso').addClass('is-invalid');
@@ -54,78 +67,63 @@ function ValidaPeso() {
         $('.msg-peso').html("O peso não pode ser 0 e deve ser até 30Kg.");
     }
     else {
-        ValidaCampo($('#peso'));
+        $('#peso').removeClass('is-invalid');
+        $('#peso').addClass('is-valid');
     }
-}
+})
 
-function ValidaValor(campo) {
-    if ($(campo).val() == 0) {
-        $(campo).removeClass('is-valid');
-        $(campo).addClass('is-invalid');
+//Validação para cadastro
+function ValidaRegistro() {
+    let altura = parseInt($('#altura').val());
+    let largura = parseInt($('#largura').val());
+    let comprimento = parseInt($('#comprimento').val());
 
-        $('.msg-valor').html("O valor não pode ser 0.");
-    }
-    else {
-        ValidaCampo(campo);
-    }
-}
+    let dimensao = (altura * 2) + (largura * 2) + comprimento;
 
-//Validação para edição
-function ValidaEdicao() {
-    $('.form-control').each(function () {
-        ValidaCampo(this);
-    });
-
-    ValidaAltura();
-    ValidaComprimento();
-    ValidaLargura();
-    ValidaPeso();
-    ValidaValor($('#estoque'));
-    ValidaValor($('#valor'));
-
-    ValidaRegistro(2);
-}
-
-//Validação de cadastro e edição
-function ValidaRegistro(acao) {
     if ($('.form-control').length == $('.is-valid').length) {
-        let produto = {
-            nome: $('#nome').val().toUpperCase(),
-            idCategoria: $('#categoria').val(),
-            descricao: $('#descricao').val().toUpperCase(),
-            valor: $('#valor').val(),
-            estoque: $('#estoque').val(),
-            fabricante: $('#fabricante').val().toUpperCase(),
-            modelo: $('#modelo').val().toUpperCase(),
-            cor: $('#cor').val().toUpperCase(),
-            peso: $('#peso').val(),
-            largura: $('#largura').val(),
-            altura: $('#altura').val(),
-            comprimento: $('#comprimento').val()
-        }
-
-        let action = "Registrar";
-
-        if (acao == 2) {
-            action = "Atualizar";
-            produto.idProduto = $('#id-produto').val();
-        }
-
-        $.ajax({
-            type: "POST",
-            url: "/Produto/" + action,
-            data: { produto: produto },
-            success: function (resultado) {
-                if (resultado) {
-                    window.location.pathname = "Produto/Lista";
-                }
-                else {
-                    alert("Falha no envio de dados.");
-                }
-            },
-            error: function () {
-                alert("Falha no envio de dados.");
+        if (dimensao <= 200) {
+            let produto = {
+                nome: $('#nome').val().toUpperCase(),
+                idCategoria: $('#categoria').val(),
+                descricao: $('#descricao').val().toUpperCase(),
+                valor: $('#valor').val(),
+                estoque: $('#estoque').val(),
+                fabricante: $('#fabricante').val().toUpperCase(),
+                modelo: $('#modelo').val().toUpperCase(),
+                cor: $('#cor').val().toUpperCase(),
+                peso: $('#peso').val(),
+                largura: $('#largura').val(),
+                altura: $('#altura').val(),
+                comprimento: $('#comprimento').val()
             }
-        });
+
+            $.ajax({
+                type: "POST",
+                url: "/Produto/Registrar",
+                data: { produto: produto },
+                success: function () {
+                    window.location.pathname = "Produto/Lista";
+                },
+                error: function (erro) {
+                    alert(erro.responseText);
+                }
+            });
+        }
+        else {
+            $('#altura').removeClass('is-valid');
+            $('#comprimento').removeClass('is-valid');
+            $('#largura').removeClass('is-valid');
+
+            $('#altura').addClass('is-invalid');
+            $('#comprimento').addClass('is-invalid');
+            $('#largura').addClass('is-invalid');
+
+            $('#altura').val("");
+            $('#comprimento').val("");
+            $('#largura').val("");
+
+            $('#dimensao').addClass('is-invalid');
+            $('.msg-dimensao').html("Dimensão máxima permitida é de 200 cm.");
+        }
     }
 }

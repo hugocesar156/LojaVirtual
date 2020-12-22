@@ -31,7 +31,7 @@ namespace LojaVirtual.Repositories
                 {
                     for (int i = 0; i < quantidade[produto.IdProduto]; i++)
                     {
-                        var dimensaoProduto = produto.Comprimento + produto.Largura + produto.Altura;
+                        var dimensaoProduto = (produto.Largura * 2) + (produto.Altura * 2) + produto.Comprimento;
                         var dimensaoPacote = pacote.Comprimento + pacote.Largura + pacote.Altura;
 
                         if ((produto.Peso + pacote.Peso) >= 30 || (dimensaoProduto + dimensaoPacote) >= 200)

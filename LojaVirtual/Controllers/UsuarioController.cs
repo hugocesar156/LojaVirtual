@@ -101,9 +101,7 @@ namespace LojaVirtual.Controllers
         {
             try
             {
-                if (usuario.Cliente.Endereco.Complemento == null)
-                    usuario.Cliente.Endereco.Complemento = "";
-
+                usuario.Cliente.Endereco.Complemento = usuario.Cliente.Endereco.Complemento ?? "";
                 return Json(_reposUsuario.Registrar(usuario));
             }
             catch (Exception erro)

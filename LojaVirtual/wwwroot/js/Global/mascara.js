@@ -4,6 +4,7 @@
     $(".cep").mask('00000-000');
     $(".cpf").mask('000.000.000-00');
     $(".data").mask('00/00');
+    $(".nascimento").mask('00/00/0000');
     $(".num-3").mask('000');
     $(".kg").mask('00,00', { reverse: true });
     $(".quantidade").mask('0000');

@@ -61,7 +61,7 @@ namespace LojaVirtual
                 return new CalcPrecoPrazoWSSoapClient(CalcPrecoPrazoWSSoapClient.EndpointConfiguration.CalcPrecoPrazoWSSoap);
             });
 
-            services.AddTransient<Pedido>();
+            services.AddTransient<AtualizarPedido>();
             services.AddScheduler();
         }
 
@@ -84,12 +84,12 @@ namespace LojaVirtual
 
             //Verifica pedidos aguardando pagamento
             app.ApplicationServices.UseScheduler(scheduler => {
-                scheduler.Schedule<Pedido>().EveryFifteenMinutes();
+                scheduler.Schedule<AtualizarPedido>().EveryFifteenMinutes();
             });
 
             //Verifica se produtos de pedidos foram entregues
             app.ApplicationServices.UseScheduler(scheduler => {
-                scheduler.Schedule<ProdutoPedido>().DailyAtHour(12);
+                scheduler.Schedule<AtualizarProduto>().DailyAtHour(12);
             });
 
             //Libera produtos de pedidos para envio

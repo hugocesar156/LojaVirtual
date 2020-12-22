@@ -15,6 +15,9 @@ namespace LojaVirtual.Models.Venda
         [Column(TypeName = "DATETIME"), Required]
         public DateTime Prazo { get; set; }
 
+        [Required]
+        public TimeSpan DiasEntrega { get; set; }
+
         [Column(TypeName = "CHAR(1)"), Required]
         public char Servico { get; set; }
     }

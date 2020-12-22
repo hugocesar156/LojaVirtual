@@ -1,15 +1,15 @@
-﻿using Coravel.Invocable;
-using LojaVirtual.Repositories;
-using System;
+﻿using System;
+using Coravel.Invocable;
 using System.Threading.Tasks;
+using LojaVirtual.Repositories;
 
 namespace LojaVirtual.Scheduling
 {
-    public class ProdutoPedido : IInvocable
+    public class AtualizarPedido : IInvocable
     {
         private readonly PedidoR _reposPedido;
 
-        public ProdutoPedido(PedidoR reposPedido) 
+        public AtualizarPedido(PedidoR reposPedido)
         {
             _reposPedido = reposPedido;
         }
@@ -18,7 +18,7 @@ namespace LojaVirtual.Scheduling
         {
             try
             {
-                _reposPedido.AtualizarProdutoPedido();
+                _reposPedido.AtualizarPedidos();
                 return Task.CompletedTask;
             }
             catch (Exception erro)

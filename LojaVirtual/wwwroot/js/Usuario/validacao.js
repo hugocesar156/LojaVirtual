@@ -114,6 +114,7 @@ function ValidaUsuario() {
 function RegistraUsuario() {
     if (ValidaFormulario(2) && ValidaFormulario(3)) {
         let usuario = CarregaUsuario();
+        usuario.cliente.email = usuario.email;
 
         $.ajax({
             type: "POST",
@@ -139,11 +140,12 @@ function CarregaUsuario() {
     return {
         email: $('#email').val(),
         senha: $('#senha').val(),
-        perfil: '1',
+        perfil: '2',
 
         cliente: {
             nome: $('#nome').val(),
             cpf: $('#cpf').val().replace(".", "").replace(".", "").replace("-", ""),
+            nascimento: $('#nascimento').val(),
 
             endereco: {
                 cep: $('#cep').val().replace("-", ""),

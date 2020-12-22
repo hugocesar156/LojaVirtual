@@ -78,7 +78,11 @@ namespace LojaVirtual.Models.Venda
         [Required]
         public uint Quantidade { get; set; }
 
+        [Required, MaxLength(20)]
         public string CodRastreamento { get; set; }
+
+        [Column(TypeName = "DATETIME"), Required]
+        public DateTime PrazoEntrega { get; set; }
 
         [Required]
         public uint IdUsuario { get; set; }

@@ -142,18 +142,23 @@ namespace LojaVirtual.Controllers
                     };
 
                     pedido.Cliente = _reposCliente.Buscar(_sessao.UsuarioSessao().IdCliente);
+
                     pedido.Frete = frete;
+                    pedido.Frete.DiasEntrega = frete.Prazo - DateTime.Now;
 
                     pedido.Produto = new List<ProdutoHistorico>();
 
                     foreach (var item in produtos)
                     {
-                        pedido.Produto.Add(new ProdutoHistorico {
+                        pedido.Produto.Add(new ProdutoHistorico
+                        {
                             IdProduto = item.IdProduto,
                             IdUsuario = item.IdUsuario,
                             Nome = item.Nome,
                             Valor = item.Valor,
                             Situacao = (byte)Global.Produto.Aguardando,
+                            CodRastreamento = "",
+                            PrazoEntrega = Convert.ToDateTime("0001/01/01"),
                             DataAtualizacao = DateTime.Now,
                             Quantidade = carrinho.FirstOrDefault(c =>
                             c.IdProduto == item.IdProduto).Quantidade
@@ -256,7 +261,9 @@ namespace LojaVirtual.Controllers
                     };
 
                     pedido.Cliente = _reposCliente.Buscar(_sessao.UsuarioSessao().IdCliente);
+
                     pedido.Frete = frete;
+                    pedido.Frete.DiasEntrega = frete.Prazo - DateTime.Now;
 
                     pedido.Produto = new List<ProdutoHistorico>();
 
@@ -269,6 +276,8 @@ namespace LojaVirtual.Controllers
                             Nome = item.Nome,
                             Valor = item.Valor,
                             Situacao = (byte)Global.Produto.Aguardando,
+                            CodRastreamento = "",
+                            PrazoEntrega = Convert.ToDateTime("0001/01/01"),
                             DataAtualizacao = DateTime.Now,
                             Quantidade = carrinho.FirstOrDefault(c =>
                             c.IdProduto == item.IdProduto).Quantidade
@@ -305,7 +314,7 @@ namespace LojaVirtual.Controllers
                     Name = cliente.Nome,
                     Type = CustomerType.Individual,
                     Country = "br",
-                    Email = "rick@morty.com",
+                    Email = cliente.Email,
 
                     Documents = new[]
                     {
@@ -315,13 +324,7 @@ namespace LojaVirtual.Controllers
                         }
                     },
 
-                    PhoneNumbers = new string[]
-                    {
-                        "+5511982738291",
-                        "+5511829378291"
-                    },
-
-                    Birthday = new DateTime(1991, 12, 12).ToString("yyyy-MM-dd")
+                    Birthday = cliente.Nascimento.ToString("yyyy-MM-dd")
                 },
 
                 Billing = new Billing
@@ -357,12 +360,21 @@ namespace LojaVirtual.Controllers
                         StreetNumber = endereco.Numero,
                         Zipcode = endereco.Cep
                     }
-                },
-
-                Item = new Item[produtos.Count]
+                }
             };
 
+            transacao.Item = new Item[produtos.Count];
+            transacao.Customer.PhoneNumbers = new string[cliente.Contato.Count];
+
             var i = 0;
+
+            foreach (var contato in cliente.Contato)
+            {
+                transacao.Customer.PhoneNumbers[i] = contato.Numero;
+                i++;
+            }
+
+            i = 0;
 
             foreach (var produto in produtos)
             {

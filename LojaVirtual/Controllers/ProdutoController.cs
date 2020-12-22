@@ -5,6 +5,8 @@ using LojaVirtual.Authorizations;
 using LojaVirtual.Sessions;
 using System.Linq;
 using X.PagedList;
+using System;
+using LojaVirtual.Validations;
 
 namespace LojaVirtual.Controllers
 {
@@ -96,12 +98,22 @@ namespace LojaVirtual.Controllers
         }
 
         [HttpPost]
-        public JsonResult Registrar(Produto produto)
+        public IActionResult Registrar(Produto produto)
         {
-            produto.IdUsuario = _sessao.UsuarioSessao().IdUsuario; 
+            try
+            {
+                produto.IdUsuario = _sessao.UsuarioSessao().IdUsuario;
 
-            return _reposProduto.Registrar(produto) > 0 ?
-              Json(true) : Json(false);
+                if (_reposProduto.Registrar(produto) > 0)
+                    return Json(new { });
+
+                return BadRequest(Global.Mensagem.FalhaCadastro);
+            }
+            catch (Exception erro)
+            {
+                Console.WriteLine(erro);
+                return BadRequest(Global.Mensagem.FalhaBanco);
+            }
         }
     }
 }

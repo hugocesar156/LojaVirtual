@@ -9,16 +9,30 @@
     <form id="form-cliente">
         <h5 class="mt-4">Cliente</h5>
         <div class="row justify-content-center mt-2">
-            <div class="col-10 col-sm-9 col-md-5 col-xl-4 text-center text-md-left">
+            <div class="col-10 col-sm-9 col-md-5 col-xl-6 text-center text-md-left">
                 <label>Nome</label>
                 <input class="form-control form-cliente" id="nome" type="text" maxlength="50"
-                       onchange="ValidaCampo(this)" value="@Model.Cliente.Nome"/>
+                       onchange="ValidaCampo(this)" value="@Model.Cliente.Nome" />
             </div>
-            <div class="col-5 col-sm-4 col-md-3 col-xl-2 text-center mt-2 mt-md-0">
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-5 col-sm-4 col-md-3 col-xl-3 text-center mt-2 mt-md-0">
                 <label>CPF</label>
-                <input class="form-control form-cliente cpf" id="cpf" type="text" placeholder="000.000.000-00" 
+                <input class="form-control form-cliente cpf" id="cpf" type="text" placeholder="000.000.000-00"
                        style="text-align: center" onchange="ValidaCampo(this)" value="@Model.Cliente.Cpf" />
                 <div class="invalid-feedback text-left" id="cpf">Insira um CPF válido</div>
+            </div>
+            <div class="col-5 col-sm-4 col-md-3 col-xl-3 text-center mt-2 mt-md-0">
+                <label>Data de nascimento</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                    </div>
+                    <input class="form-control form-cliente nascimento" id="nascimento" type="text" maxlength="35"
+                           placeholder="dd/mm/aa" style="text-align: center"
+                           onchange="ValidaCampo(this)" />
+                    <div class="invalid-feedback text-left" id="nascimento"></div>
+                </div>
             </div>
         </div>
         <div class="row justify-content-center mt-4">
@@ -39,7 +53,7 @@
             <div class="col-9 col-sm-7 col-md-4 col-xl-3 text-center text-md-left">
                 <label>Senha</label>
                 <input class="form-control form-cliente senha" id="senha" type="password" maxlength="30"
-                       placeholder="*******" style="text-align: center" 
+                       placeholder="*******" style="text-align: center"
                        onchange="ValidaCampo(this)" value="@Model.Senha" />
                 <div class="invalid-feedback text-left msg-senha" id="senha"></div>
             </div>

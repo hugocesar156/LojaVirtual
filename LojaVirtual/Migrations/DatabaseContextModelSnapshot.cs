@@ -51,6 +51,13 @@ namespace LojaVirtual.Migrations
                         .IsRequired()
                         .HasMaxLength(11);
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime>("Nascimento")
+                        .HasColumnType("DATETIME");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(50);
@@ -321,6 +328,8 @@ namespace LojaVirtual.Migrations
                     b.Property<uint>("IdFrete")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<TimeSpan>("DiasEntrega");
+
                     b.Property<DateTime>("Prazo")
                         .HasColumnType("DATETIME");
 
@@ -389,7 +398,9 @@ namespace LojaVirtual.Migrations
                     b.Property<uint>("IdProdutoHistorico")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CodRastreamento");
+                    b.Property<string>("CodRastreamento")
+                        .IsRequired()
+                        .HasMaxLength(20);
 
                     b.Property<DateTime>("DataAtualizacao")
                         .HasColumnType("DATETIME");
@@ -403,6 +414,9 @@ namespace LojaVirtual.Migrations
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(30);
+
+                    b.Property<DateTime>("PrazoEntrega")
+                        .HasColumnType("DATETIME");
 
                     b.Property<uint>("Quantidade");
 

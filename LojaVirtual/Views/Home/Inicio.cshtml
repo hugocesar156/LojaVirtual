@@ -1,7 +1,49 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Página inicial";
 }
 
 <div class="text-center">
-    <h4>Loja Virtual</h4>
+    <h4>Página Inicial</h4>
+    <div class="row mt-5">
+        <div class="col">
+            <h5>Categorias</h5>
+        </div>
+    </div>
+    <form asp-action="Lista" id="form-categoria" method="get">
+        <input type="hidden" name="idCategoria" id="categoria-produto" />
+        <div class="row justify-content-center mt-3">
+            <div class="col-3">
+                <div class="card border-light rounded-circle" onclick="ListaProdutos(1)">
+                    <div class="card-body">
+                        <h6>Celulares</h6>
+                        <img class="mt-2" src="~/images/categoria/categoria-celular.jfif" width="150" height="150" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card border-light rounded-circle" onclick="ListaProdutos(2)">
+                    <div class="card-body">
+                        <h6>Notebooks</h6>
+                        <img class="mt-2" src="~/images/categoria/categoria-notebook.webp" width="150" height="150" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card border-light rounded-circle" onclick="ListaProdutos(3)">
+                    <div class="card-body">
+                        <h6>Periféricos</h6>
+                        <img class="mt-2" src="~/images/categoria/categoria-periferico.jpg" width="150" height="150" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="row mt-4">
+        <div class="col">
+            <button class="btn btn-outline-primary">Mais categorias</button>
+        </div>
+    </div>
 </div>
+
+<script src="~/jquery/jquery-3.5.1.min.js"></script>
+<script src="~/js/Home/acoes.js"></script>

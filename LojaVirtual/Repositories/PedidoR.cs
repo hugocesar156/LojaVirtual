@@ -109,15 +109,20 @@ namespace LojaVirtual.Repositories
 
         public void EnviarProdutosPedido()
         {
-            var lista = _banco.ProdutoHistorico.Where(p => 
-            p.Situacao == (byte)Global.Produto.Aprovado).ToList();
+            var lista = _banco.Pedido.Include(p => p.Frete).Include(p => p.Produto)
+                .Where(p => p.Situacao == (byte)Global.Pedido.Aprovado).ToList();
 
-            foreach (var produto in lista)
+            foreach (var pedido in lista)
             {
-                produto.Situacao = (byte)Global.Produto.Enviado;
-                produto.DataAtualizacao = DateTime.Now;
+                foreach (var produto in pedido.Produto.Where(p => p.Situacao == (byte)Global.Produto.Aprovado))
+                {
+                    produto.Situacao = (byte)Global.Produto.Enviado;
+                    produto.CodRastreamento = "";
+                    produto.PrazoEntrega = DateTime.Now.AddDays(pedido.Frete.DiasEntrega.TotalDays);
+                    produto.DataAtualizacao = DateTime.Now;
 
-                _banco.ProdutoHistorico.Update(produto);
+                    _banco.ProdutoHistorico.Update(produto);
+                }
             }
 
             _banco.SaveChanges();

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LojaVirtual.Models.Cliente
 {
@@ -13,6 +15,12 @@ namespace LojaVirtual.Models.Cliente
 
         [Required, MaxLength(11), MinLength(11)]
         public string Cpf { get; set; }
+
+        [Required, MaxLength(50)]
+        public string Email { get; set; }
+
+        [Column(TypeName = "DATETIME"), Required]
+        public DateTime Nascimento { get; set; }
 
         public EnderecoCliente Endereco { get; set; }
         public List<ContatoCliente> Contato { get; set; }
