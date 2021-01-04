@@ -95,14 +95,9 @@ function ValidaUsuario() {
             type: "POST",
             url: "/Usuario/ValidaUsuario",
             data: { usuario: usuario },
-            success: function (validacao) {
-                if (validacao) {
-                    $('#form-cliente').addClass('d-none');
-                    $('#form-endereco').removeClass('d-none');
-                }
-                else {
-                    alert("Email já em uso.");
-                }
+            success: function () {
+                $('#form-cliente').addClass('d-none');
+                $('#form-endereco').removeClass('d-none');
             },
             error: function (erro) {
                 alert(erro.responseText);
@@ -120,16 +115,11 @@ function RegistraUsuario() {
             type: "POST",
             url: "/Usuario/Registrar",
             data: { usuario: usuario },
-            success: function (validacao) {
-                if (validacao) {
-                    window.location.pathname = "Login/Entrar";
-                }
-                else {
-                    alert("Falha ao confirmar dados de cadastro.");
-                }
+            success: function () {
+                window.location.pathname = "Login/Entrar";
             },
-            error: function () {
-                alert("Falha ao confirmar dados de cadastro.");
+            error: function (erro) {
+                alert(erro.responseText);
             }
         });
     }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LojaVirtual.Models.Venda
@@ -12,11 +11,8 @@ namespace LojaVirtual.Models.Venda
         [Column(TypeName = "FLOAT"), Required]
         public float Valor { get; set; }
 
-        [Column(TypeName = "DATETIME"), Required]
-        public DateTime Prazo { get; set; }
-
         [Required]
-        public TimeSpan DiasEntrega { get; set; }
+        public byte DiasEntrega { get; set; }
 
         [Column(TypeName = "CHAR(1)"), Required]
         public char Servico { get; set; }

@@ -19,8 +19,8 @@
 
             $('#caminho').val(imagem);
         },
-        error: function () {
-            alert("Erro ao tentar carregar imagem.");
+        error: function (erro) {
+            alert(erro.responseText);
 
             $('#lista-imagem').removeClass('d-none');
         }
@@ -46,8 +46,8 @@ function DescartaImagem() {
             $('#salvar').attr('disabled', false);
             $('#remover').attr('disabled', false);
         },
-        error: function () {
-            alert("Erro ao descartar imagem.");
+        error: function (erro) {
+            alert(erro.responseText);
 
             $('#salvar').attr('disabled', false);
             $('#remover').attr('disabled', false);
@@ -66,8 +66,8 @@ function RemoveImagem() {
         success: function (imagens) {
             $("#lista-imagem").html(imagens);
         },
-        error: function () {
-            alert("Erro ao remover imagem.");
+        error: function (erro) {
+            alert(erro.responseText);
         }
     });
 }
@@ -93,8 +93,8 @@ function SalvaImagem() {
             $("#lista-imagem").html(imagens);
             $('#lista-imagem').removeClass('d-none');
         },
-        error: function () {
-            alert("Erro ao enviar imagem.");
+        error: function (erro) {
+            alert(erro.responseText);
 
             $("#salvar").removeClass('d-none');
             $("#remover").removeClass('d-none');

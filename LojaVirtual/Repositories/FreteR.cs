@@ -22,81 +22,69 @@ namespace LojaVirtual.Repositories
 
         public static List<Pacote> PrepararPacotes(List<Produto> lista, Dictionary<uint, uint> quantidade)
         {
-            try
-            {
-                var pacotes = new List<Pacote>();
-                var pacote = new Pacote();
+            var pacotes = new List<Pacote>();
+            var pacote = new Pacote();
 
-                foreach (var produto in lista)
+            foreach (var produto in lista)
+            {
+                for (int i = 0; i < quantidade[produto.IdProduto]; i++)
                 {
-                    for (int i = 0; i < quantidade[produto.IdProduto]; i++)
+                    var dimensaoProduto = produto.Altura + produto.Comprimento + produto.Largura;
+                    var dimensaoPacote = pacote.Altura + pacote.Comprimento + pacote.Largura;
+
+                    if ((produto.Peso + pacote.Peso) >= 30 ||
+                        (produto.Altura + pacote.Altura >= 100) ||
+                        (produto.Comprimento + pacote.Comprimento >= 100) ||
+                        (produto.Largura + pacote.Largura >= 100) ||
+                        (dimensaoProduto + dimensaoPacote) >= 200)
                     {
-                        var dimensaoProduto = (produto.Largura * 2) + (produto.Altura * 2) + produto.Comprimento;
-                        var dimensaoPacote = pacote.Comprimento + pacote.Largura + pacote.Altura;
-
-                        if ((produto.Peso + pacote.Peso) >= 30 || (dimensaoProduto + dimensaoPacote) >= 200)
-                        {
-                            pacotes.Add(pacote);
-                            pacote = new Pacote();
-                        }
-
-                        pacote.Peso += produto.Peso;
-
-                        if (pacote.Comprimento < produto.Comprimento)
-                            pacote.Comprimento = produto.Comprimento;
-
-                        if (pacote.Largura < produto.Largura)
-                            pacote.Largura = produto.Largura;
-
-                        pacote.Altura += produto.Altura;
+                        pacotes.Add(pacote);
+                        pacote = new Pacote();
                     }
+
+                    pacote.Peso += produto.Peso;
+
+                    if (pacote.Comprimento < produto.Comprimento)
+                        pacote.Comprimento = produto.Comprimento;
+
+                    if (pacote.Largura < produto.Largura)
+                        pacote.Largura = produto.Largura;
+
+                    pacote.Altura += produto.Altura;
                 }
-
-                if (pacotes.LastOrDefault() != pacote) 
-                    pacotes.Add(pacote);
-
-                return pacotes;
             }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
-                return new List<Pacote>();
-            }
+
+            if (pacotes.LastOrDefault() != pacote)
+                pacotes.Add(pacote);
+
+            return pacotes;
         }
 
         public async Task<Frete> CalcularFrete(string cepDestino, List<Pacote> lista, string servico)
         {
-            try
+            var cepOrigem = _configuration.GetValue<string>("Frete:CepOrigem");
+            var maoPropria = _configuration.GetValue<string>("Frete:MaoPropria");
+            var avisoRecebimento = _configuration.GetValue<string>("Frete:AvisoRecebimento");
+
+            var prazo = await _servico.CalcPrazoAsync(servico, cepOrigem, cepDestino);
+
+            var frete = new Frete();
+
+            if (prazo.Servicos[0].Erro == "")
+                frete.DiasEntrega = Convert.ToByte(prazo.Servicos[0].PrazoEntrega);
+
+            foreach (var pacote in lista)
             {
-                var cepOrigem = _configuration.GetValue<string>("Frete:CepOrigem");
-                var maoPropria = _configuration.GetValue<string>("Frete:MaoPropria");
-                var avisoRecebimento = _configuration.GetValue<string>("Frete:AvisoRecebimento");
+                var dimensao = pacote.Altura + pacote.Comprimento + pacote.Largura;
 
-                var prazo = await _servico.CalcPrazoAsync(servico, cepOrigem, cepDestino);
+                var valor = await _servico.CalcPrecoAsync("", "", servico, cepOrigem, cepDestino, pacote.Peso.ToString(),
+                    1, pacote.Comprimento, pacote.Altura, pacote.Largura, dimensao, maoPropria, 0, avisoRecebimento);
 
-                var frete = new Frete();
-
-                if (prazo.Servicos[0].Erro == "")
-                    frete.Prazo = Convert.ToDateTime(prazo.Servicos[0].DataMaxEntrega);
-
-                foreach (var pacote in lista)
-                {
-                    var diametro = pacote.Altura + pacote.Comprimento + pacote.Largura;
-
-                    var valor = await _servico.CalcPrecoAsync("", "", servico, cepOrigem, cepDestino, pacote.Peso.ToString(),
-                        1, pacote.Comprimento, pacote.Altura, pacote.Largura, diametro, maoPropria, 0, avisoRecebimento);
-
-                    if (valor.Servicos[0].Erro == "")
-                        frete.Valor += float.Parse(valor.Servicos[0].Valor);
-                }
-
-                return frete;
+                if (valor.Servicos[0].Erro == "")
+                    frete.Valor += float.Parse(valor.Servicos[0].Valor);
             }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
-                return new Frete();
-            }
+
+            return frete;
         }
     }
 }

@@ -18,11 +18,11 @@ $('.form-control').change(function () {
 })
 
 $('#altura').change(function () {
-    if ($('#altura').val() < 2 || $('#altura').val() > 105) {
+    if ($('#altura').val() < 1 || $('#altura').val() > 100) {
         $('#altura').removeClass('is-valid');
         $('#altura').addClass('is-invalid');
 
-        $('.msg-altura').html("A altura deve ser entre 2cm e 105cm.");
+        $('.msg-altura').html("A altura deve ser entre 1cm e 100cm.");
     }
     else {
         $('#dimensao').removeClass('is-invalid');
@@ -32,11 +32,11 @@ $('#altura').change(function () {
 })
 
 $('#comprimento').change(function () {
-    if ($('#comprimento').val() < 16 || $('#comprimento').val() > 105) {
+    if ($('#comprimento').val() < 15 || $('#comprimento').val() > 100) {
         $('#comprimento').removeClass('is-valid');
         $('#comprimento').addClass('is-invalid');
 
-        $('.msg-comprimento').html("O comprimento deve ser entre 16cm e 105cm.");
+        $('.msg-comprimento').html("O comprimento deve ser entre 15cm e 100cm.");
     }
     else {
         $('#dimensao').removeClass('is-invalid');
@@ -46,11 +46,11 @@ $('#comprimento').change(function () {
 })
 
 $('#largura').change(function () {
-    if ($('#largura').val() < 11 || $('#largura').val() > 105) {
+    if ($('#largura').val() < 10 || $('#largura').val() > 100) {
         $('#largura').removeClass('is-valid');
         $('#largura').addClass('is-invalid');
 
-        $('.msg-largura').html("A largura deve ser entre 11cm e 105cm.");
+        $('.msg-largura').html("A largura deve ser entre 10cm e 100cm.");
     }
     else {
         $('#dimensao').removeClass('is-invalid');
@@ -64,7 +64,7 @@ $('#peso').change(function () {
         $('#peso').removeClass('is-valid');
         $('#peso').addClass('is-invalid');
 
-        $('.msg-peso').html("O peso não pode ser 0 e deve ser até 30Kg.");
+        $('.msg-peso').html("O peso não pode ser 0 e deve ser de até 30Kg.");
     }
     else {
         $('#peso').removeClass('is-invalid');
@@ -77,8 +77,7 @@ function ValidaRegistro() {
     let altura = parseInt($('#altura').val());
     let largura = parseInt($('#largura').val());
     let comprimento = parseInt($('#comprimento').val());
-
-    let dimensao = (altura * 2) + (largura * 2) + comprimento;
+    let dimensao = altura + largura + comprimento;
 
     if ($('.form-control').length == $('.is-valid').length) {
         if (dimensao <= 200) {
@@ -101,8 +100,8 @@ function ValidaRegistro() {
                 type: "POST",
                 url: "/Produto/Registrar",
                 data: { produto: produto },
-                success: function () {
-                    window.location.pathname = "Produto/Lista";
+                success: function (idProduto) {
+                    window.location.pathname = "Produto/Imagem/" + idProduto;
                 },
                 error: function (erro) {
                     alert(erro.responseText);
@@ -123,7 +122,7 @@ function ValidaRegistro() {
             $('#largura').val("");
 
             $('#dimensao').addClass('is-invalid');
-            $('.msg-dimensao').html("Dimensão máxima permitida é de 200 cm.");
+            $('.msg-dimensao').html("Dimensão máxima permitida é de 200cm.");
         }
     }
 }

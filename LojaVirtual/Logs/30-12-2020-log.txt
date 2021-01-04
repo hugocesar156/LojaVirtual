@@ -1,0 +1,2 @@
+2020-12-30 16:27:34.273 -03:00 [INF] Iniciando servidor web
+2020-12-30 16:27:51.430 -03:00 [INF] Iniciando servidor web

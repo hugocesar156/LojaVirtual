@@ -1,0 +1,2 @@
+2021-01-04 12:27:49.688 -03:00 [INF] Iniciando servidor web
+2021-01-04 15:49:16.243 -03:00 [INF] Iniciando servidor web

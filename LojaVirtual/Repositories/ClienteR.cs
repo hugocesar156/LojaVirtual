@@ -1,10 +1,7 @@
 ﻿using LojaVirtual.Data;
 using LojaVirtual.Models.Cliente;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace LojaVirtual.Repositories
 {
@@ -19,29 +16,12 @@ namespace LojaVirtual.Repositories
 
         public Cliente Buscar(uint idCliente)
         {
-            try
-            {
-                return _banco.Cliente.Include(c => c.Endereco)
-                    .FirstOrDefault(c => c.IdCliente == idCliente);
-            }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
-                return new Cliente();
-            }
+            return _banco.Cliente.Include(c => c.Endereco).FirstOrDefault(c => c.IdCliente == idCliente);
         }
 
-        public EnderecoCliente BuscaEndereco()
+        public EnderecoCliente BuscaEndereco(uint idCliente)
         {
-            try
-            {
-                return _banco.Endereco.FirstOrDefault(e => e.IdCliente == 1);
-            }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
-                return new EnderecoCliente();
-            }
+            return _banco.Endereco.FirstOrDefault(e => e.IdCliente == idCliente);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using LojaVirtual.Data;
 using LojaVirtual.Models.Produto;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -40,43 +39,19 @@ namespace LojaVirtual.Repositories
 
         public int Inserir(Imagem imagem)
         {
-            try
-            {
-                _banco.Imagem.Add(imagem);
-                return _banco.SaveChanges();
-            }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
-                return 0;
-            }
+            _banco.Imagem.Add(imagem);
+            return _banco.SaveChanges();
         }
 
         public int Remover(Imagem imagem)
         {
-            try
-            {
-                _banco.Imagem.Remove(imagem);
-                return _banco.SaveChanges();
-            }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
-                return 0;
-            }
+            _banco.Imagem.Remove(imagem);
+            return _banco.SaveChanges();
         }
 
         public List<Imagem> BuscaLista(uint id)
         {
-            try
-            {
-                return _banco.Imagem.Where(i => i.IdProduto == id).ToList();
-            }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
-                return new List<Imagem>();
-            }
+            return _banco.Imagem.Where(i => i.IdProduto == id).ToList();
         }
     }
 }

@@ -44,6 +44,8 @@ namespace LojaVirtual
             services.AddHttpContextAccessor();
             services.AddScoped<Sessao>();
 
+            services.AddLogging();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddDbContext<DatabaseContext>(options =>
@@ -73,7 +75,7 @@ namespace LojaVirtual
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Erro/Mensagem");
                 app.UseHsts();
             }
 

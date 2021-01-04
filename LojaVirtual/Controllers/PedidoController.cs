@@ -7,6 +7,7 @@ using System;
 using Correios.NET;
 using PagarMe;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace LojaVirtual.Controllers
 {
@@ -14,44 +15,87 @@ namespace LojaVirtual.Controllers
     public class PedidoController : Controller
     {
         private readonly Sessao _sessao;
+        private readonly ILogger<PedidoController> _logger;
+        private readonly IConfiguration _configuration;
+
         private readonly PedidoR _reposPedido;
         private readonly ProdutoR _reposProduto;
 
-        private readonly IConfiguration _configuration;
-
-        public PedidoController(Sessao sessao, PedidoR reposPedido, ProdutoR reposProduto, IConfiguration configuration)
+        public PedidoController(Sessao sessao, ILogger<PedidoController> logger, PedidoR reposPedido,
+            ProdutoR reposProduto, IConfiguration configuration)
         {
             _sessao = sessao;
+            _logger = logger;
+            _configuration = configuration;
+
             _reposPedido = reposPedido;
             _reposProduto = reposProduto;
-
-            _configuration = configuration;
         }
 
         //Páginas
         [HttpGet]
         public IActionResult Detalhe(uint id)
         {
-            var pedido = _reposPedido.Buscar(id);
-            return View(pedido);
+            try
+            {
+                var pedido = _reposPedido.Buscar(id);
+                return View(pedido);
+            }
+            catch (Exception erro)
+            {
+                _logger.LogError($"Pedido/Detalhe - {erro.Message} ID de usuário: " +
+                   $"{_sessao.UsuarioSessao().IdUsuario}");
+
+                throw new Exception(Global.Mensagem.FalhaBanco);
+            }
         }
 
         public IActionResult Gerenciar(uint id)
         {
-            var produto = _reposPedido.BuscarProdutoPedido(id);
-            return View(produto);
+            try
+            {
+                var produto = _reposPedido.BuscarProdutoPedido(id);
+                return View(produto);
+            }
+            catch (Exception erro)
+            {
+                _logger.LogError($"Pedido/Gerenciar - {erro.Message} ID de usuário: " +
+                   $"{_sessao.UsuarioSessao().IdUsuario}");
+
+                throw new Exception(Global.Mensagem.FalhaBanco);
+            }
         }
 
         public IActionResult ListaCliente()
         {
-            var lista = _reposPedido.ListarPedidos(_sessao.UsuarioSessao().IdCliente);
-            return View(lista);
+            try
+            {
+                var lista = _reposPedido.ListarPedidos(_sessao.UsuarioSessao().IdCliente);
+                return View(lista);
+            }
+            catch (Exception erro)
+            {
+                _logger.LogError($"Pedido/ListaCliente - {erro.Message} ID de usuário: " +
+                   $"{_sessao.UsuarioSessao().IdUsuario}");
+
+                throw new Exception(Global.Mensagem.FalhaBanco);
+            }
         }
 
         public IActionResult ListaVendedor()
         {
-            var lista = _reposPedido.ListarProdutoPedido(_sessao.UsuarioSessao().IdUsuario);
-            return View(lista);
+            try
+            {
+                var lista = _reposPedido.ListarProdutoPedido(_sessao.UsuarioSessao().IdUsuario);
+                return View(lista);
+            }
+            catch (Exception erro)
+            {
+                _logger.LogError($"Pedido/ListaVendedor - {erro.Message} ID de usuário: " +
+                   $"{_sessao.UsuarioSessao().IdUsuario}");
+
+                throw new Exception(Global.Mensagem.FalhaBanco);
+            }
         }
 
         //Operações
@@ -76,15 +120,19 @@ namespace LojaVirtual.Controllers
                     var produto = _reposProduto.Buscar(produtoPedido.IdProduto);
                     produto.Estoque += produtoPedido.Quantidade;
 
-                    return _reposProduto.Atualizar(produto) > 0 ?
-                        Json(Global.Mensagem.SucessoOperacao) : Json(Global.Mensagem.FalhaAtualizacao);
+                    if (_reposProduto.Atualizar(produto) > 0)
+                        return Json(Global.Mensagem.SucessoOperacao);
+
+                    return BadRequest(Global.Mensagem.FalhaAtualizacao);
                 }
 
-                return Json(Global.Mensagem.FalhaAtualizacao);
+                return BadRequest(Global.Mensagem.FalhaAtualizacao);
             }
             catch (Exception erro)
             {
-                Console.WriteLine(erro);
+                _logger.LogError($"Pedido/EstornarProduto - {erro.Message} ID de usuário: " +
+                  $"{_sessao.UsuarioSessao().IdUsuario}");
+
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }
@@ -99,8 +147,10 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                Console.WriteLine(erro);
-                return BadRequest();
+                _logger.LogError($"Pedido/RastrearProduto - {erro.Message} ID de usuário: " +
+                $"{_sessao.UsuarioSessao().IdUsuario}");
+
+                return BadRequest(Global.Mensagem.FalhaRastrear);
             }
         }
     }

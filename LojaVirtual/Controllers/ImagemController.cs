@@ -4,24 +4,32 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using LojaVirtual.Authorizations;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using LojaVirtual.Sessions;
+using Microsoft.Extensions.Logging;
+using LojaVirtual.Validations;
 
 namespace LojaVirtual.Controllers
 {
     [AcessoAutorizacao]
     public class ImagemController : Controller
     {
+        private readonly Sessao _sessao;
+        private readonly ILogger<ImagemController> _logger;
+
         private readonly ImagemR _reposImagem;
 
-        public ImagemController (ImagemR reposImagem)
+        public ImagemController (Sessao sessao, ILogger<ImagemController> logger, ImagemR reposImagem)
         {
+            _sessao = sessao;
+            _logger = logger;
+
             _reposImagem = reposImagem;
         }
 
         [HttpPost]
-        public JsonResult Carregar(IFormFile arquivo)
+        public IActionResult Carregar(IFormFile arquivo)
         {
             try
             {
@@ -39,13 +47,15 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                Console.WriteLine(erro);
-                return Json(null);
+                _logger.LogError($"Imagem/Carregar - {erro.Message} ID de usuário: " +
+                    $"{_sessao.UsuarioSessao().IdUsuario}");
+
+                return BadRequest(Global.Mensagem.FalhaCarregarImagem);
             }
         }
 
         [HttpPost]
-        public JsonResult Descartar(string arquivo)
+        public IActionResult Descartar(string arquivo)
         {
             try
             {
@@ -55,15 +65,17 @@ namespace LojaVirtual.Controllers
                     var caminho = $"wwwroot/images/produto/0/{nomeArquivo}";
 
                     ImagemR.RemoveImagem(caminho);
-                    return Json(true);
+                    return Json(new { });
                 }
 
-                return Json(false);
+                return BadRequest(Global.Mensagem.ArquivoNaoEncontrado);
             }
             catch (Exception erro)
             {
-                Console.WriteLine(erro);
-                return Json(false);
+                _logger.LogError($"Imagem/Descartar - {erro.Message} ID de usuário: " +
+                   $"{_sessao.UsuarioSessao().IdUsuario}");
+
+                return BadRequest(Global.Mensagem.FalhaDescartarImagem);
             }
         }
 
@@ -87,12 +99,14 @@ namespace LojaVirtual.Controllers
                         return PartialView("Views/Produto/_Imagens.cshtml", lista);
                 }
 
-                return BadRequest();
+                return BadRequest(Global.Mensagem.ArquivoNaoEncontrado);
             }
             catch (Exception erro)
             {
-                Console.WriteLine(erro);
-                return BadRequest();
+                _logger.LogError($"Imagem/Remover - {erro.Message} ID de usuário: " +
+                   $"{_sessao.UsuarioSessao().IdUsuario}");
+
+                return BadRequest(Global.Mensagem.FalhaRemoverImagem);
             }
         }
 
@@ -101,39 +115,38 @@ namespace LojaVirtual.Controllers
         {
             try
             {
-                var lista = new List<Imagem>();
+                if (string.IsNullOrEmpty(arquivo))
+                    return BadRequest(Global.Mensagem.ArquivoNaoEncontrado);
 
-                if (!string.IsNullOrEmpty(arquivo))
+                var pastaProduto = Directory.GetCurrentDirectory() + $"/wwwroot/images/produto/{idProduto}";
+                if (!Directory.Exists(pastaProduto)) Directory.CreateDirectory(pastaProduto);
+
+                var nomeArquivo = Path.GetFileName(arquivo);
+
+                var temp = Path.Combine(Directory.GetCurrentDirectory(),
+                    $"wwwroot/images/produto/0/{nomeArquivo}");
+
+                var destino = $"wwwroot/images/produto/{idProduto}/{nomeArquivo}";
+
+                if (ImagemR.MoveImagem(temp, destino))
                 {
-                    var pastaProduto = Directory.GetCurrentDirectory() + $"/wwwroot/images/produto/{idProduto}";
-                    if (!Directory.Exists(pastaProduto)) Directory.CreateDirectory(pastaProduto);
+                    var imagem = new Imagem { Caminho = destino, IdProduto = Convert.ToUInt32(idProduto) };
 
-                    var nomeArquivo = Path.GetFileName(arquivo);
-
-                    var temp = Path.Combine(Directory.GetCurrentDirectory(),
-                        $"wwwroot/images/produto/0/{nomeArquivo}");
-
-                    var destino = $"wwwroot/images/produto/{idProduto}/{nomeArquivo}";
-
-                    if (ImagemR.MoveImagem(temp, destino))
+                    if (_reposImagem.Inserir(imagem) > 0)
                     {
-                        var imagem = new Imagem { Caminho = destino, IdProduto = Convert.ToUInt32(idProduto) };
-
-                        if (_reposImagem.Inserir(imagem) > 0)
-                        {
-                            lista = _reposImagem.BuscaLista(Convert.ToUInt32(idProduto));
-                            return PartialView("Views/Produto/_Imagens.cshtml", lista);
-                        }
+                        var lista = _reposImagem.BuscaLista(Convert.ToUInt32(idProduto));
+                        return PartialView("Views/Produto/_Imagens.cshtml", lista);
                     }
                 }
 
-                lista = _reposImagem.BuscaLista(Convert.ToUInt32(idProduto));
-                return PartialView("Views/Produto/_Imagens.cshtml", lista);
+                return BadRequest(Global.Mensagem.FalhaSalvarImagem);
             }
             catch (Exception erro)
             {
-                Console.WriteLine(erro);
-                return BadRequest();
+                _logger.LogError($"Imagem/Salvar - {erro.Message} ID de usuário: " +
+                   $"{_sessao.UsuarioSessao().IdUsuario}");
+
+                return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }
     }

@@ -19,119 +19,65 @@ namespace LojaVirtual.Repositories
 
         public int Atualizar(Produto produto)
         {
-            try
-            {
-                _banco.Update(produto);
-                return _banco.SaveChanges();
-            }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
-                return 0;
-            }
+            _banco.Update(produto);
+            return _banco.SaveChanges();
         }
 
         public Produto Buscar(uint idProduto)
         {
-            try
-            {
-                return _banco.Produto.Include(p => p.Imagem)
-                    .FirstOrDefault(p => p.IdProduto == idProduto);
-            }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
-                return new Produto();
-            }
+            return _banco.Produto.Include(p => p.Imagem).FirstOrDefault(p => p.IdProduto == idProduto);
         }
 
         public Dictionary<uint, string> BuscarCategorias()
         {
-            try
-            {
-                return _banco.Categoria.OrderBy(c => c.Nome)
-                    .ToDictionary(c => c.IdCategoria, c => c.Nome);
-            }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
-                return new Dictionary<uint, string>();
-            }
+            return _banco.Categoria.OrderBy(c => c.Nome).ToDictionary(c => c.IdCategoria, c => c.Nome);
         }
 
         public List<Produto> Listar(string pesquisa = "")
         {
-            try
+            if (!string.IsNullOrEmpty(pesquisa))
             {
-                if (!string.IsNullOrEmpty(pesquisa))
-                {
-                    pesquisa = pesquisa.Trim().ToUpper();
+                pesquisa = pesquisa.Trim().ToUpper();
 
-                    return _banco.Produto.Include(p => p.Imagem).Where(p =>
-                    p.Nome.Contains(pesquisa) ||
-                    p.Fabricante.Contains(pesquisa) ||
-                    p.Modelo.Contains(pesquisa)).ToList();
-                }
+                return _banco.Produto.Include(p => p.Imagem).Where(p =>
+                p.Nome.Contains(pesquisa) ||
+                p.Fabricante.Contains(pesquisa) ||
+                p.Modelo.Contains(pesquisa)).ToList();
+            }
 
-                return _banco.Produto.Include(p => p.Imagem).ToList();
-            }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
-                return new List<Produto>();
-            }
+            return _banco.Produto.Include(p => p.Imagem).ToList();
         }
 
         public IPagedList<Produto> ListarPaginado(uint idUsuario, int pagina = 1, int quantidade = 25, string pesquisa = "")
         {
-            try
+            if (!string.IsNullOrEmpty(pesquisa))
             {
-                if (!string.IsNullOrEmpty(pesquisa))
-                {
-                    pesquisa = pesquisa.Trim().ToUpper();
+                pesquisa = pesquisa.Trim().ToUpper();
 
-                    return _banco.Produto.Include(p => p.Imagem).Where(p => 
-                    p.Nome.Contains(pesquisa) ||
-                    p.Fabricante.Contains(pesquisa) ||
-                    p.Modelo.Contains(pesquisa) && p.IdUsuario == idUsuario)
-                        .OrderBy(p => p.Nome).ToPagedList(pagina, quantidade);
-                }
-
-                return _banco.Produto.Include(p => p.Imagem).Where(p => p.IdUsuario == idUsuario)
+                return _banco.Produto.Include(p => p.Imagem).Where(p =>
+                p.Nome.Contains(pesquisa) ||
+                p.Fabricante.Contains(pesquisa) ||
+                p.Modelo.Contains(pesquisa) && p.IdUsuario == idUsuario)
                     .OrderBy(p => p.Nome).ToPagedList(pagina, quantidade);
             }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
 
-                var lista = new List<Produto>();
-                return lista.ToPagedList();
-            }
+            return _banco.Produto.Include(p => p.Imagem).Where(p => p.IdUsuario == idUsuario)
+                .OrderBy(p => p.Nome).ToPagedList(pagina, quantidade);
         }
 
         public IPagedList<Produto> ListarPorCategoria(uint idCategoria, int pagina = 1, string pesquisa = "")
         {
-            try
+            if (!string.IsNullOrEmpty(pesquisa))
             {
-                if (!string.IsNullOrEmpty(pesquisa))
-                {
-                    pesquisa = pesquisa.Trim().ToUpper();
-
-                    return _banco.Produto.Include(p => p.Categoria).Include(p => p.Imagem)
-                   .Where(p => p.IdCategoria == idCategoria && p.Nome.Contains(pesquisa))
-                   .OrderBy(p => p.Nome).ToPagedList(pagina, 20);
-                }
+                pesquisa = pesquisa.Trim().ToUpper();
 
                 return _banco.Produto.Include(p => p.Categoria).Include(p => p.Imagem)
-                    .Where(p => p.IdCategoria == idCategoria).OrderBy(p => p.Nome).ToPagedList(pagina, 20);
+               .Where(p => p.IdCategoria == idCategoria && p.Nome.Contains(pesquisa))
+               .OrderBy(p => p.Nome).ToPagedList(pagina, 20);
             }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
 
-                var lista = new List<Produto>();
-                return lista.ToPagedList();
-            }
+            return _banco.Produto.Include(p => p.Categoria).Include(p => p.Imagem)
+                .Where(p => p.IdCategoria == idCategoria).OrderBy(p => p.Nome).ToPagedList(pagina, 20);
         }
 
         public int Registrar(Produto produto)

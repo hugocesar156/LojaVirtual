@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
 using LojaVirtual.Validations;
+using Microsoft.Extensions.Logging;
 
 namespace LojaVirtual.Controllers
 {
@@ -19,6 +20,7 @@ namespace LojaVirtual.Controllers
     public class PagamentoController : Controller
     {
         private readonly Sessao _sessao;
+        private readonly ILogger<PagamentoController> _logger;
 
         private readonly ClienteR _reposCliente;
         private readonly ProdutoR _reposProduto;
@@ -27,10 +29,11 @@ namespace LojaVirtual.Controllers
 
         private readonly IConfiguration _configuration;
 
-        public PagamentoController(Sessao sessao, ClienteR reposCliente, ProdutoR reposProduto, 
-            CarrinhoR reposCarrinho, PedidoR reposPedido, IConfiguration configuration)
+        public PagamentoController(Sessao sessao, ILogger<PagamentoController> logger, ClienteR reposCliente, 
+            ProdutoR reposProduto, CarrinhoR reposCarrinho, PedidoR reposPedido, IConfiguration configuration)
         {
             _sessao = sessao;
+            _logger = logger;
 
             _reposCliente = reposCliente;
             _reposProduto = reposProduto;
@@ -42,7 +45,7 @@ namespace LojaVirtual.Controllers
 
         //Operações
         [HttpPost]
-        public JsonResult CalculaParcelas(float valor, float frete)
+        public IActionResult CalculaParcelas(float valor, float frete)
         {
             try
             {
@@ -78,31 +81,33 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                Console.WriteLine(erro);
-                return Json(0);
+                _logger.LogError($"Carrinho/CalculaParcelas - {erro.Message} ID de usuário: " +
+                    $"{_sessao.UsuarioSessao().IdUsuario}");
+
+                return BadRequest(Global.Mensagem.FalhaCalculoParcelas);
             }
         }
 
         [HttpPost]
-        public JsonResult PagamentoBoleto(EnderecoCliente endereco, Frete frete)
+        public IActionResult PagamentoBoleto(EnderecoCliente endereco, Frete frete)
         {
-            var carrinho = _reposCarrinho.Buscar(_sessao.UsuarioSessao().IdCliente);
-            var produtos = new List<Produto>();
-
-            var total = 0.0F;
-
-            foreach (var item in carrinho)
-            {
-                var produto = _reposProduto.Buscar(item.IdProduto);
-                produtos.Add(produto);
-
-                total += produto.Valor * item.Quantidade;
-            }
-
-            total += frete.Valor;
-
             try
             {
+                var carrinho = _reposCarrinho.Buscar(_sessao.UsuarioSessao().IdCliente);
+                var produtos = new List<Produto>();
+
+                var total = 0.0F;
+
+                foreach (var item in carrinho)
+                {
+                    var produto = _reposProduto.Buscar(item.IdProduto);
+                    produtos.Add(produto);
+
+                    total += produto.Valor * item.Quantidade;
+                }
+
+                total += frete.Valor;
+
                 var transacao = PreparaTranscao(endereco, frete, produtos, carrinho);
 
                 transacao.PaymentMethod = PaymentMethod.Boleto;
@@ -144,7 +149,6 @@ namespace LojaVirtual.Controllers
                     pedido.Cliente = _reposCliente.Buscar(_sessao.UsuarioSessao().IdCliente);
 
                     pedido.Frete = frete;
-                    pedido.Frete.DiasEntrega = frete.Prazo - DateTime.Now;
 
                     pedido.Produto = new List<ProdutoHistorico>();
 
@@ -167,21 +171,25 @@ namespace LojaVirtual.Controllers
 
                     _reposCarrinho.RemoverTodos(_sessao.UsuarioSessao().IdCliente);
 
-                    return _reposPedido.Registrar(pedido) > 0 ?
-                        Json(Convert.ToInt32(transacao.Id)) : Json(0);
+                    if (_reposPedido.Registrar(pedido) > 0)
+                        return Json(Convert.ToInt32(transacao.Id));
+
+                    return BadRequest($"{Global.Mensagem.FalhaPedido} {transacao.Id}");
                 }
 
-                return Json(0);
+                return BadRequest(Global.Mensagem.FalhaTransacao);
             }
             catch (Exception erro)
             {
-                Console.WriteLine(erro);
-                return Json(0);
+                _logger.LogError($"Carrinho/PagamentoBoleto - {erro.Message} ID de usuário: " +
+                    $"{_sessao.UsuarioSessao().IdUsuario}");
+
+                return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }
 
         [HttpPost]
-        public JsonResult PagamentoCartao(Cartao cartao, EnderecoCliente endereco, Frete frete, byte parcelas)
+        public IActionResult PagamentoCartao(Cartao cartao, EnderecoCliente endereco, Frete frete, byte parcelas)
         {
             var carrinho = _reposCarrinho.Buscar(_sessao.UsuarioSessao().IdCliente);
             var produtos = new List<Produto>();
@@ -263,7 +271,6 @@ namespace LojaVirtual.Controllers
                     pedido.Cliente = _reposCliente.Buscar(_sessao.UsuarioSessao().IdCliente);
 
                     pedido.Frete = frete;
-                    pedido.Frete.DiasEntrega = frete.Prazo - DateTime.Now;
 
                     pedido.Produto = new List<ProdutoHistorico>();
 
@@ -286,16 +293,20 @@ namespace LojaVirtual.Controllers
 
                     _reposCarrinho.RemoverTodos(_sessao.UsuarioSessao().IdCliente);
 
-                    return _reposPedido.Registrar(pedido) > 0 ?
-                        Json(Convert.ToInt32(transacao.Id)) : Json(0);
+                    if (_reposPedido.Registrar(pedido) > 0)
+                        return Json(Convert.ToInt32(transacao.Id));
+
+                    return BadRequest($"{Global.Mensagem.FalhaPedido} {transacao.Id}");
                 }
 
-                return Json(0);
+                return BadRequest(Global.Mensagem.FalhaTransacao);
             }
             catch (Exception erro)
             {
-                Console.WriteLine(erro);
-                return Json(0);
+                _logger.LogError($"Carrinho/PagamentoCartao - {erro.Message} ID de usuário: " +
+                    $"{_sessao.UsuarioSessao().IdUsuario}");
+
+                return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }
 
@@ -347,7 +358,7 @@ namespace LojaVirtual.Controllers
                 {
                     Name = endereco.Nome,
                     Fee = Convert.ToInt32(frete.Valor.ToString("C").Replace("R$", "").Replace(".", "").Replace(",", "")),
-                    DeliveryDate = frete.Prazo.ToString("yyyy-MM-dd"),
+                    DeliveryDate = DateTime.Now.AddDays(frete.DiasEntrega).ToString("yyyy-MM-dd"),
                     Expedited = false,
 
                     Address = new Address

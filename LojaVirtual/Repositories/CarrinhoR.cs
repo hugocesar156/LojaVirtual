@@ -1,6 +1,5 @@
 ﻿using LojaVirtual.Data;
 using LojaVirtual.Models.Venda;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,69 +14,43 @@ namespace LojaVirtual.Repositories
             _banco = banco;
         }
 
+        public int AdicionarItem(Carrinho carrinho)
+        {
+            _banco.Add(carrinho);
+            return _banco.SaveChanges();
+        }
+
         public int Atualizar(Carrinho item, byte operacao)
         {
-            try
-            {
-                /* 1- Adicionar item; 2- Remover item */
-                if (operacao == 1)
-                    item.Quantidade++;
-                else
-                    item.Quantidade--;
+            /* 1- Adicionar item; 2- Remover item */
+            if (operacao == 1)
+                item.Quantidade++;
+            else
+                item.Quantidade--;
 
-                _banco.Update(item);
-                return _banco.SaveChanges();
-            }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
-                return 0;
-            }
+            _banco.Update(item);
+            return _banco.SaveChanges();
         }
 
         public List<Carrinho> Buscar(uint idCliente)
         {
-            try
-            {
-                return _banco.Carrinho.Where(c => c.IdCliente == idCliente).ToList();
-            }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
-                return new List<Carrinho>();
-            }
+            return _banco.Carrinho.Where(c => c.IdCliente == idCliente).ToList();
         }
 
         public int RemoverItem(Carrinho item)
         {
-            try
-            {
-                _banco.Remove(item);
-                return _banco.SaveChanges();
-            }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
-                return 0;
-            }
+            _banco.Remove(item);
+            return _banco.SaveChanges();
         }
 
         public int RemoverTodos(uint idCliente)
         {
-            try
-            {
-                var carrinho = _banco.Carrinho.Where(c => c.IdCliente == idCliente);
+            var carrinho = _banco.Carrinho.Where(c => c.IdCliente == idCliente);
 
-                foreach (var item in carrinho)
-                    _banco.Remove(item);
+            foreach (var item in carrinho)
+                _banco.Remove(item);
 
-                return _banco.SaveChanges();
-            }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
-                return 0;
-            }
+            return _banco.SaveChanges();
         }
     }
 }

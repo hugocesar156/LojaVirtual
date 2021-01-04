@@ -1,13 +1,11 @@
 ﻿using Correios.NET;
 using LojaVirtual.Data;
-using LojaVirtual.Models.Cliente;
 using LojaVirtual.Models.Venda;
 using LojaVirtual.Validations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PagarMe;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using X.PagedList;
 
@@ -61,6 +59,22 @@ namespace LojaVirtual.Repositories
                             produtoPedido.Situacao = (byte)Global.Produto.Cancelado;
 
                         produtoPedido.DataAtualizacao = DateTime.Now;
+                        _banco.ProdutoHistorico.Update(produtoPedido);
+                    }
+                }
+                else if (transacao.Status == TransactionStatus.Refunded)
+                {
+                    //pedido estornado
+                    item.Situacao = (byte)Global.Pedido.Estornado;
+                    item.DataAtualizacao = Convert.ToDateTime(transacao.DateUpdated);
+
+                    _banco.Pedido.Update(item);
+
+                    foreach (var produtoPedido in item.Produto)
+                    {
+                        produtoPedido.Situacao = (byte)Global.Produto.Cancelado;
+                        produtoPedido.DataAtualizacao = DateTime.Now;
+
                         _banco.ProdutoHistorico.Update(produtoPedido);
                     }
                 }
@@ -118,7 +132,7 @@ namespace LojaVirtual.Repositories
                 {
                     produto.Situacao = (byte)Global.Produto.Enviado;
                     produto.CodRastreamento = "";
-                    produto.PrazoEntrega = DateTime.Now.AddDays(pedido.Frete.DiasEntrega.TotalDays);
+                    produto.PrazoEntrega = DateTime.Now.AddDays(pedido.Frete.DiasEntrega);
                     produto.DataAtualizacao = DateTime.Now;
 
                     _banco.ProdutoHistorico.Update(produto);
@@ -166,79 +180,34 @@ namespace LojaVirtual.Repositories
 
         public Pedido Buscar(uint idTransacao)
         {
-            try
-            {
-                return _banco.Pedido
-                    .Include(p => p.Frete).Include(p => p.Parcelamento)
-                    .Include(p => p.Boleto).Include(p => p.Endereco)
-                    .Include(p => p.Produto).FirstOrDefault(p => p.IdTransacao == idTransacao);
-            }
-            catch (Exception erro) 
-            {
-                Console.WriteLine(erro);
-                return new Pedido();
-            }
+            return _banco.Pedido.Include(p => p.Frete).Include(p => p.Parcelamento)
+                   .Include(p => p.Boleto).Include(p => p.Endereco).Include(p => p.Produto)
+                   .FirstOrDefault(p => p.IdTransacao == idTransacao);
         }
 
         public ProdutoHistorico BuscarProdutoPedido(uint idProdutoHistorico)
         {
-            try
-            {
-                return _banco.ProdutoHistorico.Include(p => p.Pedido.Cliente.Contato).Include(p => p.Pedido.Frete)
-                    .Include(p => p.Pedido.Endereco).Include(p => p.Pedido.Parcelamento)
-                    .FirstOrDefault(p => p.IdProdutoHistorico == idProdutoHistorico);
-            }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
-                return new ProdutoHistorico();
-            }
+            return _banco.ProdutoHistorico.Include(p => p.Pedido.Cliente.Contato).Include(p => p.Pedido.Frete)
+                   .Include(p => p.Pedido.Endereco).Include(p => p.Pedido.Parcelamento)
+                   .FirstOrDefault(p => p.IdProdutoHistorico == idProdutoHistorico);
         }
 
         public IPagedList<Pedido> ListarPedidos(uint idCliente)
         {
-            try
-            {
-                return _banco.Pedido.Where(p => p.IdCliente == idCliente).Include(p => p.Boleto)
+            return _banco.Pedido.Where(p => p.IdCliente == idCliente).Include(p => p.Boleto)
                     .OrderByDescending(p => p.DataCriacao).ToPagedList(1, 10);
-            }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
-
-                var lista = new List<Pedido>();
-                return lista.ToPagedList();
-            }
         }
 
         public IPagedList<ProdutoHistorico> ListarProdutoPedido(uint idUsuario)
         {
-            try
-            {
-                return _banco.ProdutoHistorico.Include(p => p.Pedido)
-                    .Where(p => p.IdUsuario == idUsuario).OrderByDescending(p => p.Pedido.DataCriacao).ToPagedList(1, 10);
-            }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
-
-                var lista = new List<ProdutoHistorico>();
-                return lista.ToPagedList();
-            }
+            return _banco.ProdutoHistorico.Include(p => p.Pedido).Where(p => p.IdUsuario == idUsuario)
+                .OrderByDescending(p => p.Pedido.DataCriacao).ToPagedList(1, 10);
         }
 
         public int Registrar(Pedido pedido)
         {
-            try
-            {
-                _banco.Add(pedido);
-                return _banco.SaveChanges();
-            }
-            catch (Exception erro)
-            {
-                Console.WriteLine(erro);
-                return 0;
-            }
+            _banco.Add(pedido);
+            return _banco.SaveChanges();
         }
     }
 }

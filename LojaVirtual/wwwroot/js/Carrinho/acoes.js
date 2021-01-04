@@ -9,7 +9,7 @@ function AdicionarQuantidade(idProduto) {
         success: function (lista) {
             $("#lista").html(lista);
 
-            CalcularFrete($('#cep').val().replace("-", ""));
+            CalcularFrete($('#cep-salvo').val().replace("-", ""));
         },
         error: function () {
             alert("Erro ao tentar atualizar carrinho.");
@@ -17,33 +17,27 @@ function AdicionarQuantidade(idProduto) {
     });
 }
 
-function ValidaCep() {
-    let cep = $('#cep-salvo').val().replace("-", "");
+function CalculaParcelas() {
+    let valor = $('#subtotal').html();
+    let frete = $('#frete').html();
 
     $.ajax({
-        type: "GET",
-        url: "https://viacep.com.br/ws/"+ cep +"/json",
-        dataType: "jsonp",
-        success: function (endereco) {
-            if (endereco.cep != undefined) {
-                $('#exibe-endereco').html(`<strong>Endereço salvo atual:</strong> 
-                    ${endereco.cep} | ${endereco.logradouro}, ${endereco.bairro} - ${endereco.localidade}`
-                );
+        type: "POST",
+        url: "/Pagamento/CalculaParcelas",
+        data: { valor: valor, frete: frete },
+        success: function (data) {
+            let campos = "";
 
-                CalcularFrete(cep);
+            campos += `<option value="1">Pagamento à vista: R$ ${data[1][0]}`;
+
+            for (let i = 2; i <= 12; i++) {
+                campos += `<option value="${i}">${i}x de R$ ${data[0][i - 1]} | Total: R$ ${data[1][i - 1]}</option>`;
             }
-            else {
-                $('#load-frete').addClass('d-none');
-                $('#load-gif-frete').attr('src', '');
-            }
+
+            $('#parcelas').html(campos);
         },
-        error: function () {
-            alert("Erro ao tentar buscar endereço");
-
-            $('#load-frete').addClass('d-none');
-            $('#load-gif-frete').attr('src', '');
-
-            $('#continuar').attr('disabled', false);
+        error: function (erro) {
+            alert(erro.responseText);
         }
     });
 }
@@ -86,10 +80,7 @@ function CalcularFrete(cep) {
             $('#load-gif').attr('src', '');
 
             $('#frete').html(frete.valor.toFixed(2).replace(".", ","));
-
-            let data = frete.prazo.split("T");
-            let prazo = data[0].split("-");
-            $('#prazo').html(`Prazo de entrega: ${prazo[2]}/${prazo[1]}/${prazo[0]}`);
+            $('#prazo').html(`Prazo de entrega: ${frete.diasEntrega} dia(s) após aprovação do pagamento`);
 
             CalculaParcelas();
             CalculaValores();
@@ -137,7 +128,7 @@ function RemoverItem(idProduto) {
         success: function (lista) {
             $("#lista").html(lista);
 
-            CalcularFrete($('#cep').val().replace("-", ""));
+            CalcularFrete($('#cep-salvo').val().replace("-", ""));
         },
         error: function () {
             alert("Erro ao tentar atualizar carrinho.");
@@ -152,12 +143,29 @@ function RetirarQuantidade(idProduto) {
         success: function (lista) {
             $("#lista").html(lista);
 
-            CalcularFrete($('#cep').val().replace("-", ""));
+            CalcularFrete($('#cep-salvo').val().replace("-", ""));
         },
         error: function () {
             alert("Erro ao tentar atualizar carrinho.");
         }
     });
+}
+
+function SalvaEndereco() {
+    ValidaCampoEndereco();
+
+    if ($('#cep').hasClass('is-valid') && $('.form-endereco').length == $('.is-valid').length) {
+        $('.form-endereco').each(function () {
+            $(this).removeClass('is-valid');
+        })
+
+        $('#cep-salvo').val($('#cep').val());
+        $('#numero-salvo').val($('#numero-endereco').val());
+        $('#nome-endereco-salvo').val($('#nome-endereco').val());
+        $('#modal-endereco').modal('hide');
+
+        ValidaCep();
+    }
 }
 
 function ValidaCampoEndereco(campo) {
@@ -185,44 +193,33 @@ function ValidaCampoEndereco(campo) {
     }
 }
 
-function SalvaEndereco() {
-    ValidaCampoEndereco();
-
-    if ($('#cep').hasClass('is-valid') && $('.form-endereco').length == $('.is-valid').length) {
-        $('.form-endereco').each(function () {
-            $(this).removeClass('is-valid');
-        })
-
-        $('#cep-salvo').val($('#cep').val());
-        $('#numero-salvo').val($('#numero-endereco').val());
-        $('#nome-endereco-salvo').val($('#nome-endereco').val());
-        $('#modal-endereco').modal('hide');
-
-        ValidaCep();
-    }
-}
-
-function CalculaParcelas() {
-    let valor = $('#subtotal').html();
-    let frete = $('#frete').html();
+function ValidaCep() {
+    let cep = $('#cep-salvo').val().replace("-", "");
 
     $.ajax({
-        type: "POST",
-        url: "/Pagamento/CalculaParcelas",
-        data: { valor: valor, frete: frete },
-        success: function (data) {
-            let campos = "";
+        type: "GET",
+        url: "https://viacep.com.br/ws/" + cep + "/json",
+        dataType: "jsonp",
+        success: function (endereco) {
+            if (endereco.cep != undefined) {
+                $('#exibe-endereco').html(`<strong>Endereço salvo atual:</strong> 
+                    ${endereco.cep} | ${endereco.logradouro}, ${endereco.bairro} - ${endereco.localidade}`
+                );
 
-            campos += `<option value="1">Pagamento à vista: R$ ${data[1][0]}`;
-
-            for (let i = 2; i <= 12; i++) {
-                campos += `<option value="${i}">${i}x de R$ ${data[0][i - 1]} | Total: R$ ${data[1][i - 1]}</option>`;
+                CalcularFrete(cep);
             }
-
-            $('#parcelas').html(campos);
+            else {
+                $('#load-frete').addClass('d-none');
+                $('#load-gif-frete').attr('src', '');
+            }
         },
         error: function () {
-            alert("Erro ao calcular parcelas do pagamento.");
+            alert("Erro ao tentar buscar endereço");
+
+            $('#load-frete').addClass('d-none');
+            $('#load-gif-frete').attr('src', '');
+
+            $('#continuar').attr('disabled', false);
         }
     });
 }

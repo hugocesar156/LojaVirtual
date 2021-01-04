@@ -12,16 +12,11 @@
             type: "POST",
             url: "/Login/ValidaAcesso",
             data: { usuario: usuario },
-            success: function (validacao) {
-                if (validacao) {
-                    window.location.pathname = "Home/Inicio";
-                }
-                else {
-                    alert("Dados de acesso não conferem.");
-                }
+            success: function () {
+                window.location.pathname = "Home/Inicio";
             },
-            error: function () {
-                alert("Erro na tentativa de acesso.");
+            error: function (erro) {
+                alert(erro.responseText);
             }
         });
     }

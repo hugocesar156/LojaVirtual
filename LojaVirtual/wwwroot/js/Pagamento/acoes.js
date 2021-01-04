@@ -62,22 +62,16 @@
                                 url: "/Pagamento/PagamentoCartao",
                                 data: { cartao: cartao, endereco: endereco, frete: frete, parcelas: parcelas },
                                 success: function (transacao) {
-                                    if (transacao > 0) {
-                                        window.location.pathname = "Pedido/Detalhe/" + transacao;
-                                    }
-                                    else {
-                                        $('#btn-cartao').attr('disabled', false);
-                                        alert("Erro, confira os dados antes de continuar.");
-                                    }
+                                    window.location.pathname = "Pedido/Detalhe/" + transacao;
+                                },
+                                error: function (erro) {
+                                    $('#btn-cartao').attr('disabled', false);
+                                    alert(erro.resposeText);
                                 }
                             });
                         }
                     });
                 }
-            },
-            error: function () {
-                $('#btn-cartao').attr('disabled', false);
-                alert("Erro ao preparar transação.");
             }
         });
     }
@@ -137,22 +131,16 @@ function PagamentoBoleto() {
                             url: "/Pagamento/PagamentoBoleto",
                             data: { endereco: endereco, frete: frete },
                             success: function (transacao) {
-                                if (transacao > 0) {
-                                    window.location.pathname = "Pedido/Detalhe/" + transacao;
-                                }
-                                else {
-                                    $('#btn-boleto').attr('disabled', false);
-                                    alert("Erro ao gerar boleto.");
-                                }
+                                window.location.pathname = "Pedido/Detalhe/" + transacao;
+                            },
+                            error: function (erro) {
+                                $('#btn-boleto').attr('disabled', false);
+                                alert(erro.responseText);
                             }
                         });
                     }
                 });
             }
-        },
-        error: function () {
-            $('#btn-boleto').attr('disabled', false);
-            alert("Erro ao preparar transação.");
         }
     });
 }

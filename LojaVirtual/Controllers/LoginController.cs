@@ -5,25 +5,40 @@ using LojaVirtual.Authorizations;
 using LojaVirtual.Sessions;
 using System;
 using LojaVirtual.Validations;
+using Microsoft.Extensions.Logging;
 
 namespace LojaVirtual.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly UsuarioR _reposUsuario;
         private readonly Sessao _sessao;
+        private readonly ILogger<LoginController> _logger;
 
-        public LoginController(UsuarioR reposUsuario, Sessao sessao)
+        private readonly UsuarioR _reposUsuario;
+
+        public LoginController(Sessao sessao, ILogger<LoginController> logger, UsuarioR reposUsuario)
         {
-            _reposUsuario = reposUsuario;
             _sessao = sessao;
+            _logger = logger;
+
+            _reposUsuario = reposUsuario;
         }
 
         //Páginas
         [AnonimoAutorizacao]
         public IActionResult Entrar()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception erro)
+            {
+                _logger.LogError($"Login/Entrar - {erro.Message} ID de usuário: " +
+                   $"{_sessao.UsuarioSessao().IdUsuario}");
+
+                throw new Exception(Global.Mensagem.FalhaRedirecionamento);
+            }
         }
 
         //Operações
@@ -37,14 +52,16 @@ namespace LojaVirtual.Controllers
                 if (usuarioBanco != null)
                 {
                     _sessao.Salvar(usuarioBanco, "Acesso");
-                    return Json(true);
+                    return Json(new { });
                 }
 
                 return BadRequest(Global.Mensagem.FalhaValidarUsuario);
             }
             catch (Exception erro)
             {
-                Console.WriteLine(erro);
+                _logger.LogError($"Login/ValidaAcesso - {erro.Message} ID de usuário: " +
+                  $"{_sessao.UsuarioSessao().IdUsuario}");
+
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }

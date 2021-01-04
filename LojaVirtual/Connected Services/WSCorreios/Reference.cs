@@ -5,6 +5,7 @@ using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace WSCorreios
@@ -397,7 +398,7 @@ namespace WSCorreios
                 return new BasicHttpBinding 
                 {
                     MaxBufferSize = int.MaxValue,
-                    ReaderQuotas = System.Xml.XmlDictionaryReaderQuotas.Max,
+                    ReaderQuotas = XmlDictionaryReaderQuotas.Max,
                     MaxReceivedMessageSize = int.MaxValue,
                     AllowCookies = true
                 };

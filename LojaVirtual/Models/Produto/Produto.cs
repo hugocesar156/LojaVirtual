@@ -34,13 +34,13 @@ namespace LojaVirtual.Models.Produto
         [Required, Column(TypeName = "FLOAT"), Range(0.001, 30)]
         public float Peso { get; set; }
 
-        [Required, Range(2, 105)]
+        [Required, Range(1, 100)]
         public uint Altura { get; set; }
 
-        [Required, Range(16, 105)]
+        [Required, Range(15, 100)]
         public uint Comprimento { get; set; }
 
-        [Required, Range(11, 105)]
+        [Required, Range(10, 100)]
         public uint Largura { get; set; }
 
         [ForeignKey("IdUsuario")]
