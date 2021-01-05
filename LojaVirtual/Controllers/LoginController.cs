@@ -34,8 +34,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Login/Entrar - {erro.Message} ID de usuário: " +
-                   $"{_sessao.UsuarioSessao().IdUsuario}");
+                _logger.LogError($"Login/Entrar - {erro.Message}");
 
                 throw new Exception(Global.Mensagem.FalhaRedirecionamento);
             }
@@ -59,8 +58,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Login/ValidaAcesso - {erro.Message} ID de usuário: " +
-                  $"{_sessao.UsuarioSessao().IdUsuario}");
+                _logger.LogError($"Login/ValidaAcesso - {erro.Message}");
 
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
@@ -69,8 +67,17 @@ namespace LojaVirtual.Controllers
         [AcessoAutorizacao]
         public IActionResult Sair()
         {
-            _sessao.Remover("Acesso");
-            return View("Entrar");
+            try
+            {
+                _sessao.Remover("Acesso");
+                return View("Entrar");
+            }
+            catch (Exception erro)
+            {
+                _logger.LogError($"Login/Sair - {erro.Message}");
+
+                throw new Exception(Global.Mensagem.FalhaRedirecionamento);
+            }
         }
     }
 }
