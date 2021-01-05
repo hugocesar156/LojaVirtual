@@ -14,8 +14,8 @@
             success: function (tabela) {
                 $('#tabela').html(tabela);
             },
-            error: function () {
-                alert("Falha na busca de dados.");
+            error: function (erro) {
+                alert(erro.responseText);
             }
         });
     }
@@ -29,8 +29,8 @@
             success: function (tabela) {
                 $('#tabela').html(tabela);
             },
-            error: function () {
-                alert("Falha na busca de dados.");
+            error: function (erro) {
+                alert(erro.responseText);
             }
         });
     }
@@ -44,8 +44,8 @@
             success: function (tabela) {
                 $('#tabela').html(tabela);
             },
-            error: function () {
-                alert("Falha na busca de dados.");
+            error: function (erro) {
+                alert(erro.responseText);
             }
         });
     }
@@ -59,8 +59,8 @@
             success: function (tabela) {
                 $('#tabela').html(tabela);
             },
-            error: function () {
-                alert("Falha na busca de dados.");
+            error: function (erro) {
+                alert(erro.responseText);
             }
         });
     }
@@ -79,8 +79,8 @@ function Ordenacao(ordenacao) {
         success: function (tabela) {
             $('#tabela').html(tabela);
         },
-        error: function () {
-            alert("Falha na busca de dados.");
+        error: function (erro) {
+            alert(erro.responseText);
         }
     });
 }
@@ -96,8 +96,8 @@ function Pesquisa() {
         success: function (tabela) {
             $('#tabela').html(tabela);
         },
-        error: function () {
-            alert("Falha na busca de dados.");
+        error: function (erro) {
+            alert(erro.responseText);
         }
     });
 }

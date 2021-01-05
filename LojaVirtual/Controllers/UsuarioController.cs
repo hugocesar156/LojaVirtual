@@ -34,9 +34,9 @@ namespace LojaVirtual.Controllers
             {
                 ViewBag.Estados = new string[]
                 {
-                "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA",
-                "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN",
-                "RO", "RR", "RS", "SC", "SE", "SP", "TO"
+                    "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA",
+                    "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN",
+                    "RO", "RR", "RS", "SC", "SE", "SP", "TO"
                 };
 
                 return View(new Usuario { Cliente = new Cliente() });
@@ -163,14 +163,16 @@ namespace LojaVirtual.Controllers
             {
                 usuario.Cliente.Endereco.Complemento = usuario.Cliente.Endereco.Complemento ?? "";
 
-                if (_reposUsuario.Registrar(usuario))
+                if (_reposUsuario.Registrar(usuario) > 0)
                     return Json(new { });
 
                 return BadRequest(Global.Mensagem.FalhaCadastro);
             }
             catch (Exception erro)
             {
-                Console.WriteLine(erro);
+                _logger.LogError($"Usuario/Registrar - {erro.Message} ID de usuário: " +
+               $"{_sessao.UsuarioSessao().IdUsuario}");
+
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }

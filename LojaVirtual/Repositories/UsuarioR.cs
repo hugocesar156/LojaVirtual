@@ -21,10 +21,10 @@ namespace LojaVirtual.Repositories
             return _banco.Usuario.Include(u => u.Cliente.Endereco).FirstOrDefault(u => u.IdUsuario == idUsuario);
         }
 
-        public bool Registrar(Usuario usuario)
+        public int Registrar(Usuario usuario)
         {
             _banco.Add(usuario);
-            return _banco.SaveChanges() > 0;
+            return _banco.SaveChanges();
         }
 
         public List<Usuario> Listar(string pesquisa = "")
