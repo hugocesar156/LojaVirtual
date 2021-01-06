@@ -48,6 +48,11 @@ namespace LojaVirtual.Repositories
             return _banco.Produto.Include(p => p.Imagem).ToList();
         }
 
+        public IPagedList<Categoria> ListarCategoria(int pagina = 1)
+        {
+            return _banco.Categoria.Where(c => c.CategoriaPaiId == 1).OrderBy(c => c.Nome).ToPagedList(pagina, 4);
+        }
+
         public IPagedList<Produto> ListarPaginado(uint idUsuario, int pagina = 1, int quantidade = 25, string pesquisa = "")
         {
             if (!string.IsNullOrEmpty(pesquisa))
@@ -72,12 +77,12 @@ namespace LojaVirtual.Repositories
                 pesquisa = pesquisa.Trim().ToUpper();
 
                 return _banco.Produto.Include(p => p.Categoria).Include(p => p.Imagem)
-               .Where(p => p.IdCategoria == idCategoria && p.Nome.Contains(pesquisa))
+               .Where(p => p.Categoria.CategoriaPaiId == idCategoria && p.Nome.Contains(pesquisa))
                .OrderBy(p => p.Nome).ToPagedList(pagina, 20);
             }
 
             return _banco.Produto.Include(p => p.Categoria).Include(p => p.Imagem)
-                .Where(p => p.IdCategoria == idCategoria).OrderBy(p => p.Nome).ToPagedList(pagina, 20);
+                .Where(p => p.Categoria.CategoriaPaiId == idCategoria).OrderBy(p => p.Nome).ToPagedList(pagina, 20);
         }
 
         public int Registrar(Produto produto)

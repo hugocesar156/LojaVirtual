@@ -4,6 +4,7 @@ using LojaVirtual.Validations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 
 namespace LojaVirtual.Controllers
 {
@@ -25,7 +26,32 @@ namespace LojaVirtual.Controllers
 
         public IActionResult Inicio()
         {
-            return View();
+            try
+            {
+                var categorias = _reposProduto.ListarCategoria();
+                return View(categorias);
+            }
+            catch (Exception erro)
+            {
+                _logger.LogError($"Home/Inicio - {erro.Message}");
+
+                throw new Exception(Global.Mensagem.FalhaBanco);
+            }
+        }
+
+        public IActionResult MudaCategoria(int pagina)
+        {
+            try
+            {
+                var categorias = _reposProduto.ListarCategoria(pagina);
+                return PartialView("_Categoria", categorias);
+            }
+            catch (Exception erro)
+            {
+                _logger.LogError($"Home/MudaCategoria - {erro.Message}");
+
+                return BadRequest(Global.Mensagem.FalhaBanco);
+            }
         }
 
         [HttpGet]
@@ -38,8 +64,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Home/Lista - {erro.Message} ID de usuário: " +
-                    $"{_sessao.UsuarioSessao().IdUsuario}");
+                _logger.LogError($"Home/Lista - {erro.Message}");
 
                 throw new Exception(Global.Mensagem.FalhaBanco);
             }

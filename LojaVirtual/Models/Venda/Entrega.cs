@@ -11,7 +11,7 @@ namespace LojaVirtual.Models.Venda
         [Column(TypeName = "FLOAT"), Required]
         public float Valor { get; set; }
 
-        [Required]
+        [Column(TypeName = "TINYINT"), Required]
         public byte DiasEntrega { get; set; }
 
         [Column(TypeName = "CHAR(1)"), Required]

@@ -22,7 +22,6 @@ namespace LojaVirtual
 
             try
             {
-                Log.Information("Iniciando servidor web");
                 CreateWebHostBuilder(args).Build().Run();
             }
             catch (Exception ex)

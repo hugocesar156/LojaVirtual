@@ -87,3 +87,20 @@
             break;
     }
 })
+
+$('#btn-cancelar').click(function () {
+    let idTransacao = $('#id-transacao').val();
+    let idProduto = $('#id-produto').val();
+
+    $.ajax({
+        type: "POST",
+        url: "/Pedido/EstornarProduto",
+        data: { idTransacao: idTransacao, idProduto: idProduto },
+        success: function () {
+            
+        },
+        error: function (erro) {
+            alert(erro.responseText);
+        }
+    });
+})
