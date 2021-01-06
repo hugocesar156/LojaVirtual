@@ -106,6 +106,7 @@ namespace LojaVirtual.Controllers
 
         //Operações
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Atualizar(Produto produto)
         {
             try
@@ -113,7 +114,7 @@ namespace LojaVirtual.Controllers
                 produto.IdUsuario = _sessao.UsuarioSessao().IdUsuario;
 
                 if (_reposProduto.Atualizar(produto) > 0)
-                    return Json(new { });
+                    return Json(produto.IdProduto);
 
                 return BadRequest(Global.Mensagem.FalhaAtualizacao);
             }
@@ -175,6 +176,7 @@ namespace LojaVirtual.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Registrar(Produto produto)
         {
             try

@@ -57,10 +57,15 @@
 
                             let parcelas = $('#parcelas').val();
 
+                            let token = $('input[name="__RequestVerificationToken"]').val();
+
                             $.ajax({
                                 type: "POST",
                                 url: "/Pagamento/PagamentoCartao",
-                                data: { cartao: cartao, endereco: endereco, frete: frete, parcelas: parcelas },
+                                data: {
+                                    __RequestVerificationToken: token, cartao: cartao,
+                                    endereco: endereco, frete: frete, parcelas: parcelas
+                                },
                                 success: function (transacao) {
                                     window.location.pathname = "Pedido/Detalhe/" + transacao;
                                 },
@@ -126,10 +131,12 @@ function PagamentoBoleto() {
                             frete.servico = '2';
                         }
 
+                        let token = $('input[name="__RequestVerificationToken"]').val();
+
                         $.ajax({
                             type: "POST",
                             url: "/Pagamento/PagamentoBoleto",
-                            data: { endereco: endereco, frete: frete },
+                            data: { __RequestVerificationToken: token, endereco: endereco, frete: frete },
                             success: function (transacao) {
                                 window.location.pathname = "Pedido/Detalhe/" + transacao;
                             },

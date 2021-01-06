@@ -96,10 +96,12 @@ function ValidaRegistro() {
                 comprimento: $('#comprimento').val()
             }
 
+            let token = $('input[name="__RequestVerificationToken"]').val();
+
             $.ajax({
                 type: "POST",
                 url: "/Produto/Registrar",
-                data: { produto: produto },
+                data: { __RequestVerificationToken: token, produto: produto },
                 success: function (idProduto) {
                     window.location.pathname = "Produto/Imagem/" + idProduto;
                 },

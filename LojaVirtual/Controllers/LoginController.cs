@@ -42,6 +42,7 @@ namespace LojaVirtual.Controllers
 
         //Operações
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult ValidaAcesso(Usuario usuario)
         {
             try

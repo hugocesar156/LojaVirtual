@@ -8,10 +8,12 @@
             senha: $('#senha').val()
         }
 
+        let token = $('input[name="__RequestVerificationToken"]').val();
+
         $.ajax({
             type: "POST",
             url: "/Login/ValidaAcesso",
-            data: { usuario: usuario },
+            data: { __RequestVerificationToken: token, usuario: usuario },
             success: function () {
                 window.location.pathname = "Home/Inicio";
             },

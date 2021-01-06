@@ -89,6 +89,7 @@ namespace LojaVirtual.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult PagamentoBoleto(EnderecoCliente endereco, Frete frete)
         {
             try
@@ -189,6 +190,7 @@ namespace LojaVirtual.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult PagamentoCartao(Cartao cartao, EnderecoCliente endereco, Frete frete, byte parcelas)
         {
             var carrinho = _reposCarrinho.Buscar(_sessao.UsuarioSessao().IdCliente);

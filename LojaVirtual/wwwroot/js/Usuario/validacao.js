@@ -90,11 +90,12 @@ function ValidaSenha(senha) {
 function ValidaUsuario() {
     if (ValidaFormulario(1)) {
         let usuario = CarregaUsuario();
+        let token = $('input[name="__RequestVerificationToken"]').val();
 
         $.ajax({
             type: "POST",
             url: "/Usuario/ValidaUsuario",
-            data: { usuario: usuario },
+            data: { __RequestVerificationToken: token, usuario: usuario },
             success: function () {
                 $('#form-cliente').addClass('d-none');
                 $('#form-endereco').removeClass('d-none');
@@ -111,10 +112,12 @@ function RegistraUsuario() {
         let usuario = CarregaUsuario();
         usuario.cliente.email = usuario.email;
 
+        let token = $('input[name="__RequestVerificationToken"]').val();
+
         $.ajax({
             type: "POST",
             url: "/Usuario/Registrar",
-            data: { usuario: usuario },
+            data: { __RequestVerificationToken: token, usuario: usuario },
             success: function () {
                 window.location.pathname = "Login/Entrar";
             },

@@ -5,10 +5,10 @@
 }
 
 <div class="text-center">
-    <h4>Edição de produto</h4>
+    <h4 id="titulo">Edição de produto</h4>
 
     <form action="" method="post" id="form-cadastro">
-        <input type="hidden" id="id-produto"  value="@Model.IdProduto" />
+        <input type="hidden" id="id-produto" value="@Model.IdProduto" />
         <div class="row justify-content-center text-center text-md-left mt-4">
             <div class="col-10 col-md-6 col-xl-5">
                 <label>Nome</label>
@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="row justify-content-center mt-4">
-            <div class="col-10 col-md-6 col-xl-5 text-center text-md-left">
+            <div class="col-10 col-md-6 col-xl-4 text-center text-md-left">
                 <label>Descrição</label>
                 <textarea id="descricao" class="form-control" maxlength="150" asp-for="Descricao" onchange="ValidaCampo(this)"></textarea>
                 <div id="descricao" class="invalid-feedback"></div>
@@ -68,7 +68,7 @@
                 <input id="modelo" type="text" class="form-control" maxlength="25" value="@Model.Modelo" onchange="ValidaCampo(this)" />
                 <div id="modelo" class="invalid-feedback"></div>
             </div>
-            <div class="col-8 col-md-4 col-xl-3 text-center text-md-left mt-3 mt-md-0">
+            <div class="col-8 col-md-4 col-xl-2 text-center text-md-left mt-3 mt-md-0">
                 <label>Cor</label>
                 <input id="cor" type="text" class="form-control" maxlength="20" value="@Model.Cor" onchange="ValidaCampo(this)" />
                 <div id="cor" class="invalid-feedback"></div>
@@ -108,7 +108,7 @@
                     <div id="comprimento" class="invalid-feedback msg-comprimento"></div>
                 </div>
             </div>
-            <div class="col-4 col-md-3 col-xl-2 ml-xl-4 text-lg-left mt-3 mt-md-0 mt-xl-0">
+            <div class="col-4 col-md-3 col-xl-2 text-lg-left mt-3 mt-md-0 mt-xl-0">
                 <label>Peso</label>
                 <div class="input-group">
                     <input id="peso" type="text" class="form-control kg" style="text-align: center"
@@ -120,13 +120,21 @@
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center mt-5 mb-3">
-            <a href="@Url.Action("Imagem", "Produto", new { id = Model.IdProduto })" class="btn btn-outline-success col-6 col-sm-5 col-md-3" 
-                    style="border-radius: 5px 0px 0px 5px;">Imagem</a>
-            <button class="btn btn-outline-success col-6 col-sm-5 col-md-3" type="button" 
-                    style="border-radius: 0px 5px 5px 0px;" onclick="ValidaEdicao()">Salvar</button>
+        <div class="row justify-content-center mt-4">
+            <div class="col-9">
+                <input type="hidden" id="dimensao" />
+                <div id="dimensao" class="invalid-feedback msg-dimensao"></div>
+            </div>
         </div>
+        <div class="row justify-content-center mt-5 mb-3">
+            <button class="btn btn-outline-success col-6 col-sm-5 col-md-3" type="button" onclick="ValidaEdicao()">
+                Salvar
+            </button>
+        </div>
+        @Html.AntiForgeryToken()
     </form>
 </div>
 
+<script src="~/jquery/jquery-3.5.1.min.js"></script>
 <script src="~/js/Produto/validacao.js"></script>
+<script src="~/js/Produto/edicao.js"></script>

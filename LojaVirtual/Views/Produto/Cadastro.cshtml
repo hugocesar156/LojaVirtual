@@ -5,7 +5,7 @@
 }
 
 <div class="text-center">
-    <h4>Cadastro de produto</h4>
+    <h4 id="titulo">Cadastro de produto</h4>
 
     <form action="" method="post" id="form-cadastro">
         <div class="row justify-content-center text-center text-md-left mt-4">
@@ -124,8 +124,9 @@
         <div class="row justify-content-center mt-5 mb-3">
             <button class="btn btn-success col-6 col-sm-5 col-md-3" type="button" onclick="ValidaRegistro()">Registrar</button>
         </div>
+        @Html.AntiForgeryToken()
     </form>
+</div>
 
 <script src="~/jquery/jquery-3.5.1.min.js"></script>
 <script src="~/js/Produto/validacao.js"></script>
-<script src="~/js/Produto/imagem.js"></script>

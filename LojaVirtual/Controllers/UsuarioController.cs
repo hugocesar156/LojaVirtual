@@ -138,6 +138,7 @@ namespace LojaVirtual.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult ValidaUsuario(Usuario usuario)
         {
             try
@@ -150,13 +151,14 @@ namespace LojaVirtual.Controllers
             catch (Exception erro)
             {
                 _logger.LogError($"Usuario/ValidaUsuario - {erro.Message} ID de usuário: " +
-               $"{_sessao.UsuarioSessao().IdUsuario}");
+                $"{_sessao.UsuarioSessao().IdUsuario}");
 
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Registrar(Usuario usuario)
         {
             try
@@ -171,7 +173,7 @@ namespace LojaVirtual.Controllers
             catch (Exception erro)
             {
                 _logger.LogError($"Usuario/Registrar - {erro.Message} ID de usuário: " +
-               $"{_sessao.UsuarioSessao().IdUsuario}");
+                $"{_sessao.UsuarioSessao().IdUsuario}");
 
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
