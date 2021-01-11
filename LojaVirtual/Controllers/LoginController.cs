@@ -52,6 +52,8 @@ namespace LojaVirtual.Controllers
                 if (usuarioBanco != null)
                 {
                     _sessao.Salvar(usuarioBanco, "Acesso");
+                    Sessao.IdPerfil = usuarioBanco.Perfil;
+
                     return Json(new { });
                 }
 

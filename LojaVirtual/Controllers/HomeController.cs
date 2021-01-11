@@ -4,13 +4,11 @@ using LojaVirtual.Validations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Linq;
 
 namespace LojaVirtual.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly Sessao _sessao;
         private readonly ILogger<HomeController> _logger;
 
         private readonly ProdutoR _reposProduto;
@@ -19,7 +17,6 @@ namespace LojaVirtual.Controllers
         {
             Sessao.sessao = sessao;
 
-            _sessao = sessao;
             _logger = logger;
             _reposProduto = reposProduto;
         }

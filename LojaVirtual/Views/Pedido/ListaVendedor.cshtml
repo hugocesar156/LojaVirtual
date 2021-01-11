@@ -52,7 +52,7 @@
                             @{var total = item.Valor * item.Quantidade;}
                             <td width="100">@total.ToString("C")</td>
                             <td width="50">
-                                <a href="@Url.Action("Gerenciar", "Pedido", new { id = item.IdProdutoHistorico })" class="btn btn-sm btn-outline-primary"><i class="fa fa-info-circle"></i></a>
+                                <a href="@Url.Action("Gerenciar", "Pedido", new { id = item.IdProdutoHistorico })" class="btn btn-sm btn-outline-info"><i class="fa fa-info-circle"></i></a>
                             </td>
                         </tr>
                     }

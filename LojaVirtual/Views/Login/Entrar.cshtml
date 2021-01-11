@@ -23,10 +23,10 @@
             </div>
         </div>
         <div class="row justify-content-center mt-5 mb-3">
-            <button class="btn btn-primary col-6 col-sm-5 col-md-3" type="button" onclick="ValidaAcesso()">Entrar</button>
+            <button class="btn btn-info col-6 col-sm-5 col-md-3" type="button" onclick="ValidaAcesso()">Entrar</button>
         </div>
         <div class="row justify-content-center mb-5">
-            <a href="#">Registrar-se</a>
+            <a href="@Url.Action("Cadastro", "Usuario")">Registrar-se</a>
         </div>
         @Html.AntiForgeryToken()
     </form>

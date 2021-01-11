@@ -21,12 +21,6 @@ namespace LojaVirtual.Repositories
             return _banco.Usuario.Include(u => u.Cliente.Endereco).FirstOrDefault(u => u.IdUsuario == idUsuario);
         }
 
-        public int Registrar(Usuario usuario)
-        {
-            _banco.Add(usuario);
-            return _banco.SaveChanges();
-        }
-
         public List<Usuario> Listar(string pesquisa = "")
         {
             if (!string.IsNullOrEmpty(pesquisa))
@@ -59,6 +53,12 @@ namespace LojaVirtual.Repositories
 
             return _banco.Usuario.Include(p => p.Cliente.Contato)
                 .OrderBy(u => u.Cliente.Nome).ToPagedList(pagina, quantidade);
+        }
+
+        public int Registrar(Usuario usuario)
+        {
+            _banco.Add(usuario);
+            return _banco.SaveChanges();
         }
 
         public Usuario ValidaAcesso(Usuario usuario)

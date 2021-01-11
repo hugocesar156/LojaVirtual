@@ -1,0 +1,2 @@
+2021-01-08 10:04:14.137 -03:00 [ERR] Home/MudaCategoria - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '-4' at line 5
+2021-01-08 10:12:01.686 -03:00 [ERR] Carrinho/Menu - An item with the same key has already been added. Key: 139 ID de usuário: 1

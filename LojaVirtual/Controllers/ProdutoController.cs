@@ -190,7 +190,9 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                Console.WriteLine(erro);
+                _logger.LogError($"Produto/Registrar - {erro.Message} ID de usuário: " +
+                    $"{_sessao.UsuarioSessao().IdUsuario}");
+
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }

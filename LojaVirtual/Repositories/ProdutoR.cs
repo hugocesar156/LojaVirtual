@@ -1,7 +1,6 @@
 ﻿using LojaVirtual.Data;
 using LojaVirtual.Models.Produto;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using X.PagedList;
@@ -77,12 +76,12 @@ namespace LojaVirtual.Repositories
                 pesquisa = pesquisa.Trim().ToUpper();
 
                 return _banco.Produto.Include(p => p.Categoria).Include(p => p.Imagem)
-               .Where(p => p.Categoria.CategoriaPaiId == idCategoria && p.Nome.Contains(pesquisa))
+               .Where(p => p.IdCategoria == idCategoria && p.Nome.Contains(pesquisa))
                .OrderBy(p => p.Nome).ToPagedList(pagina, 20);
             }
 
             return _banco.Produto.Include(p => p.Categoria).Include(p => p.Imagem)
-                .Where(p => p.Categoria.CategoriaPaiId == idCategoria).OrderBy(p => p.Nome).ToPagedList(pagina, 20);
+                .Where(p => p.IdCategoria == idCategoria).OrderBy(p => p.Nome).ToPagedList(pagina, 20);
         }
 
         public int Registrar(Produto produto)

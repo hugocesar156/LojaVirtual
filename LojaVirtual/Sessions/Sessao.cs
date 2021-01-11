@@ -7,6 +7,7 @@ namespace LojaVirtual.Sessions
     public class Sessao
     {
         public static Sessao sessao;
+        public static uint IdPerfil;
 
         private readonly IHttpContextAccessor _context;
 

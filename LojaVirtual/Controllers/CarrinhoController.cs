@@ -60,9 +60,9 @@ namespace LojaVirtual.Controllers
 
                 ViewBag.Estados = new string[]
                 {
-                "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA",
-                "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN",
-                "RO", "RR", "RS", "SC", "SE", "SP", "TO"
+                     "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA",
+                     "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN",
+                     "RO", "RR", "RS", "SC", "SE", "SP", "TO"
                 };
 
                 return View(produtos);
@@ -134,6 +134,9 @@ namespace LojaVirtual.Controllers
         {
             try
             {
+                if (_reposCarrinho.ItemAdicionado(_sessao.UsuarioSessao().IdCliente, idProduto))
+                    return Json(new { });
+
                 var carrinho = new Carrinho
                 {
                     IdProduto = idProduto,
