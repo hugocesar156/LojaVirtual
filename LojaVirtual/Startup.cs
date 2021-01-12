@@ -45,6 +45,7 @@ namespace LojaVirtual
             services.AddScoped<Sessao>();
 
             services.AddLogging();
+            services.AddScoped<LogR>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

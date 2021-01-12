@@ -163,5 +163,5 @@ C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.csprojA
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Home\Lista.cshtml.g.cs
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Home\_Produtos.cshtml.g.cs
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Erro\Mensagem.cshtml.g.cs
-C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.csproj.CoreCompileInputs.cache
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Home\_Categoria.cshtml.g.cs
+C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.csproj.CoreCompileInputs.cache

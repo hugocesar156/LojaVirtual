@@ -3,14 +3,16 @@ using System;
 using LojaVirtual.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LojaVirtual.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210112113300_TesteLogBanco")]
+    partial class TesteLogBanco
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,39 +138,24 @@ namespace LojaVirtual.Migrations
 
             modelBuilder.Entity("LojaVirtual.Models.Log.Log", b =>
                 {
-                    b.Property<uint>("IdLog")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id");
+                    b.Property<uint>("Id")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<string>("DataHora")
-                        .HasColumnName("Timestamp")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("Erro")
-                        .HasColumnName("Exception")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("Mensagem")
-                        .HasColumnName("Message")
+                    b.Property<string>("Exception")
                         .HasMaxLength(50);
 
-                    b.Property<string>("Nivel")
-                        .HasColumnName("Level")
-                        .HasMaxLength(15);
+                    b.Property<string>("Message")
+                        .HasMaxLength(50);
 
-                    b.Property<string>("Propriedades")
-                        .HasColumnName("Properties")
-                        .HasMaxLength(150);
+                    b.Property<string>("MessageTemplate")
+                        .HasMaxLength(50);
 
-                    b.Property<string>("Template")
-                        .HasColumnName("Template")
-                        .HasMaxLength(100);
+                    b.Property<string>("Properties")
+                        .HasMaxLength(50);
 
-                    b.Property<TimeSpan>("Ts")
-                        .HasColumnName("_ts")
-                        .HasColumnType("TIMESTAMP");
+                    b.Property<TimeSpan>("TimeSpan");
 
-                    b.HasKey("IdLog");
+                    b.HasKey("Id");
 
                     b.ToTable("Logs");
                 });

@@ -18,6 +18,7 @@ namespace LojaVirtual
            .MinimumLevel.Override("Microsoft", LogEventLevel.Fatal)
            .Enrich.FromLogContext()
            .WriteTo.File(Directory.GetCurrentDirectory() + $"/Logs/{dataLog}-log.txt")
+           .WriteTo.MySQL("Server=127.0.0.1; Port=3306; Database=loja; Username=HCTS; Password=HCTS+102030;")
            .CreateLogger();
 
             try

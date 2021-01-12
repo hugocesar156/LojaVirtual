@@ -1,5 +1,6 @@
 ﻿using LojaVirtual.Models.Acesso;
 using LojaVirtual.Models.Cliente;
+using LojaVirtual.Models.Log;
 using LojaVirtual.Models.Pagamento;
 using LojaVirtual.Models.Produto;
 using LojaVirtual.Models.Venda;
@@ -24,5 +25,6 @@ namespace LojaVirtual.Data
         public DbSet<ProdutoHistorico> ProdutoHistorico { get; set; }
         public DbSet<Boleto> Boleto { get; set; }
         public DbSet<ContatoCliente> Contato { get; set; }
+        public DbSet<Log> Log { get; set; }
     }
 }

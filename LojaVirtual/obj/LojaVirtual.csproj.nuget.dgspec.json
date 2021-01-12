@@ -10,11 +10,14 @@
         "projectUniqueName": "C:\\Projetos\\Loja Virtual\\LojaVirtual\\LojaVirtual.csproj",
         "projectName": "LojaVirtual",
         "projectPath": "C:\\Projetos\\Loja Virtual\\LojaVirtual\\LojaVirtual.csproj",
-        "packagesPath": "C:\\Users\\hugoc\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\Hugo Souza\\.nuget\\packages\\",
         "outputPath": "C:\\Projetos\\Loja Virtual\\LojaVirtual\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\hugoc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Hugo Souza\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -118,7 +121,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

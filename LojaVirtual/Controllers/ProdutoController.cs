@@ -37,9 +37,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Produto/Cadastro - {erro.Message} ID de usuário: " +
-                  $"{_sessao.UsuarioSessao().IdUsuario}");
-
+                _logger.LogError(erro, Global.Mensagem.FalhaBanco);
                 throw new Exception(Global.Mensagem.FalhaBanco);
             }
         }
@@ -114,7 +112,13 @@ namespace LojaVirtual.Controllers
                 produto.IdUsuario = _sessao.UsuarioSessao().IdUsuario;
 
                 if (_reposProduto.Atualizar(produto) > 0)
+                {
+                    _logger.LogInformation($"{_sessao.UsuarioSessao().IdUsuario} " +
+                        $"{(byte)Global.Tipo.Produto} {(byte)Global.Operacao.Editar}" +
+                        $"{produto.IdProduto}");
+
                     return Json(produto.IdProduto);
+                }
 
                 return BadRequest(Global.Mensagem.FalhaAtualizacao);
             }

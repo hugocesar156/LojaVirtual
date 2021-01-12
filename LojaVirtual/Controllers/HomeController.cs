@@ -30,8 +30,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Home/Inicio - {erro.Message}");
-
+                _logger.LogError(erro, Global.Mensagem.FalhaBanco);
                 throw new Exception(Global.Mensagem.FalhaBanco);
             }
         }
@@ -45,8 +44,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Home/MudaCategoria - {erro.Message}");
-
+                _logger.LogError(erro, Global.Mensagem.FalhaBanco);
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }
@@ -61,8 +59,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Home/Lista - {erro.Message}");
-
+                _logger.LogError(erro, Global.Mensagem.FalhaBanco);
                 throw new Exception(Global.Mensagem.FalhaBanco);
             }
         }

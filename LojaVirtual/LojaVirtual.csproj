@@ -19,6 +19,10 @@
     <Compile Remove="Migrations\20201130121424_AddBoletoEnderecoPedido.Designer.cs" />
     <Compile Remove="Migrations\20201216144550_CorrigeNoemCmapoPedido.cs" />
     <Compile Remove="Migrations\20201216144550_CorrigeNoemCmapoPedido.Designer.cs" />
+    <Compile Remove="Migrations\20210112171439_AddLog.cs" />
+    <Compile Remove="Migrations\20210112171439_AddLog.Designer.cs" />
+    <Compile Remove="Migrations\20210112172233_AddLog.cs" />
+    <Compile Remove="Migrations\20210112172233_AddLog.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,7 +49,7 @@
 
   <ItemGroup>
     <Reference Include="PagarMeCore">
-      <HintPath>..\PagarMe\pagarme-net-master\PagarMeCore\bin\Release\netstandard2.0\PagarMeCore.dll</HintPath>
+      <HintPath>..\PagarMe\pagarme-net-master\PagarMeCore\bin\Debug\netstandard2.0\PagarMeCore.dll</HintPath>
     </Reference>
   </ItemGroup>
 

@@ -1,0 +1,68 @@
+2021-01-12 12:05:14.717 -03:00 [INF] Teste
+2021-01-12 12:06:01.107 -03:00 [INF] Eae Brunão!
+2021-01-12 12:09:36.121 -03:00 [INF] Testando Log no banco de dados.
+2021-01-12 12:13:41.302 -03:00 [INF] Testando Log no banco de dados.
+2021-01-12 12:13:41.360 -03:00 [ERR] Falha ao tentar acessar o Banco de Dados.
+MySql.Data.MySqlClient.MySqlException (0x80004005): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-8' at line 5 ---> MySql.Data.MySqlClient.MySqlException (0x80004005): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-8' at line 5
+   at MySqlConnector.Core.ResultSet.ReadResultSetHeaderAsync(IOBehavior ioBehavior) in C:\projects\mysqlconnector\src\MySqlConnector\Core\ResultSet.cs:line 42
+   at MySql.Data.MySqlClient.MySqlDataReader.ActivateResultSet(ResultSet resultSet) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlDataReader.cs:line 80
+   at MySql.Data.MySqlClient.MySqlDataReader.ReadFirstResultSetAsync(IOBehavior ioBehavior) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlDataReader.cs:line 302
+   at MySql.Data.MySqlClient.MySqlDataReader.CreateAsync(MySqlCommand command, CommandBehavior behavior, ResultSetProtocol resultSetProtocol, IOBehavior ioBehavior) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlDataReader.cs:line 287
+   at MySqlConnector.Core.TextCommandExecutor.ExecuteReaderAsync(String commandText, MySqlParameterCollection parameterCollection, CommandBehavior behavior, IOBehavior ioBehavior, CancellationToken cancellationToken) in C:\projects\mysqlconnector\src\MySqlConnector\Core\TextCommandExecutor.cs:line 37
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlCommand.cs:line 252
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.Enumerator.BufferlessMoveNext(DbContext _, Boolean buffer)
+   at Pomelo.EntityFrameworkCore.MySql.Storage.Internal.MySqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.Enumerator.MoveNext()
+   at Microsoft.EntityFrameworkCore.Query.Internal.LinqOperatorProvider._TrackEntities[TOut,TIn](IEnumerable`1 results, QueryContext queryContext, IList`1 entityTrackingInfos, IList`1 entityAccessors)+MoveNext()
+   at Microsoft.EntityFrameworkCore.Query.Internal.LinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext()
+   at System.Collections.Generic.List`1.AddEnumerable(IEnumerable`1 enumerable)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at X.PagedList.PagedList`1..ctor(IQueryable`1 superset, Int32 pageNumber, Int32 pageSize)
+   at X.PagedList.PagedListExtensions.ToPagedList[T](IEnumerable`1 superset, Int32 pageNumber, Int32 pageSize)
+   at LojaVirtual.Repositories.ProdutoR.ListarCategoria(Int32 pagina) in C:\Projetos\Loja Virtual\LojaVirtual\Repositories\ProdutoR.cs:line 52
+   at LojaVirtual.Controllers.HomeController.MudaCategoria(Int32 pagina) in C:\Projetos\Loja Virtual\LojaVirtual\Controllers\HomeController.cs:line 45
+2021-01-12 12:17:11.572 -03:00 [INF] Testando Log no banco de dados.
+2021-01-12 12:17:11.626 -03:00 [ERR] Falha ao tentar acessar o Banco de Dados.
+MySql.Data.MySqlClient.MySqlException (0x80004005): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-8' at line 5 ---> MySql.Data.MySqlClient.MySqlException (0x80004005): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-8' at line 5
+   at MySqlConnector.Core.ResultSet.ReadResultSetHeaderAsync(IOBehavior ioBehavior) in C:\projects\mysqlconnector\src\MySqlConnector\Core\ResultSet.cs:line 42
+   at MySql.Data.MySqlClient.MySqlDataReader.ActivateResultSet(ResultSet resultSet) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlDataReader.cs:line 80
+   at MySql.Data.MySqlClient.MySqlDataReader.ReadFirstResultSetAsync(IOBehavior ioBehavior) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlDataReader.cs:line 302
+   at MySql.Data.MySqlClient.MySqlDataReader.CreateAsync(MySqlCommand command, CommandBehavior behavior, ResultSetProtocol resultSetProtocol, IOBehavior ioBehavior) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlDataReader.cs:line 287
+   at MySqlConnector.Core.TextCommandExecutor.ExecuteReaderAsync(String commandText, MySqlParameterCollection parameterCollection, CommandBehavior behavior, IOBehavior ioBehavior, CancellationToken cancellationToken) in C:\projects\mysqlconnector\src\MySqlConnector\Core\TextCommandExecutor.cs:line 37
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in C:\projects\mysqlconnector\src\MySqlConnector\MySql.Data.MySqlClient\MySqlCommand.cs:line 252
+   at System.Data.Common.DbCommand.ExecuteReader()
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.Execute(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteReader(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.Enumerator.BufferlessMoveNext(DbContext _, Boolean buffer)
+   at Pomelo.EntityFrameworkCore.MySql.Storage.Internal.MySqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryingEnumerable`1.Enumerator.MoveNext()
+   at Microsoft.EntityFrameworkCore.Query.Internal.LinqOperatorProvider._TrackEntities[TOut,TIn](IEnumerable`1 results, QueryContext queryContext, IList`1 entityTrackingInfos, IList`1 entityAccessors)+MoveNext()
+   at Microsoft.EntityFrameworkCore.Query.Internal.LinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext()
+   at System.Collections.Generic.List`1.AddEnumerable(IEnumerable`1 enumerable)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at X.PagedList.PagedList`1..ctor(IQueryable`1 superset, Int32 pageNumber, Int32 pageSize)
+   at X.PagedList.PagedListExtensions.ToPagedList[T](IEnumerable`1 superset, Int32 pageNumber, Int32 pageSize)
+   at LojaVirtual.Repositories.ProdutoR.ListarCategoria(Int32 pagina) in C:\Projetos\Loja Virtual\LojaVirtual\Repositories\ProdutoR.cs:line 52
+   at LojaVirtual.Controllers.HomeController.MudaCategoria(Int32 pagina) in C:\Projetos\Loja Virtual\LojaVirtual\Controllers\HomeController.cs:line 45
+2021-01-12 13:40:38.263 -03:00 [INF] ID usuário:0, Operação:1, Entidade:2
+2021-01-12 14:29:43.445 -03:00 [INF] Teste
+2021-01-12 14:31:19.492 -03:00 [INF] Teste
+2021-01-12 14:33:14.241 -03:00 [INF] Teste
+2021-01-12 14:41:59.289 -03:00 [INF] 0 1 2 3
+2021-01-12 14:44:15.662 -03:00 [INF] 0 1 2 3
+2021-01-12 14:45:05.540 -03:00 [INF] 0 1 2 3
+2021-01-12 14:47:38.084 -03:00 [INF] 0 1 2 3
+2021-01-12 14:49:54.206 -03:00 [INF] 0 1 2 3
+2021-01-12 14:51:07.828 -03:00 [INF] 0-1-2-3
+2021-01-12 14:52:29.842 -03:00 [INF] teste
+2021-01-12 14:53:38.924 -03:00 [INF] ?
+2021-01-12 14:55:17.019 -03:00 [INF] 0 1 2 3
+2021-01-12 14:56:30.967 -03:00 [INF] 0 1 2 3
+2021-01-12 14:57:42.089 -03:00 [INF] 0 1 2 3
+2021-01-12 14:58:30.323 -03:00 [INF] 0 1 2 3
+2021-01-12 15:01:13.232 -03:00 [INF] 0
+2021-01-12 15:02:15.732 -03:00 [INF] 215
+2021-01-12 15:04:58.378 -03:00 [INF] 1 2 1 215
