@@ -8,6 +8,7 @@ using X.PagedList;
 using System;
 using LojaVirtual.Validations;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace LojaVirtual.Controllers
 {
@@ -113,9 +114,10 @@ namespace LojaVirtual.Controllers
 
                 if (_reposProduto.Atualizar(produto) > 0)
                 {
-                    _logger.LogInformation($"{_sessao.UsuarioSessao().IdUsuario} " +
-                        $"{(byte)Global.Tipo.Produto} {(byte)Global.Operacao.Editar}" +
-                        $"{produto.IdProduto}");
+                    Log.ForContext("Usuario", Convert.ToString(_sessao.UsuarioSessao().IdUsuario))
+                        .ForContext("Entidade", Global.Entidade.Produto)
+                        .ForContext("Acao", Global.Acao.Editar)
+                        .ForContext("Objeto", produto.IdProduto).Information("");
 
                     return Json(produto.IdProduto);
                 }
@@ -172,8 +174,9 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Produto/PesquisarLista - {erro.Message} ID de usuário: " +
-                   $"{_sessao.UsuarioSessao().IdUsuario}");
+                Log.ForContext("Usuario", Convert.ToString(_sessao.UsuarioSessao().IdUsuario))
+                        .ForContext("Entidade", Global.Entidade.Produto)
+                        .ForContext("Acao", Global.Acao.Editar).Error(erro, "");
 
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }

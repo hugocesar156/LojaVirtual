@@ -37,12 +37,22 @@
             public const string FalhaValidarUsuario = "Falha na validação de usuário";
         }
 
-        public enum Operacao : byte
+        public enum Acao : byte
         {
             Inserir,
             Editar,
             Visualizar,
             Remover
+        }
+
+        public enum Entidade : byte
+        {
+            Usuario,
+            Cliente,
+            Produto,
+            Carrinho,
+            Pagamento,
+            Pedido
         }
 
         public enum Pagamento : byte
@@ -75,16 +85,6 @@
             Enviado,
             Entregue,
             Cancelado
-        }
-
-        public enum Tipo : byte
-        {
-            Usuario,
-            Cliente,
-            Produto,
-            Carrinho,
-            Pagamento,
-            Pedido
         }
     }
 }

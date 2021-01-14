@@ -20,19 +20,10 @@ namespace LojaVirtual.Repositories
         {
             try
             {
-                var logs = _banco.Log.Where(l => l.Ts >= DateTime.Now.AddDays(-7)).ToList();
-                
-                foreach (var item in logs)
-                {
-                    var info = item.Mensagem.Split(" ");
+                var pesquisa = $"Usuario\":\"{idUsuario}"; 
 
-                    item.IdUsuario = Convert.ToUInt32(info[0]);
-                    item.Tipo = Convert.ToByte(info[1]);
-                    item.Operacao = Convert.ToByte(info[2]);
-                    item.IdEntidade = Convert.ToUInt32(info[3]);
-                }
-
-                return logs.Where(l => l.IdUsuario == idUsuario).ToList();
+                return _banco.Log.Where(l => l.Ts >= DateTime.Now.AddDays(-7) 
+                && l.Propriedades.Contains($"Usuario\":\"{idUsuario}".Replace("\\", ""))).ToList();
             }
             catch (Exception erro)
             {
@@ -45,19 +36,7 @@ namespace LojaVirtual.Repositories
         {
             try
             {
-                var logs = _banco.Log.Where(l => l.Ts >= DateTime.Now.AddDays(-7) && l.Nivel == "Error").ToList();
-
-                foreach (var item in logs)
-                {
-                    var info = item.Mensagem.Split(" ");
-
-                    item.IdUsuario = Convert.ToUInt32(info[0]);
-                    item.Tipo = Convert.ToByte(info[1]);
-                    item.Operacao = Convert.ToByte(info[2]);
-                    item.IdEntidade = Convert.ToUInt32(info[3]);
-                }
-
-                return logs;
+                return _banco.Log.Where(l => l.Ts >= DateTime.Now.AddDays(-7) && l.Nivel == "Error").ToList();
             }
             catch (Exception erro)
             {

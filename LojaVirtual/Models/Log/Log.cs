@@ -9,6 +9,7 @@ namespace LojaVirtual.Models.Log
     [Table("Logs")]
     public class Log
     {
+        public static object Logger { get; internal set; }
         [Key, Column("id")]
         public uint IdLog { get; set; }
 
@@ -17,9 +18,6 @@ namespace LojaVirtual.Models.Log
 
         [Column("Level"), MaxLength(15)]
         public string Nivel { get; set; }
-
-        [Column("Template"), MaxLength(100)]
-        public string Template { get; set; }
 
         [Column("Message"), MaxLength(50)]
         public string Mensagem { get; set; }
