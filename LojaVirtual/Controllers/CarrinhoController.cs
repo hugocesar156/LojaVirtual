@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System;
 using Microsoft.Extensions.Logging;
 using LojaVirtual.Validations;
+using Serilog;
 
 namespace LojaVirtual.Controllers
 {
@@ -17,7 +18,6 @@ namespace LojaVirtual.Controllers
     public class CarrinhoController : Controller
     {
         private readonly Sessao _sessao;
-        private readonly ILogger<CarrinhoController> _logger;
 
         private readonly ProdutoR _reposProduto;
         private readonly CarrinhoR _reposCarrinho;
@@ -26,11 +26,10 @@ namespace LojaVirtual.Controllers
 
         private static List<Carrinho> _carrinho;
 
-        public CarrinhoController(Sessao sessao, ILogger<CarrinhoController> logger, ProdutoR reposProduto, CarrinhoR reposCarrinho, 
+        public CarrinhoController(Sessao sessao, ProdutoR reposProduto, CarrinhoR reposCarrinho, 
             FreteR reposFrete, ClienteR reposCliente)
         {
             _sessao = sessao;
-            _logger = logger;
 
             _reposProduto = reposProduto;
             _reposCarrinho = reposCarrinho;
@@ -69,9 +68,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Carrinho/Menu - {erro.Message} ID de usuário: " +
-                    $"{_sessao.UsuarioSessao().IdUsuario}");
-
+                GerarLogErro(erro, (byte)Global.Entidade.Carrinho, (byte)Global.Acao.Visualizar);
                 throw new Exception(Global.Mensagem.FalhaBanco);
             }
         }
@@ -95,9 +92,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Carrinho/AdicionarQuantidade - {erro.Message} ID de usuário: " +
-                    $"{_sessao.UsuarioSessao().IdUsuario}");
-
+                GerarLogErro(erro, (byte)Global.Entidade.Carrinho, (byte)Global.Acao.Editar);
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }
@@ -122,9 +117,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Carrinho/CalcularFrete - {erro.Message} ID de usuário: " +
-                    $"{_sessao.UsuarioSessao().IdUsuario}");
-
+                GerarLogErro(erro, (byte)Global.Entidade.Carrinho, (byte)Global.Acao.Visualizar);
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }
@@ -151,9 +144,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Carrinho/NovoItem - {erro.Message} ID de usuário: " +
-                   $"{_sessao.UsuarioSessao().IdUsuario}");
-
+                GerarLogErro(erro, (byte)Global.Entidade.Carrinho, (byte)Global.Acao.Inserir);
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }
@@ -180,9 +171,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Carrinho/RetirarQuantidade - {erro.Message} ID de usuário: " +
-                   $"{_sessao.UsuarioSessao().IdUsuario}");
-
+                GerarLogErro(erro, (byte)Global.Entidade.Carrinho, (byte)Global.Acao.Editar);
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }
@@ -204,9 +193,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Carrinho/RemoverItem - {erro.Message} ID de usuário: " +
-                   $"{_sessao.UsuarioSessao().IdUsuario}");
-
+                GerarLogErro(erro, (byte)Global.Entidade.Carrinho, (byte)Global.Acao.Remover);
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }
@@ -221,6 +208,12 @@ namespace LojaVirtual.Controllers
             ViewBag.Quantidade = itens.ToDictionary(i => i.IdProduto, i => i.Quantidade);
 
             return carrinho;
+        }
+
+        public void GerarLogErro(Exception erro, byte entidade, byte acao)
+        {
+            Log.ForContext("Usuario", Convert.ToString(_sessao.UsuarioSessao().IdUsuario))
+                       .ForContext("Entidade", entidade).ForContext("Acao", acao).Error(erro, "");
         }
     }
 }

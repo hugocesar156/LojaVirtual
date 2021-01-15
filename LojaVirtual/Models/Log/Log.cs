@@ -1,6 +1,4 @@
-﻿using Serilog.Core;
-using Serilog.Events;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -9,12 +7,11 @@ namespace LojaVirtual.Models.Log
     [Table("Logs")]
     public class Log
     {
-        public static object Logger { get; internal set; }
         [Key, Column("id")]
-        public uint IdLog { get; set; }
+        public int IdLog { get; set; }
 
         [Column("Timestamp"), MaxLength(100)]
-        public string DataHora { get; set; }
+        public DateTime DataHora { get; set; }
 
         [Column("Level"), MaxLength(15)]
         public string Nivel { get; set; }
@@ -28,7 +25,7 @@ namespace LojaVirtual.Models.Log
         [Column("Properties"), MaxLength(400)]
         public string Propriedades { get; set; }
 
-        [Column("_ts", TypeName = "TIMESTAMP")]
+        [NotMapped]
         public DateTime Ts { get; set; }
 
         [NotMapped]

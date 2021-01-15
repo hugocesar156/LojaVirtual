@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using System.Linq;
 using LojaVirtual.Validations;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace LojaVirtual.Controllers
 {
@@ -20,7 +21,6 @@ namespace LojaVirtual.Controllers
     public class PagamentoController : Controller
     {
         private readonly Sessao _sessao;
-        private readonly ILogger<PagamentoController> _logger;
 
         private readonly ClienteR _reposCliente;
         private readonly ProdutoR _reposProduto;
@@ -29,18 +29,16 @@ namespace LojaVirtual.Controllers
 
         private readonly IConfiguration _configuration;
 
-        public PagamentoController(Sessao sessao, ILogger<PagamentoController> logger, ClienteR reposCliente, 
-            ProdutoR reposProduto, CarrinhoR reposCarrinho, PedidoR reposPedido, IConfiguration configuration)
+        public PagamentoController(Sessao sessao, ClienteR reposCliente, ProdutoR reposProduto, CarrinhoR reposCarrinho, 
+            PedidoR reposPedido, IConfiguration configuration)
         {
             _sessao = sessao;
-            _logger = logger;
+            _configuration = configuration;
 
             _reposCliente = reposCliente;
             _reposProduto = reposProduto;
             _reposCarrinho = reposCarrinho;
             _reposPedido = reposPedido;
-
-            _configuration = configuration;
         }
 
         //Operações
@@ -81,9 +79,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Carrinho/CalculaParcelas - {erro.Message} ID de usuário: " +
-                    $"{_sessao.UsuarioSessao().IdUsuario}");
-
+                GerarLogErro(erro, (byte)Global.Entidade.Pedido, (byte)Global.Acao.Visualizar);
                 return BadRequest(Global.Mensagem.FalhaCalculoParcelas);
             }
         }
@@ -173,7 +169,10 @@ namespace LojaVirtual.Controllers
                     _reposCarrinho.RemoverTodos(_sessao.UsuarioSessao().IdCliente);
 
                     if (_reposPedido.Registrar(pedido) > 0)
+                    {
+                        GerarLog((byte)Global.Entidade.Pedido, (byte)Global.Acao.Inserir, pedido.IdPedido);
                         return Json(Convert.ToInt32(transacao.Id));
+                    }
 
                     return BadRequest($"{Global.Mensagem.FalhaPedido} {transacao.Id}");
                 }
@@ -182,9 +181,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Carrinho/PagamentoBoleto - {erro.Message} ID de usuário: " +
-                    $"{_sessao.UsuarioSessao().IdUsuario}");
-
+                GerarLogErro(erro, (byte)Global.Entidade.Pedido, (byte)Global.Acao.Inserir);
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }
@@ -296,7 +293,10 @@ namespace LojaVirtual.Controllers
                     _reposCarrinho.RemoverTodos(_sessao.UsuarioSessao().IdCliente);
 
                     if (_reposPedido.Registrar(pedido) > 0)
+                    {
+                        GerarLog((byte)Global.Entidade.Pedido, (byte)Global.Acao.Inserir, pedido.IdPedido);
                         return Json(Convert.ToInt32(transacao.Id));
+                    }
 
                     return BadRequest($"{Global.Mensagem.FalhaPedido} {transacao.Id}");
                 }
@@ -305,9 +305,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Carrinho/PagamentoCartao - {erro.Message} ID de usuário: " +
-                    $"{_sessao.UsuarioSessao().IdUsuario}");
-
+                GerarLogErro(erro, (byte)Global.Entidade.Pedido, (byte)Global.Acao.Inserir);
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }
@@ -405,6 +403,18 @@ namespace LojaVirtual.Controllers
             }
 
             return transacao;
+        }
+
+        public void GerarLog(byte entidade, byte acao, uint objeto)
+        {
+            Log.ForContext("Usuario", Convert.ToString(_sessao.UsuarioSessao().IdUsuario))
+                       .ForContext("Entidade", entidade).ForContext("Acao", acao).ForContext("Objeto", objeto).Information("");
+        }
+
+        public void GerarLogErro(Exception erro, byte entidade, byte acao)
+        {
+            Log.ForContext("Usuario", Convert.ToString(_sessao.UsuarioSessao().IdUsuario))
+                       .ForContext("Entidade", entidade).ForContext("Acao", acao).Error(erro, "");
         }
     }
 }

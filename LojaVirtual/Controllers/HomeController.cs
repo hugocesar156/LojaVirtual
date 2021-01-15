@@ -2,22 +2,18 @@
 using LojaVirtual.Sessions;
 using LojaVirtual.Validations;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using System;
 
 namespace LojaVirtual.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
         private readonly ProdutoR _reposProduto;
 
-        public HomeController(ProdutoR reposProduto, Sessao sessao, ILogger<HomeController> logger)
+        public HomeController(Sessao sessao, ProdutoR reposProduto)
         {
             Sessao.sessao = sessao;
-
-            _logger = logger;
             _reposProduto = reposProduto;
         }
 
@@ -30,7 +26,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError(erro, Global.Mensagem.FalhaBanco);
+                GerarLogErro(erro, (byte)Global.Entidade.Produto, (byte)Global.Acao.Visualizar);
                 throw new Exception(Global.Mensagem.FalhaBanco);
             }
         }
@@ -44,7 +40,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError(erro, Global.Mensagem.FalhaBanco);
+                GerarLogErro(erro, (byte)Global.Entidade.Produto, (byte)Global.Acao.Visualizar);
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }
@@ -59,9 +55,14 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError(erro, Global.Mensagem.FalhaBanco);
+                GerarLogErro(erro, (byte)Global.Entidade.Produto, (byte)Global.Acao.Visualizar);
                 throw new Exception(Global.Mensagem.FalhaBanco);
             }
+        }
+
+        public void GerarLogErro(Exception erro, byte entidade, byte acao)
+        {
+            Log.ForContext("Entidade", entidade).ForContext("Acao", acao).Error(erro, "");
         }
     }
 }

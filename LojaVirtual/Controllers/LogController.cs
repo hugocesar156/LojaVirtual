@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LojaVirtual.Repositories;
+﻿using LojaVirtual.Repositories;
 using LojaVirtual.Sessions;
 using Microsoft.AspNetCore.Mvc;
 

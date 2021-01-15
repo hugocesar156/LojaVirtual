@@ -7,7 +7,6 @@ using System.Linq;
 using X.PagedList;
 using System;
 using LojaVirtual.Validations;
-using Microsoft.Extensions.Logging;
 using Serilog;
 
 namespace LojaVirtual.Controllers
@@ -16,15 +15,11 @@ namespace LojaVirtual.Controllers
     public class ProdutoController : Controller
     {
         private readonly Sessao _sessao;
-        private readonly ILogger<ProdutoController> _logger;
-
         private readonly ProdutoR _reposProduto;
 
-        public ProdutoController(Sessao sessao, ILogger<ProdutoController> logger, ProdutoR reposProduto)
+        public ProdutoController(Sessao sessao, ProdutoR reposProduto)
         {
             _sessao = sessao;
-            _logger = logger;
-
             _reposProduto = reposProduto;
         }
 
@@ -38,7 +33,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError(erro, Global.Mensagem.FalhaBanco);
+                GerarLogErro(erro, (byte)Global.Entidade.Produto, (byte)Global.Acao.Inserir);
                 throw new Exception(Global.Mensagem.FalhaBanco);
             }
         }
@@ -58,9 +53,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Produto/Edicao - {erro.Message} ID de usuário: " +
-                  $"{_sessao.UsuarioSessao().IdUsuario}");
-
+                GerarLogErro(erro, (byte)Global.Entidade.Produto, (byte)Global.Acao.Editar);
                 throw new Exception(Global.Mensagem.FalhaBanco);
             }
         }
@@ -79,9 +72,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Produto/Imagem - {erro.Message} ID de usuário: " +
-                 $"{_sessao.UsuarioSessao().IdUsuario}");
-
+                GerarLogErro(erro, (byte)Global.Entidade.Produto, (byte)Global.Acao.Editar);
                 throw new Exception(Global.Mensagem.FalhaBanco);
             }
         }
@@ -95,9 +86,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Produto/Lista - {erro.Message} ID de usuário: " +
-                    $"{_sessao.UsuarioSessao().IdUsuario}");
-
+                GerarLogErro(erro, (byte)Global.Entidade.Produto, (byte)Global.Acao.Visualizar);
                 throw new Exception(Global.Mensagem.FalhaBanco);
             }
         }
@@ -114,11 +103,7 @@ namespace LojaVirtual.Controllers
 
                 if (_reposProduto.Atualizar(produto) > 0)
                 {
-                    Log.ForContext("Usuario", Convert.ToString(_sessao.UsuarioSessao().IdUsuario))
-                        .ForContext("Entidade", Global.Entidade.Produto)
-                        .ForContext("Acao", Global.Acao.Editar)
-                        .ForContext("Objeto", produto.IdProduto).Information("");
-
+                    GerarLog((byte)Global.Entidade.Produto, (byte)Global.Acao.Editar, produto.IdProduto);
                     return Json(produto.IdProduto);
                 }
 
@@ -126,9 +111,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Produto/Atualizar - {erro.Message} ID de usuário: " +
-                    $"{_sessao.UsuarioSessao().IdUsuario}");
-
+                GerarLogErro(erro, (byte)Global.Entidade.Produto, (byte)Global.Acao.Editar);
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }
@@ -157,9 +140,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Produto/OrdenarLista - {erro.Message} ID de usuário: " +
-                   $"{_sessao.UsuarioSessao().IdUsuario}");
-
+                GerarLogErro(erro, (byte)Global.Entidade.Produto, (byte)Global.Acao.Visualizar);
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }
@@ -174,10 +155,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                Log.ForContext("Usuario", Convert.ToString(_sessao.UsuarioSessao().IdUsuario))
-                        .ForContext("Entidade", Global.Entidade.Produto)
-                        .ForContext("Acao", Global.Acao.Editar).Error(erro, "");
-
+                GerarLogErro(erro, (byte)Global.Entidade.Produto, (byte)Global.Acao.Visualizar);
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }
@@ -191,17 +169,30 @@ namespace LojaVirtual.Controllers
                 produto.IdUsuario = _sessao.UsuarioSessao().IdUsuario;
 
                 if (_reposProduto.Registrar(produto) > 0)
+                {
+                    GerarLog((byte)Global.Entidade.Produto, (byte)Global.Acao.Inserir, produto.IdProduto);
                     return Json(produto.IdProduto);
-
+                }
+                    
                 return BadRequest(Global.Mensagem.FalhaCadastro);
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Produto/Registrar - {erro.Message} ID de usuário: " +
-                    $"{_sessao.UsuarioSessao().IdUsuario}");
-
+                GerarLogErro(erro, (byte)Global.Entidade.Produto, (byte)Global.Acao.Inserir);
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
+        }
+
+        public void GerarLog(byte entidade, byte acao, uint objeto)
+        {
+            Log.ForContext("Usuario", Convert.ToString(_sessao.UsuarioSessao().IdUsuario))
+                       .ForContext("Entidade", entidade).ForContext("Acao", acao).ForContext("Objeto", objeto).Information("");
+        }
+
+        public void GerarLogErro(Exception erro, byte entidade, byte acao)
+        {
+            Log.ForContext("Usuario", Convert.ToString(_sessao.UsuarioSessao().IdUsuario))
+                       .ForContext("Entidade", entidade).ForContext("Acao", acao).Error(erro, "");
         }
     }
 }

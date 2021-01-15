@@ -3,7 +3,6 @@ using LojaVirtual.Models.Log;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace LojaVirtual.Repositories
 {
@@ -20,10 +19,8 @@ namespace LojaVirtual.Repositories
         {
             try
             {
-                var pesquisa = $"Usuario\":\"{idUsuario}"; 
-
-                return _banco.Log.Where(l => l.Ts >= DateTime.Now.AddDays(-7) 
-                && l.Propriedades.Contains($"Usuario\":\"{idUsuario}".Replace("\\", ""))).ToList();
+                return _banco.Log.Where(l => l.Propriedades.Contains($"Usuario\":\"{idUsuario}") 
+                && l.DataHora >= DateTime.Now.AddDays(-7)).ToList();
             }
             catch (Exception erro)
             {

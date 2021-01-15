@@ -6,21 +6,18 @@ using LojaVirtual.Sessions;
 using System;
 using LojaVirtual.Validations;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace LojaVirtual.Controllers
 {
     public class LoginController : Controller
     {
         private readonly Sessao _sessao;
-        private readonly ILogger<LoginController> _logger;
-
         private readonly UsuarioR _reposUsuario;
 
-        public LoginController(Sessao sessao, ILogger<LoginController> logger, UsuarioR reposUsuario)
+        public LoginController(Sessao sessao, UsuarioR reposUsuario)
         {
             _sessao = sessao;
-            _logger = logger;
-
             _reposUsuario = reposUsuario;
         }
 
@@ -34,8 +31,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Login/Entrar - {erro.Message}");
-
+                Console.WriteLine(erro);
                 throw new Exception(Global.Mensagem.FalhaRedirecionamento);
             }
         }
@@ -61,8 +57,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Login/ValidaAcesso - {erro.Message}");
-
+                Console.WriteLine(erro);
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }
@@ -77,8 +72,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Login/Sair - {erro.Message}");
-
+                Console.WriteLine(erro);
                 throw new Exception(Global.Mensagem.FalhaRedirecionamento);
             }
         }

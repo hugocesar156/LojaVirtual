@@ -7,8 +7,8 @@ using System;
 using System.IO;
 using System.Linq;
 using LojaVirtual.Sessions;
-using Microsoft.Extensions.Logging;
 using LojaVirtual.Validations;
+using Serilog;
 
 namespace LojaVirtual.Controllers
 {
@@ -16,15 +16,11 @@ namespace LojaVirtual.Controllers
     public class ImagemController : Controller
     {
         private readonly Sessao _sessao;
-        private readonly ILogger<ImagemController> _logger;
-
         private readonly ImagemR _reposImagem;
 
-        public ImagemController (Sessao sessao, ILogger<ImagemController> logger, ImagemR reposImagem)
+        public ImagemController (Sessao sessao, ImagemR reposImagem)
         {
             _sessao = sessao;
-            _logger = logger;
-
             _reposImagem = reposImagem;
         }
 
@@ -47,9 +43,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Imagem/Carregar - {erro.Message} ID de usuário: " +
-                    $"{_sessao.UsuarioSessao().IdUsuario}");
-
+                GerarLogErro(erro, (byte)Global.Entidade.Produto, (byte)Global.Acao.Visualizar);
                 return BadRequest(Global.Mensagem.FalhaCarregarImagem);
             }
         }
@@ -72,9 +66,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Imagem/Descartar - {erro.Message} ID de usuário: " +
-                   $"{_sessao.UsuarioSessao().IdUsuario}");
-
+                GerarLogErro(erro, (byte)Global.Entidade.Produto, (byte)Global.Acao.Visualizar);
                 return BadRequest(Global.Mensagem.FalhaDescartarImagem);
             }
         }
@@ -96,16 +88,17 @@ namespace LojaVirtual.Controllers
                     lista.Remove(imagem);
 
                     if (_reposImagem.Remover(imagem) > 0)
+                    {
+                        GerarLog((byte)Global.Entidade.Produto, (byte)Global.Acao.Remover, id);
                         return PartialView("Views/Produto/_Imagens.cshtml", lista);
+                    }
                 }
 
                 return BadRequest(Global.Mensagem.ArquivoNaoEncontrado);
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Imagem/Remover - {erro.Message} ID de usuário: " +
-                   $"{_sessao.UsuarioSessao().IdUsuario}");
-
+                GerarLogErro(erro, (byte)Global.Entidade.Produto, (byte)Global.Acao.Remover);
                 return BadRequest(Global.Mensagem.FalhaRemoverImagem);
             }
         }
@@ -134,6 +127,8 @@ namespace LojaVirtual.Controllers
 
                     if (_reposImagem.Inserir(imagem) > 0)
                     {
+                        GerarLog((byte)Global.Entidade.Produto, (byte)Global.Acao.Inserir, Convert.ToUInt32(idProduto));
+
                         var lista = _reposImagem.BuscaLista(Convert.ToUInt32(idProduto));
                         return PartialView("Views/Produto/_Imagens.cshtml", lista);
                     }
@@ -143,11 +138,21 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Imagem/Salvar - {erro.Message} ID de usuário: " +
-                   $"{_sessao.UsuarioSessao().IdUsuario}");
-
+                GerarLogErro(erro, (byte)Global.Entidade.Produto, (byte)Global.Acao.Remover);
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
+        }
+
+        public void GerarLog(byte entidade, byte acao, uint objeto)
+        {
+            Log.ForContext("Usuario", Convert.ToString(_sessao.UsuarioSessao().IdUsuario))
+                       .ForContext("Entidade", entidade).ForContext("Acao", acao).ForContext("Objeto", objeto).Information("");
+        }
+
+        public void GerarLogErro(Exception erro, byte entidade, byte acao)
+        {
+            Log.ForContext("Usuario", Convert.ToString(_sessao.UsuarioSessao().IdUsuario))
+                       .ForContext("Entidade", entidade).ForContext("Acao", acao).Error(erro, "");
         }
     }
 }
