@@ -39,9 +39,11 @@
 
         public enum Acao : byte
         {
+            Acessar,
             Inserir,
             Editar,
             Visualizar,
+            Redirecionar,
             Remover
         }
 

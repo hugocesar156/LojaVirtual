@@ -5,7 +5,6 @@ using LojaVirtual.Authorizations;
 using LojaVirtual.Sessions;
 using System;
 using LojaVirtual.Validations;
-using Microsoft.Extensions.Logging;
 using Serilog;
 
 namespace LojaVirtual.Controllers
@@ -31,7 +30,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                Console.WriteLine(erro);
+                GerarLogErro(erro, (byte)Global.Entidade.Usuario, (byte)Global.Acao.Redirecionar);
                 throw new Exception(Global.Mensagem.FalhaRedirecionamento);
             }
         }
@@ -50,6 +49,7 @@ namespace LojaVirtual.Controllers
                     _sessao.Salvar(usuarioBanco, "Acesso");
                     Sessao.IdPerfil = usuarioBanco.Perfil;
 
+                    GerarLog((byte)Global.Entidade.Usuario, (byte)Global.Acao.Acessar, usuarioBanco.IdUsuario);
                     return Json(new { });
                 }
 
@@ -57,7 +57,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                Console.WriteLine(erro);
+                GerarLogErro(erro, (byte)Global.Entidade.Usuario, (byte)Global.Acao.Acessar);
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }
@@ -72,9 +72,21 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                Console.WriteLine(erro);
+                GerarLogErro(erro, (byte)Global.Entidade.Usuario, (byte)Global.Acao.Redirecionar);
                 throw new Exception(Global.Mensagem.FalhaRedirecionamento);
             }
+        }
+
+        public void GerarLog(byte entidade, byte acao, uint objeto)
+        {
+            Log.ForContext("Usuario", Convert.ToString(_sessao.UsuarioSessao().IdUsuario))
+                       .ForContext("Entidade", entidade).ForContext("Acao", acao).ForContext("Objeto", objeto).Information("");
+        }
+
+        public void GerarLogErro(Exception erro, byte entidade, byte acao)
+        {
+            Log.ForContext("Usuario", Convert.ToString(_sessao.UsuarioSessao().IdUsuario))
+                       .ForContext("Entidade", entidade).ForContext("Acao", acao).Error(erro, "");
         }
     }
 }
