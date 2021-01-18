@@ -78,7 +78,7 @@
                             <i class="fa fa-user"></i> Conta
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Perfil</a>
+                            <a class="dropdown-item" href="#" id="btn-perfil" data-toggle="modal" data-target="#modal-perfil">Perfil</a>
                             <a class="dropdown-item" href="@Url.Action("Sair", "Login")">Sair</a>
                         </div>
                     </div>
@@ -89,6 +89,8 @@
 
     <div class="container mt-3 body-content">
         @RenderBody()
+
+        @await Html.PartialAsync("_Perfil")
         <footer class="text-center mt-5">
             <p>@DateTime.Now.Year - Loja Virtual</p>
         </footer>
@@ -100,3 +102,4 @@
 <script src="~/jquery/plugins/mask/jquery.mask.min.js"></script>
 <script src="~/bootstrap/js/bootstrap.min.js"></script>
 <script src="~/js/Global/mascara.js"></script>
+<script src="~/js/Global/perfil.js"></script>

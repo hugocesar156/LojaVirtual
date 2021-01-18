@@ -8,7 +8,6 @@ using LojaVirtual.Sessions;
 using LojaVirtual.Validations;
 using X.PagedList;
 using System.Linq;
-using Microsoft.Extensions.Logging;
 using Serilog;
 
 namespace LojaVirtual.Controllers
@@ -16,15 +15,11 @@ namespace LojaVirtual.Controllers
     public class UsuarioController : Controller
     {
         private readonly Sessao _sessao;
-        private readonly ILogger<UsuarioController> _logger;
-
         private readonly UsuarioR _reposUsuario;
 
-        public UsuarioController(Sessao sessao, ILogger<UsuarioController> logger, UsuarioR reposUsuario)
+        public UsuarioController(Sessao sessao, UsuarioR reposUsuario)
         {
             _sessao = sessao;
-            _logger = logger;
-
             _reposUsuario = reposUsuario;
         }
 
@@ -49,6 +44,21 @@ namespace LojaVirtual.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult Edicao()
+        {
+            try
+            {
+                var usuario = _reposUsuario.Buscar(_sessao.UsuarioSessao().IdUsuario);
+                return View(usuario);
+            }
+            catch (Exception erro)
+            {
+                GerarLogErro(erro, (byte)Global.Entidade.Usuario, (byte)Global.Acao.Editar);
+                throw new Exception(Global.Mensagem.FalhaBanco);
+            }
+        }
+
         [Autorizacao.AcessoAutorizacao]
         public IActionResult Lista()
         {
@@ -64,13 +74,17 @@ namespace LojaVirtual.Controllers
             }
         }
 
-        [Autorizacao.AcessoAutorizacao]
+        [HttpPost]
         public IActionResult Perfil()
         {
             try
             {
                 var usuario = _reposUsuario.Buscar(_sessao.UsuarioSessao().IdUsuario);
-                return View(usuario);
+
+                if (usuario != null)
+                    return Json(usuario.Cliente);
+
+                return BadRequest();
             }
             catch (Exception erro)
             {

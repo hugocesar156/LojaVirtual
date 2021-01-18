@@ -153,7 +153,7 @@ function CarregaUsuario() {
 
             contato: [{
                 nome: $('#nome-contato').val().toUpperCase(),
-                numero: $('#numero-contato').val().replace(" ", "").replace("-", "")
+                numero: $('#numero-contato').val().replace(" ", "").replace("-", "").replace("(", "").replace(")", "")
             }]
         }
     }

@@ -10,14 +10,7 @@
         };
 
         let cep = $('#cep-salvo').val().replace("-", "");
-        let servico = "";
-
-        if ($('#sedex-input').prop('checked')) {
-            servico = "04014";
-        }
-        else {
-            servico = "04510";
-        }
+        let servico = $('#sedex-input').prop('checked') ? "04014" : "04510";
 
         let endereco = {};
 
@@ -47,13 +40,7 @@
                         success: function (data) {
                             frete.valor = data.valor.toFixed(2).replace(".", ",");
                             frete.prazo = data.prazo;
-
-                            if (servico == "04014") {
-                                frete.servico = '1';
-                            }
-                            else {
-                                frete.servico = '2';
-                            }
+                            frete.servico = servico == "04014" ? '1' : '2';
 
                             let parcelas = $('#parcelas').val();
 
@@ -86,14 +73,7 @@ function PagamentoBoleto() {
     $('#btn-boleto').attr('disabled', true);
 
     let cep = $('#cep-salvo').val().replace("-", "");
-    let servico = "";
-
-    if ($('#sedex-input').prop('checked')) {
-        servico = "04014";
-    }
-    else {
-        servico = "04510";
-    }
+    let servico = $('#sedex-input').prop('checked') ? "04014" : "04510";
 
     let endereco = {};
 
@@ -123,13 +103,7 @@ function PagamentoBoleto() {
                     success: function (data) {
                         frete.valor = data.valor.toFixed(2).replace(".", ",");
                         frete.prazo = data.prazo;
-
-                        if (servico == "04014") {
-                            frete.servico = '1';
-                        }
-                        else {
-                            frete.servico = '2';
-                        }
+                        frete.servico = servico == "04014" ? '1' : '2';
 
                         let token = $('input[name="__RequestVerificationToken"]').val();
 

@@ -153,7 +153,6 @@ C:\Projetos\Loja Virtual\LojaVirtual\bin\Debug\netcoreapp2.1\Connected Services\
 C:\Projetos\Loja Virtual\LojaVirtual\bin\Debug\netcoreapp2.1\PagarMeCore.dll
 C:\Projetos\Loja Virtual\LojaVirtual\bin\Debug\netcoreapp2.1\PagarMeCore.pdb
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Pedido\Detalhe.cshtml.g.cs
-C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Usuario\Perfil.cshtml.g.cs
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Usuario\Lista.cshtml.g.cs
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Usuario\_Tabela.cshtml.g.cs
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Pedido\ListaCliente.cshtml.g.cs
@@ -165,3 +164,5 @@ C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Home\_P
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Erro\Mensagem.cshtml.g.cs
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Home\_Categoria.cshtml.g.cs
 C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\LojaVirtual.csproj.CoreCompileInputs.cache
+C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_Perfil.cshtml.g.cs
+C:\Projetos\Loja Virtual\LojaVirtual\obj\Debug\netcoreapp2.1\Razor\Views\Usuario\Edicao.cshtml.g.cs

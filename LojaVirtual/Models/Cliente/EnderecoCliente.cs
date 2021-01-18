@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LojaVirtual.Models.Cliente
@@ -8,7 +9,7 @@ namespace LojaVirtual.Models.Cliente
         [Key]
         public uint IdEndereco { get; set; }
 
-        [ForeignKey("IdCliente")]
+        [ForeignKey("IdCliente"), JsonIgnore]
         public Cliente Cliente { get; set; }
 
         [Required]

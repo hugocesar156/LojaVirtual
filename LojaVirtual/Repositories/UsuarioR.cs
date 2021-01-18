@@ -18,7 +18,8 @@ namespace LojaVirtual.Repositories
 
         public Usuario Buscar(uint idUsuario)
         {
-            return _banco.Usuario.Include(u => u.Cliente.Endereco).FirstOrDefault(u => u.IdUsuario == idUsuario);
+            return _banco.Usuario.Include(u => u.Cliente.Endereco)
+                .FirstOrDefault(u => u.IdUsuario == idUsuario);
         }
 
         public List<Usuario> Listar(string pesquisa = "")
