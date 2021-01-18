@@ -1,6 +1,0 @@
-2021-01-05 16:57:38.515 -03:00 [INF] Iniciando servidor web
-2021-01-05 16:59:46.986 -03:00 [INF] Iniciando servidor web
-2021-01-05 16:59:52.234 -03:00 [ERR] Login/ValidaAcesso - Access denied for user 'root'@'localhost' (using password: NO)
-2021-01-05 17:01:50.215 -03:00 [INF] Iniciando servidor web
-2021-01-05 17:01:57.815 -03:00 [ERR] Login/ValidaAcesso - Access denied for user 'root'@'localhost' (using password: NO)
-2021-01-05 17:03:09.119 -03:00 [INF] Iniciando servidor web

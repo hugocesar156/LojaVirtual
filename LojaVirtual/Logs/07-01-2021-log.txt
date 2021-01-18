@@ -1,1 +1,0 @@
-2021-01-07 09:52:42.679 -03:00 [ERR] Home/Inicio - Access denied for user 'HCTS'@'localhost' (using password: YES)

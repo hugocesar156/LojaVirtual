@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
 using LojaVirtual.Validations;
-using Microsoft.Extensions.Logging;
 using Serilog;
 
 namespace LojaVirtual.Controllers
@@ -21,13 +20,12 @@ namespace LojaVirtual.Controllers
     public class PagamentoController : Controller
     {
         private readonly Sessao _sessao;
+        private readonly IConfiguration _configuration;
 
         private readonly ClienteR _reposCliente;
         private readonly ProdutoR _reposProduto;
         private readonly CarrinhoR _reposCarrinho;
         private readonly PedidoR _reposPedido;
-
-        private readonly IConfiguration _configuration;
 
         public PagamentoController(Sessao sessao, ClienteR reposCliente, ProdutoR reposProduto, CarrinhoR reposCarrinho, 
             PedidoR reposPedido, IConfiguration configuration)
