@@ -49,7 +49,7 @@ namespace LojaVirtual.Controllers
             }
         }
 
-        [AcessoAutorizacao]
+        [Autorizacao.AcessoAutorizacao]
         public IActionResult Lista()
         {
             try
@@ -64,7 +64,7 @@ namespace LojaVirtual.Controllers
             }
         }
 
-        [AcessoAutorizacao]
+        [Autorizacao.AcessoAutorizacao]
         public IActionResult Perfil()
         {
             try

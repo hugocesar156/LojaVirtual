@@ -22,7 +22,7 @@ namespace LojaVirtual.Controllers
         }
 
         //Páginas
-        [AnonimoAutorizacao]
+        [Autorizacao.AnonimoAutorizacao]
         public IActionResult Entrar()
         {
             try
@@ -62,7 +62,7 @@ namespace LojaVirtual.Controllers
             }
         }
 
-        [AcessoAutorizacao]
+        [Autorizacao.AcessoAutorizacao]
         public IActionResult Sair()
         {
             try

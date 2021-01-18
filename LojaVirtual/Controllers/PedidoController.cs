@@ -11,7 +11,7 @@ using Serilog;
 
 namespace LojaVirtual.Controllers
 {
-    [AcessoAutorizacao]
+    [Autorizacao.AcessoAutorizacao]
     public class PedidoController : Controller
     {
         private readonly Sessao _sessao;
