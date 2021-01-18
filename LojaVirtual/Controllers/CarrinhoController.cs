@@ -24,8 +24,6 @@ namespace LojaVirtual.Controllers
         private readonly FreteR _reposFrete;
         private readonly ClienteR _reposCliente;
 
-        private static List<Carrinho> _carrinho;
-
         public CarrinhoController(Sessao sessao, ProdutoR reposProduto, CarrinhoR reposCarrinho, 
             FreteR reposFrete, ClienteR reposCliente)
         {
@@ -47,8 +45,6 @@ namespace LojaVirtual.Controllers
 
                 foreach (var item in carrinho)
                     produtos.Add(_reposProduto.Buscar(item.IdProduto));
-
-                _carrinho = carrinho;
 
                 ViewBag.Quantidade = carrinho.ToDictionary(i => i.IdProduto, i => i.Quantidade);
 
@@ -80,12 +76,13 @@ namespace LojaVirtual.Controllers
         {
             try
             {
-                var item = _carrinho.FirstOrDefault(c => c.IdProduto == id);
+                var carrinho = _reposCarrinho.Buscar(_sessao.UsuarioSessao().IdCliente);
+                var item = carrinho.FirstOrDefault(c => c.IdProduto == id);
 
                 if (_reposProduto.Buscar(id).Estoque > item.Quantidade)
                 {
                     if (_reposCarrinho.Atualizar(item, 1) > 0)
-                        return PartialView("_Carrinho", BuscaProdutosCarrinho(_carrinho));
+                        return PartialView("_Carrinho", BuscaProdutosCarrinho(carrinho));
                 }
 
                 return BadRequest(Global.Mensagem.SemEstoque);
@@ -154,18 +151,16 @@ namespace LojaVirtual.Controllers
         {
             try
             {
-                var item = _carrinho.FirstOrDefault(c => c.IdProduto == id);
+                var carrinho = _reposCarrinho.Buscar(_sessao.UsuarioSessao().IdCliente);
+                var item = carrinho.FirstOrDefault(c => c.IdProduto == id);
 
                 if (item.Quantidade > 1)
                 {
                     if (_reposCarrinho.Atualizar(item, 2) > 0)
-                        return PartialView("_Carrinho", BuscaProdutosCarrinho(_carrinho));
+                        return PartialView("_Carrinho", BuscaProdutosCarrinho(carrinho));
                 }
                 else if (_reposCarrinho.RemoverItem(item) > 0)
-                {
-                    _carrinho.Remove(item);
-                    return PartialView("_Carrinho", BuscaProdutosCarrinho(_carrinho));
-                }
+                    return PartialView("_Carrinho", BuscaProdutosCarrinho(carrinho));
 
                 return BadRequest(Global.Mensagem.FalhaRetirar);
             }
@@ -181,13 +176,11 @@ namespace LojaVirtual.Controllers
         {
             try
             {
-                var item = _carrinho.FirstOrDefault(c => c.IdProduto == id);
+                var carrinho = _reposCarrinho.Buscar(_sessao.UsuarioSessao().IdCliente);
+                var item = carrinho.FirstOrDefault(c => c.IdProduto == id);
 
                 if (_reposCarrinho.RemoverItem(item) > 0)
-                {
-                    _carrinho.Remove(item);
-                    return PartialView("_Carrinho", BuscaProdutosCarrinho(_carrinho));
-                }
+                    return PartialView("_Carrinho", BuscaProdutosCarrinho(carrinho));
 
                 return BadRequest(Global.Mensagem.FalhaRemover);
             }

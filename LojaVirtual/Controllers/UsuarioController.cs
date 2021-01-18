@@ -123,9 +123,7 @@ namespace LojaVirtual.Controllers
             }
             catch (Exception erro)
             {
-                _logger.LogError($"Usuario/PesquisarLista - {erro.Message} ID de usuário: " +
-                $"{_sessao.UsuarioSessao().IdUsuario}");
-
+                GerarLogErro(erro, (byte)Global.Entidade.Usuario, (byte)Global.Acao.Visualizar);
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }
