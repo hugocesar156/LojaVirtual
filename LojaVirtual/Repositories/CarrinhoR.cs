@@ -39,7 +39,8 @@ namespace LojaVirtual.Repositories
 
         public bool ItemAdicionado(uint idCliente, uint idProduto)
         {
-            return _banco.Carrinho.Where(c => c.IdCliente == idCliente && c.IdProduto == idProduto) != null;
+            return _banco.Carrinho.Where(c => c.IdCliente == idCliente 
+            && c.IdProduto == idProduto).ToList().Count() > 0;
         }
 
         public int RemoverItem(Carrinho item)

@@ -2,7 +2,7 @@
     @foreach (var categoria in Model)
     {
         <div class="col-3">
-            <div class="card rounded-circle shadow" onclick="ListaCategoria('@categoria.IdCategoria')">
+            <div class="card rounded-circle" onclick="ListaCategoria('@categoria.IdCategoria')">
                 <div class="card-body">
                     <h6>@categoria.Nome</h6>
                     @{ var imagem = $"/images/categoria/categoria-{categoria.Nome.ToLower()}.png";}

@@ -179,7 +179,14 @@ namespace LojaVirtual.Controllers
                 var item = carrinho.FirstOrDefault(c => c.IdProduto == id);
 
                 if (_reposCarrinho.RemoverItem(item) > 0)
-                    return PartialView("_Carrinho", BuscaProdutosCarrinho(carrinho));
+                {
+                    carrinho.Remove(item);
+
+                    if (carrinho.Count() > 0)
+                        return PartialView("_Carrinho", BuscaProdutosCarrinho(carrinho));
+
+                    return Json(null);
+                }
 
                 return BadRequest(Global.Mensagem.FalhaRemover);
             }

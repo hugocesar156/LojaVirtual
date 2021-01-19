@@ -24,6 +24,7 @@
                         </thead>
                         <tbody id="lista">
                             @await Html.PartialAsync("_Carrinho")
+                            @await Html.PartialAsync("_Produto")
                         </tbody>
                     </table>
                 </div>
@@ -324,7 +325,10 @@
     </div>
 </div>
 
+<link href="~/css/Produto/imagem.css" rel="stylesheet" />
+
 <script src="~/jquery/jquery-3.5.1.min.js"></script>
 <script src="~/js/Endereco/endereco.js"></script>
 <script src="~/js/Carrinho/acoes.js"></script>
 <script src="~/js/Pagamento/acoes.js"></script>
+<script src="~/js/Produto/gerenciar.js"></script>

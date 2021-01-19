@@ -1,5 +1,10 @@
 ﻿$('.card').mouseover(function () {
     $(this).css('cursor', 'pointer');
+    $(this).addClass('shadow');
+})
+
+$('.card').mouseleave(function () {
+    $(this).removeClass('shadow');
 })
 
 $('#btn-anterior').click(function () {
@@ -19,6 +24,15 @@ $('#btn-anterior').click(function () {
         success: function (categorias) {
             $('#div-categoria').html(categorias);
             $('#numero-pagina').val(pagina);
+
+            $('.card').mouseover(function () {
+                $(this).css('cursor', 'pointer');
+                $(this).addClass('shadow');
+            })
+
+            $('.card').mouseleave(function () {
+                $(this).removeClass('shadow');
+            })
         },
         error: function (data) {
             alert(data.responseText);
@@ -43,6 +57,15 @@ $('#btn-proximo').click(function () {
         success: function (categorias) {
             $('#div-categoria').html(categorias);
             $('#numero-pagina').val(pagina);
+
+            $('.card').mouseover(function () {
+                $(this).css('cursor', 'pointer');
+                $(this).addClass('shadow');
+            })
+
+            $('.card').mouseleave(function () {
+                $(this).removeClass('shadow');
+            })
         },
         error: function (data) {
             alert(data.responseText);

@@ -54,14 +54,7 @@ function CalcularFrete(cep) {
     $('#load').removeClass('d-none');
     $('#load-gif').attr('src', '/images/load.gif');
 
-    let servico = "";
-
-    if ($('#sedex-input').prop('checked')) {
-        servico = "04014";
-    }
-    else {
-        servico = "04510";
-    }
+    let servico = $('#sedex-input').prop('checked') ? "04014" : "04510";
 
     $.ajax({
         type: "GET",
@@ -123,9 +116,13 @@ function RemoverItem(idProduto) {
         type: "GET",
         url: "/Carrinho/RemoverItem/" + idProduto,
         success: function (lista) {
-            $("#lista").html(lista);
-
-            CalcularFrete($('#cep-salvo').val().replace("-", ""));
+            if (lista != null) {
+                $("#lista").html(lista);
+                CalcularFrete($('#cep-salvo').val().replace("-", ""));
+            }
+            else {
+                window.location.pathname = "Carrinho/Menu";
+            }
         },
         error: function (erro) {
             alert(erro.responseText);
