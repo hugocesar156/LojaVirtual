@@ -15,6 +15,7 @@
             public const string FalhaAtualizacao = "Falha ao tentar atualizar registro.";
             public const string FalhaCadastro = "Falha ao tentar realizar cadastro.";
             public const string FalhaRedirecionamento = "Falha ao buscar página.";
+            public const string FalhaRemoverBanco = "Falha ao tentar remover item.";
             public const string SucessoOperacao = "Operação realizada com sucesso.";
 
             //Imagem

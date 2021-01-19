@@ -87,7 +87,7 @@ function ValidaSenha(senha) {
 }
 
 //Validações de cadastro
-function ValidaUsuario() {
+function ValidaUsuario(acao = 1) {
     if (ValidaFormulario(1)) {
         let usuario = CarregaUsuario();
         let token = $('input[name="__RequestVerificationToken"]').val();
@@ -95,7 +95,7 @@ function ValidaUsuario() {
         $.ajax({
             type: "POST",
             url: "/Usuario/ValidaUsuario",
-            data: { __RequestVerificationToken: token, usuario: usuario },
+            data: { __RequestVerificationToken: token, usuario: usuario, acao: acao },
             success: function () {
                 $('#form-cliente').addClass('d-none');
                 $('#form-endereco').removeClass('d-none');
@@ -107,19 +107,20 @@ function ValidaUsuario() {
     }
 }
 
-function RegistraUsuario() {
+function RegistraUsuario(acao = 1) {
     if (ValidaFormulario(2) && ValidaFormulario(3)) {
         let usuario = CarregaUsuario();
         usuario.cliente.email = usuario.email;
 
         let token = $('input[name="__RequestVerificationToken"]').val();
+        let url = acao == 1 ? "/Usuario/Registrar" : "/Usuario/Atualizar";
 
         $.ajax({
             type: "POST",
-            url: "/Usuario/Registrar",
+            url: url,
             data: { __RequestVerificationToken: token, usuario: usuario },
             success: function () {
-                window.location.pathname = "Login/Entrar";
+                window.location.pathname = acao == 1 ? "Login/Entrar" : "Home/Inicio";
             },
             error: function (erro) {
                 alert(erro.responseText);
@@ -187,19 +188,21 @@ function ValidaFormulario(form) {
     return validos == $('.form-contato').length;
 }
 
-function Voltar() {
-    $('.form-endereco').each(function () {
-        $(this).val("");
-        $(this).removeClass('is-valid');
-        $(this).removeClass('is-invalid');
-    });
+function Voltar(limparForm = false) {
+    if (limparForm) {
+        $('.form-endereco').each(function () {
+            $(this).val("");
+            $(this).removeClass('is-valid');
+            $(this).removeClass('is-invalid');
+        });
 
-    $('.form-contato').each(function () {
-        $(this).val("");
-        $(this).removeClass('is-valid');
-        $(this).removeClass('is-invalid');
-    });
-
+        $('.form-contato').each(function () {
+            $(this).val("");
+            $(this).removeClass('is-valid');
+            $(this).removeClass('is-invalid');
+        });
+    }
+    
     $('#form-endereco').addClass('d-none');
     $('#form-cliente').removeClass('d-none');
 }

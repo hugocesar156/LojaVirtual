@@ -117,6 +117,21 @@ namespace LojaVirtual.Controllers
         }
 
         [HttpGet]
+        public IActionResult Detalhar(uint id)
+        {
+            try
+            {
+                var produto = _reposProduto.Buscar(id);
+                return Json(produto);
+            }
+            catch (Exception erro)
+            {
+                GerarLogErro(erro, (byte)Global.Entidade.Produto, (byte)Global.Acao.Visualizar);
+                return BadRequest(Global.Mensagem.FalhaBanco);
+            }
+        }
+
+        [HttpGet]
         public IActionResult OrdenarLista(int pagina, int quantidade, string pesquisa, byte ordenacao)
         {
             try
@@ -156,6 +171,26 @@ namespace LojaVirtual.Controllers
             catch (Exception erro)
             {
                 GerarLogErro(erro, (byte)Global.Entidade.Produto, (byte)Global.Acao.Visualizar);
+                return BadRequest(Global.Mensagem.FalhaBanco);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Remover(uint idProduto)
+        {
+            try
+            {
+                if (_reposProduto.Remover(idProduto) > 0)
+                {
+                    GerarLog((byte)Global.Entidade.Produto, (byte)Global.Acao.Remover, idProduto);
+                    return Json(new { });
+                }
+
+                return BadRequest(Global.Mensagem.FalhaRemoverBanco);
+            }
+            catch (Exception erro)
+            {
+                GerarLogErro(erro, (byte)Global.Entidade.Produto, (byte)Global.Acao.Remover);
                 return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }

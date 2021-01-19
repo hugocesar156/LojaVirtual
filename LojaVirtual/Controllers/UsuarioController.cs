@@ -49,6 +49,13 @@ namespace LojaVirtual.Controllers
         {
             try
             {
+                ViewBag.Estados = new string[]
+                {
+                    "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA",
+                    "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN",
+                    "RO", "RR", "RS", "SC", "SE", "SP", "TO"
+                };
+
                 var usuario = _reposUsuario.Buscar(_sessao.UsuarioSessao().IdUsuario);
                 return View(usuario);
             }
@@ -74,27 +81,31 @@ namespace LojaVirtual.Controllers
             }
         }
 
+
+        //Operações
         [HttpPost]
-        public IActionResult Perfil()
+        [ValidateAntiForgeryToken]
+        public IActionResult Atualizar(Usuario usuario)
         {
             try
             {
-                var usuario = _reposUsuario.Buscar(_sessao.UsuarioSessao().IdUsuario);
+                usuario.IdUsuario = _sessao.UsuarioSessao().IdUsuario;
 
-                if (usuario != null)
-                    return Json(usuario.Cliente);
+                if (_reposUsuario.Atualizar(usuario) > 0)
+                {
+                    GerarLog((byte)Global.Entidade.Produto, (byte)Global.Acao.Editar, usuario.IdUsuario);
+                    return Json(new { });
+                }
 
-                return BadRequest();
+                return BadRequest(Global.Mensagem.FalhaAtualizacao);
             }
             catch (Exception erro)
             {
-                GerarLogErro(erro, (byte)Global.Entidade.Usuario, (byte)Global.Acao.Visualizar);
-                throw new Exception(Global.Mensagem.FalhaBanco);
+                GerarLogErro(erro, (byte)Global.Entidade.Usuario, (byte)Global.Acao.Editar);
+                return BadRequest(Global.Mensagem.FalhaBanco);
             }
         }
 
-
-        //Operações
         [HttpGet]
         public IActionResult OrdenarLista(int pagina, int quantidade, string pesquisa, byte ordenacao)
         {
@@ -127,6 +138,28 @@ namespace LojaVirtual.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult Perfil()
+        {
+            try
+            {
+                var usuario = _reposUsuario.Buscar(_sessao.UsuarioSessao().IdUsuario);
+
+                if (usuario != null)
+                {
+                    usuario.Cliente.Contato = null;
+                    return Json(usuario.Cliente);
+                }
+
+                return BadRequest();
+            }
+            catch (Exception erro)
+            {
+                GerarLogErro(erro, (byte)Global.Entidade.Usuario, (byte)Global.Acao.Visualizar);
+                throw new Exception(Global.Mensagem.FalhaBanco);
+            }
+        }
+
         [HttpGet]
         public IActionResult PesquisarLista(int pagina, int quantidade, string pesquisa)
         {
@@ -144,11 +177,11 @@ namespace LojaVirtual.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult ValidaUsuario(Usuario usuario)
+        public IActionResult ValidaUsuario(Usuario usuario, byte acao)
         {
             try
             {
-                if (_reposUsuario.ValidaEmail(usuario.Email))
+                if (acao == 2 || _reposUsuario.ValidaEmail(usuario.Email))
                     return Json(new { });
 
                 return BadRequest(Global.Mensagem.FalhaEmail);

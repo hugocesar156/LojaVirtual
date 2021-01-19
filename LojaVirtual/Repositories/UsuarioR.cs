@@ -1,6 +1,7 @@
 ﻿using LojaVirtual.Data;
 using LojaVirtual.Models.Acesso;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using X.PagedList;
@@ -16,9 +17,15 @@ namespace LojaVirtual.Repositories
             _banco = banco;
         }
 
+        public int Atualizar(Usuario usuario)
+        {
+            _banco.Update(usuario);
+            return _banco.SaveChanges();
+        }
+
         public Usuario Buscar(uint idUsuario)
         {
-            return _banco.Usuario.Include(u => u.Cliente.Endereco)
+            return _banco.Usuario.Include(u => u.Cliente.Endereco).Include(u => u.Cliente.Contato)
                 .FirstOrDefault(u => u.IdUsuario == idUsuario);
         }
 

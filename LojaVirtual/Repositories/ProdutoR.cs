@@ -89,5 +89,11 @@ namespace LojaVirtual.Repositories
             _banco.Add(produto);
             return _banco.SaveChanges();
         }
+
+        public int Remover(uint idProduto)
+        {
+            _banco.Remove(new Produto { IdProduto = idProduto });
+            return _banco.SaveChanges();
+        }
     }
 }

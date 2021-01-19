@@ -1,4 +1,5 @@
 ﻿using LojaVirtual.Models.Acesso;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -80,7 +81,7 @@ namespace LojaVirtual.Models.Produto
         [Required, MaxLength(150)]
         public string Caminho { get; set; }
 
-        [ForeignKey("IdProduto")]
+        [ForeignKey("IdProduto"), JsonIgnore]
         public Produto Produto { get; set; }
 
         [Required]
