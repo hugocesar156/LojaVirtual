@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Detalhe de pedido";
-} 
+}
 
 <div class="text-center">
     <h4>Detalhe de pedido</h4>
@@ -39,7 +39,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <button class="btn btn-sm btn-outline-primary"><i class="fa fa-info-circle"></i></button>
+                                    <button class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#modal-produto" onclick="Detalhar('@produto.IdProduto')"><i class="fa fa-info-circle"></i></button>
                                     <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#situacao-modal" onclick="CarregaSituacao('@produto.Situacao')"><i class="fa fa-ellipsis-h"></i></button>
                                 </td>
                             </tr>
@@ -148,6 +148,8 @@
     }
 </div>
 
+@await Html.PartialAsync("_Produto")
+
 <div class="modal fade" id="situacao-modal" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -199,3 +201,4 @@
 
 <script src="~/jquery/jquery-3.5.1.min.js"></script>
 <script src="~/js/Pedido/detalhe.js"></script>
+<script src="~/js/Produto/gerenciar.js"></script>

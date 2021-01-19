@@ -12,7 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Coravel;
 using System;
 using WSCorreios;
-using Serilog;
 
 namespace LojaVirtual
 {
