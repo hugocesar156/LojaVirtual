@@ -197,16 +197,16 @@ namespace LojaVirtual.Controllers
             }
         }
 
-        public List<Produto> BuscaProdutosCarrinho(List<Carrinho> itens)
+        public List<Produto> BuscaProdutosCarrinho(List<Carrinho> carrinho)
         {
-            var carrinho = new List<Produto>();
+            var produtos = new List<Produto>();
 
-            foreach (var item in itens)
-                carrinho.Add(_reposProduto.Buscar(item.IdProduto));
+            foreach (var item in carrinho)
+                produtos.Add(_reposProduto.Buscar(item.IdProduto));
 
-            ViewBag.Quantidade = itens.ToDictionary(i => i.IdProduto, i => i.Quantidade);
+            ViewBag.Quantidade = carrinho.ToDictionary(i => i.IdProduto, i => i.Quantidade);
 
-            return carrinho;
+            return produtos;
         }
 
         public void GerarLogErro(Exception erro, byte entidade, byte acao)
