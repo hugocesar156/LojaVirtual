@@ -11,7 +11,7 @@
     <title>@ViewData["Title"] - Loja Virtual</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-md navbar-light" style="background-color: #ade9eb">
+    <nav class="navbar navbar-expand-sm navbar-light" style="background-color: #ade9eb">
         <a class="navbar-brand" href="@Url.Action("Inicio", "Home")">Loja Virtual</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -68,7 +68,7 @@
         }
         else
         {
-            <div class="row">
+            <div class="row d-none d-sm-flex">
                 <div class="col">
                     <a class="btn btn-sm btn-outline-light" href="@Url.Action("Menu", "Carrinho")"><i class="fa fa-shopping-cart"></i></a>
                 </div>
