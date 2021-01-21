@@ -69,6 +69,23 @@ namespace LojaVirtual.Repositories
                 .OrderBy(p => p.Nome).ToPagedList(pagina, quantidade);
         }
 
+        public IPagedList<Produto> ListarPaginadoCategoria(uint idCategoria, int pagina = 1, string pesquisa = "")
+        {
+            if (!string.IsNullOrEmpty(pesquisa))
+            {
+                pesquisa = pesquisa.Trim().ToUpper();
+
+                return _banco.Produto.Include(p => p.Imagem).Where(p =>
+                p.Nome.Contains(pesquisa) ||
+                p.Fabricante.Contains(pesquisa) ||
+                p.Modelo.Contains(pesquisa) && p.IdCategoria == idCategoria)
+                    .OrderBy(p => p.Nome).ToPagedList(pagina, 30);
+            }
+
+            return _banco.Produto.Include(p => p.Imagem).Where(p => p.IdCategoria == idCategoria)
+                .OrderBy(p => p.Nome).ToPagedList(pagina, 30);
+        }
+
         public IPagedList<Produto> ListarPorCategoria(uint idCategoria, int pagina = 1, string pesquisa = "")
         {
             if (!string.IsNullOrEmpty(pesquisa))

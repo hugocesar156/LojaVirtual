@@ -17,6 +17,7 @@ namespace LojaVirtual.Controllers
             _reposProduto = reposProduto;
         }
 
+        //Páginas
         public IActionResult Inicio()
         {
             try
@@ -31,12 +32,28 @@ namespace LojaVirtual.Controllers
             }
         }
 
+        //Operações
         public IActionResult MudaCategoria(int pagina)
         {
             try
             {
                 var categorias = _reposProduto.ListarCategoria(pagina);
                 return PartialView("_Categoria", categorias);
+            }
+            catch (Exception erro)
+            {
+                GerarLogErro(erro, (byte)Global.Entidade.Produto, (byte)Global.Acao.Visualizar);
+                return BadRequest(Global.Mensagem.FalhaBanco);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult PesquisarLista(int pagina, string pesquisa, uint idCategoria)
+        {
+            try
+            {
+                var lista = _reposProduto.ListarPaginadoCategoria(idCategoria, pagina, pesquisa);
+                return PartialView("_Produtos", lista);
             }
             catch (Exception erro)
             {

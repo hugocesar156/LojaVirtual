@@ -1,6 +1,4 @@
-﻿@model IPagedList<LojaVirtual.Models.Produto.Produto>
-
-@if (Model.Count > 0)
+﻿@if (Model.Count > 0)
 {
     <div class="row mt-3">
         @foreach (var produto in Model)
@@ -40,7 +38,7 @@
 }
 else
 {
-    <p>Nenhum registro encontrado</p>
+    <p class="mt-4">Nenhum registro encontrado</p>
 }
 
 <div class="text-left mt-3">
@@ -69,14 +67,14 @@ else
         @if (Model.PageNumber > 2)
         {
             <button class="btn btn-sm btn-primary mr-2" type="button"
-                    onclick="AlterarPagina(1)">
+                    onclick="AlterarPagina(1, '@Model[0].IdCategoria')">
                 1
             </button>
         }
         @if (Model.PageNumber > 1)
         {
             <button class="btn btn-sm btn-primary" type="button"
-                    onclick="AlterarPagina(2)">
+                    onclick="AlterarPagina(2, '@Model[0].IdCategoria')">
                 @{ var anterior = Model.PageNumber - 1;} @anterior
             </button>
         }
@@ -89,14 +87,14 @@ else
         @if (Model.PageNumber < Model.PageCount)
         {
             <button class="btn btn-sm btn-primary" type="button"
-                    onclick="AlterarPagina(3)">
+                    onclick="AlterarPagina(3, '@Model[0].IdCategoria')">
                 @{ var proximo = Model.PageNumber + 1;} @proximo
             </button>
         }
         @if (Model.PageNumber < Model.PageCount - 1)
         {
             <button class="btn btn-sm btn-primary ml-2" type="button"
-                    onclick="AlterarPagina(4)">
+                    onclick="AlterarPagina(4, '@Model[0].IdCategoria')">
                 @Model.PageCount
             </button>
         }
@@ -105,3 +103,4 @@ else
 
 <script src="~/jquery/jquery-3.5.1.min.js"></script>
 <script src="~/js/Home/acoes.js"></script>
+<script src="~/js/Home/lista.js"></script>
