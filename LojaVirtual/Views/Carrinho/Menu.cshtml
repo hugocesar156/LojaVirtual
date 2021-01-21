@@ -111,9 +111,9 @@
     }
 </div>
 
-<input type="hidden" id="cep-salvo" value="@ViewBag.Cep" onchange="CalculaParcelas()" />
-<input type="hidden" id="numero-salvo" value="@ViewBag.Numero" />
-<input type="hidden" id="nome-endereco-salvo" value="@ViewBag.Nome" />
+<input type="hidden" id="cep-salvo" value="@ViewBag.Endereco.Cep" onchange="CalculaParcelas()" />
+<input type="hidden" id="numero-salvo" value="@ViewBag.Endereco.Numero" />
+<input type="hidden" id="nome-endereco-salvo" value="@ViewBag.Endereco.Nome" />
 
 <div class="modal fade" id="modal-endereco" aria-hidden="true">
     <div class="modal-dialog modal-lg">

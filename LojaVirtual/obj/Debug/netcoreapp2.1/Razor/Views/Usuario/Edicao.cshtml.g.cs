@@ -88,7 +88,7 @@ using LojaVirtual.Validations;
             WriteLiteral("\r\n<div class=\"text-center\">\r\n    <h4>Edição de usuário</h4>\r\n    ");
             EndContext();
             BeginContext(162, 3782, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d92282d960884a8fa4668f85a9b1d516", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9636acacc617467087dfd055804d40cb", async() => {
                 BeginContext(186, 365, true);
                 WriteLiteral(@"
         <h5 class=""mt-4"">Cliente</h5>
@@ -239,7 +239,7 @@ WriteAttributeValue("", 3112, Model.Senha, 3112, 12, false);
             WriteLiteral("\r\n\r\n    ");
             EndContext();
             BeginContext(3952, 5355, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3aea415470dc4eb080c0f0d07b17948e", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b6ba766fd3cd4a44bb4de1fee8fa75b0", async() => {
                 BeginContext(3992, 364, true);
                 WriteLiteral(@"
         <h5 class=""mt-4"">Endereço</h5>
@@ -324,7 +324,7 @@ WriteAttributeValue("", 5989, Model.Cliente.Endereco.Cidade, 5989, 30, false);
                     ");
                 EndContext();
                 BeginContext(6352, 37, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1455ad4869f4494fb520c30bbb1893c9", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0afd3a8fe5534326a01286528f94f647", async() => {
                     BeginContext(6378, 2, true);
                     WriteLiteral("--");
                     EndContext();
@@ -360,7 +360,7 @@ WriteAttributeValue("", 5989, Model.Cliente.Endereco.Cidade, 5989, 30, false);
                 WriteLiteral("                            ");
                 EndContext();
                 BeginContext(6591, 41, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ec452c434895495491ba8c6d3d0d2cc3", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a96b9787a3a646ccafa2be8fcf5fd908", async() => {
                     BeginContext(6621, 2, false);
 #line 113 "C:\Projetos\Loja Virtual\LojaVirtual\Views\Usuario\Edicao.cshtml"
                                                     Write(uf);
@@ -406,7 +406,7 @@ WriteAttributeValue("", 5989, Model.Cliente.Endereco.Cidade, 5989, 30, false);
                 WriteLiteral("                            ");
                 EndContext();
                 BeginContext(6746, 32, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7557200158234b2aa64e989bcc2f285e", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "11f92655dcac4650ae08f0b5342675ef", async() => {
                     BeginContext(6767, 2, false);
 #line 117 "C:\Projetos\Loja Virtual\LojaVirtual\Views\Usuario\Edicao.cshtml"
                                            Write(uf);
@@ -552,7 +552,7 @@ WriteAttributeValue("", 8707, Model.Cliente.Contato[0].Numero, 8707, 32, false);
             WriteLiteral("\r\n</div>\r\n\r\n");
             EndContext();
             BeginContext(9319, 52, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2148762e715544e68897daa33b8bf4e8", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "28a2e1a7744c4dc4927e24902f14a7e3", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -570,7 +570,7 @@ WriteAttributeValue("", 8707, Model.Cliente.Contato[0].Numero, 8707, 32, false);
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(9373, 49, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4a48974374ee4740865fc3867b0c67d1", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fe09890a0092480daee5dd41a80cc19d", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -588,7 +588,7 @@ WriteAttributeValue("", 8707, Model.Cliente.Contato[0].Numero, 8707, 32, false);
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(9424, 49, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5d4de08288c84f8a896f3536205b0870", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "89225b8d20b34ee293fab863f5cd4007", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -606,7 +606,7 @@ WriteAttributeValue("", 8707, Model.Cliente.Contato[0].Numero, 8707, 32, false);
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(9475, 46, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ec455633a41346fda3532e2c1ac257d3", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "baec77ebdcd44bdf91be9572013d53ff", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

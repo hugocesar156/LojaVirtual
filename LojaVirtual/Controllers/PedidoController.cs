@@ -115,8 +115,6 @@ namespace LojaVirtual.Controllers
                         GerarLog((byte)Global.Entidade.Pedido, (byte)Global.Acao.Editar, Convert.ToUInt32(transacao.Id));
                         return Json(Global.Mensagem.SucessoOperacao);
                     }
-
-                    return BadRequest(Global.Mensagem.FalhaAtualizacao);
                 }
 
                 return BadRequest(Global.Mensagem.FalhaAtualizacao);

@@ -37,9 +37,11 @@ namespace LojaVirtual.Controllers
                     {
                         arquivo.CopyTo(stream);
                     }
+                      
+                    return Json($"/images/produto/0/{arquivo.FileName}");
                 }
 
-                return Json($"/images/produto/0/{arquivo.FileName}");
+                return BadRequest(Global.Mensagem.ArquivoNaoEncontrado);
             }
             catch (Exception erro)
             {
